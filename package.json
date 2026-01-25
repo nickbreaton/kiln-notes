@@ -3,14 +3,20 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
+    "dev": "bun --bun astro dev",
+    "build": "bun --bun astro build",
+    "preview": "bun --bun astro preview",
     "astro": "astro"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",
     "astro": "^5.16.15",
+    "astrojs-service-worker": "^2.0.0",
     "tailwindcss": "^4.1.18"
+  },
+  "devDependencies": {
+    "@astrojs/cloudflare": "^12.6.12",
+    "@astrojs/react": "^4.4.2",
+    "@vitejs/plugin-basic-ssl": "^2.1.4"
   }
 }
