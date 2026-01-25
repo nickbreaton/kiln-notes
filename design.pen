@@ -743,9 +743,10 @@
         {
           "type": "frame",
           "id": "OzQKo",
-          "x": 0,
-          "y": 0,
+          "x": -0.004357056141884641,
+          "y": 0.030360582933280256,
           "name": "Header",
+          "rotation": 0.008920583735270295,
           "width": 390,
           "height": 56,
           "fill": "$bg-surface",
@@ -768,7 +769,7 @@
               "id": "G5xnS",
               "name": "title",
               "fill": "$text-primary",
-              "content": "Kiln Notes",
+              "content": "\t",
               "fontFamily": "Outfit",
               "fontSize": 20,
               "fontWeight": "600"
@@ -3296,6 +3297,483 @@
                           "fontFamily": "Outfit",
                           "fontSize": 16,
                           "fontWeight": "600"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "xx62p",
+      "x": 1760,
+      "y": 0,
+      "name": "Favicon",
+      "width": 128,
+      "height": 128,
+      "fill": "#3D8A5A",
+      "cornerRadius": 28,
+      "layout": "none",
+      "children": [
+        {
+          "type": "icon_font",
+          "id": "zMDTt",
+          "x": 28,
+          "y": 28,
+          "name": "Clipboard Clock",
+          "width": 72,
+          "height": 72,
+          "iconFontName": "clipboard-clock",
+          "iconFontFamily": "lucide",
+          "fill": "#F5F4F1"
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "t16xp",
+      "x": 1988,
+      "y": 0,
+      "name": "Kiln Notes - Empty State",
+      "clip": true,
+      "width": 390,
+      "height": 844,
+      "fill": "$bg-primary",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "KdRyN",
+          "name": "Header",
+          "width": "fill_container",
+          "height": 56,
+          "fill": "$bg-surface",
+          "stroke": {
+            "align": "inside",
+            "thickness": {
+              "bottom": 1
+            },
+            "fill": "$border-subtle"
+          },
+          "padding": [
+            0,
+            20
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "9jOAz",
+              "name": "title",
+              "fill": "$text-primary",
+              "content": "Kiln Notes",
+              "fontFamily": "Outfit",
+              "fontSize": 20,
+              "fontWeight": "600"
+            },
+            {
+              "type": "frame",
+              "id": "de764",
+              "name": "addBtn",
+              "width": 36,
+              "height": 36,
+              "fill": "$accent-primary",
+              "cornerRadius": 100,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "RtqGV",
+                  "name": "addIcon",
+                  "width": 20,
+                  "height": 20,
+                  "iconFontName": "plus",
+                  "iconFontFamily": "lucide",
+                  "fill": "#FFFFFF"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "3cUPo",
+          "name": "Content",
+          "width": "fill_container",
+          "height": "fill_container",
+          "layout": "vertical",
+          "gap": 24,
+          "padding": [
+            20,
+            0,
+            0,
+            0
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "6Idib",
+              "name": "Drying Section",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "zThcY",
+                  "name": "dryingHeader",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "padding": [
+                    0,
+                    20
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "ellipse",
+                      "id": "txCCZ",
+                      "name": "dryingDot",
+                      "fill": "$status-drying",
+                      "width": 8,
+                      "height": 8
+                    },
+                    {
+                      "type": "text",
+                      "id": "9zmnS",
+                      "name": "dryingTitle",
+                      "fill": "$text-secondary",
+                      "content": "Drying",
+                      "fontFamily": "Outfit",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "iy9VU",
+                      "name": "dryingCount",
+                      "fill": "$text-tertiary",
+                      "content": "0",
+                      "fontFamily": "Outfit",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "yN0J9",
+                  "name": "Drying Grid",
+                  "width": "fill_container",
+                  "padding": [
+                    0,
+                    20
+                  ],
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "ABT76",
+                      "name": "Drying Empty",
+                      "width": "fill_container",
+                      "height": 110,
+                      "cornerRadius": 12,
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$border-subtle"
+                      },
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "nv0lS",
+                          "name": "dryingEmptyText",
+                          "fill": "$text-tertiary",
+                          "content": "No pieces drying",
+                          "fontFamily": "Outfit",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "XPPmt",
+              "name": "Bisking Section",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "Svc9U",
+                  "name": "biskingHeader",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "padding": [
+                    0,
+                    20
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "ellipse",
+                      "id": "jnBO7",
+                      "name": "biskingDot",
+                      "fill": "$status-bisking",
+                      "width": 8,
+                      "height": 8
+                    },
+                    {
+                      "type": "text",
+                      "id": "j6i46",
+                      "name": "biskingTitle",
+                      "fill": "$text-secondary",
+                      "content": "Bisking",
+                      "fontFamily": "Outfit",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "XS29U",
+                      "name": "biskingCount",
+                      "fill": "$text-tertiary",
+                      "content": "0",
+                      "fontFamily": "Outfit",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "mB2RJ",
+                  "name": "Bisking Grid",
+                  "width": "fill_container",
+                  "padding": [
+                    0,
+                    20
+                  ],
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "N2Pdp",
+                      "name": "Bisking Empty",
+                      "width": "fill_container",
+                      "height": 110,
+                      "cornerRadius": 12,
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$border-subtle"
+                      },
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "GrIIj",
+                          "name": "biskingEmptyText",
+                          "fill": "$text-tertiary",
+                          "content": "No pieces bisking",
+                          "fontFamily": "Outfit",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "XP0bd",
+              "name": "Glazed Section",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "wNcaA",
+                  "name": "glazedHeader",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "padding": [
+                    0,
+                    20
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "ellipse",
+                      "id": "CAKfB",
+                      "name": "glazedDot",
+                      "fill": "$status-glazed",
+                      "width": 8,
+                      "height": 8
+                    },
+                    {
+                      "type": "text",
+                      "id": "6yMfc",
+                      "name": "glazedTitle",
+                      "fill": "$text-secondary",
+                      "content": "Glazed",
+                      "fontFamily": "Outfit",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "otYip",
+                      "name": "glazedCount",
+                      "fill": "$text-tertiary",
+                      "content": "0",
+                      "fontFamily": "Outfit",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "V4EjZ",
+                  "name": "Glazed Grid",
+                  "width": "fill_container",
+                  "padding": [
+                    0,
+                    20
+                  ],
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "SaSuo",
+                      "name": "Glazed Empty",
+                      "width": "fill_container",
+                      "height": 110,
+                      "cornerRadius": 12,
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$border-subtle"
+                      },
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "BEEqn",
+                          "name": "glazedEmptyText",
+                          "fill": "$text-tertiary",
+                          "content": "No pieces glazed",
+                          "fontFamily": "Outfit",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "Fdnkg",
+              "name": "Complete Section",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "6Cjo8",
+                  "name": "completeHeader",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "padding": [
+                    0,
+                    20
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "ellipse",
+                      "id": "9U6Gp",
+                      "name": "completeDot",
+                      "fill": "$status-complete",
+                      "width": 8,
+                      "height": 8
+                    },
+                    {
+                      "type": "text",
+                      "id": "o1zoy",
+                      "name": "completeTitle",
+                      "fill": "$text-secondary",
+                      "content": "Complete",
+                      "fontFamily": "Outfit",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "RRe0t",
+                      "name": "completeCount",
+                      "fill": "$text-tertiary",
+                      "content": "0",
+                      "fontFamily": "Outfit",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "jLC93",
+                  "name": "Complete Grid",
+                  "width": "fill_container",
+                  "padding": [
+                    0,
+                    20
+                  ],
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "VVZut",
+                      "name": "Complete Empty",
+                      "width": "fill_container",
+                      "height": 110,
+                      "cornerRadius": 12,
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$border-subtle"
+                      },
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "57vC7",
+                          "name": "completeEmptyText",
+                          "fill": "$text-tertiary",
+                          "content": "No pieces complete",
+                          "fontFamily": "Outfit",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
                         }
                       ]
                     }
