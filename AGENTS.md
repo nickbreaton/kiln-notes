@@ -26,3 +26,7 @@
 - Check for project skills when working with unfamiliar tech (e.g., LiveStore, Effect).
 - Use the LiveStore skill when touching LiveStore code.
 - Depend on LiveStore for local-first tasks.
+
+## Design
+- Design is being complete in Pencil.dev via Pencil MCP and rule.
+- When modifying the pencil, we should be sure to keep the Tailwind color palette in sync in @src/styles/global.css.
