@@ -7,7 +7,7 @@ type PieceProps = {
 export const Piece = ({ imageUrl, dayLabel, muted }: PieceProps) => {
   return (
     <div
-      className={`relative h-[110px] w-[110px] overflow-hidden rounded-xl bg-cream-100 ${
+      className={`relative aspect-square w-full overflow-hidden rounded-xl bg-cream-100 ${
         muted ? "opacity-50" : "opacity-100"
       }`}
       style={{

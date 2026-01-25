@@ -82,15 +82,13 @@ export const App = () => {
             count={dryingPieces.length}
             status="drying"
           >
-            <div className="grid grid-cols-3 gap-2 px-5">
-              {dryingPieces.map((piece) => (
-                <Piece
-                  key={piece.imageUrl}
-                  imageUrl={piece.imageUrl}
-                  dayLabel={piece.dayLabel}
-                />
-              ))}
-            </div>
+            {dryingPieces.map((piece) => (
+              <Piece
+                key={piece.imageUrl}
+                imageUrl={piece.imageUrl}
+                dayLabel={piece.dayLabel}
+              />
+            ))}
           </PiecesSection>
 
           <PiecesSection
@@ -98,15 +96,13 @@ export const App = () => {
             count={biskingPieces.length}
             status="bisking"
           >
-            <div className="grid grid-cols-3 gap-2 px-5">
-              {biskingPieces.map((piece) => (
-                <Piece
-                  key={piece.imageUrl}
-                  imageUrl={piece.imageUrl}
-                  dayLabel={piece.dayLabel}
-                />
-              ))}
-            </div>
+            {biskingPieces.map((piece) => (
+              <Piece
+                key={piece.imageUrl}
+                imageUrl={piece.imageUrl}
+                dayLabel={piece.dayLabel}
+              />
+            ))}
           </PiecesSection>
 
           <PiecesSection
@@ -114,15 +110,13 @@ export const App = () => {
             count={glazedPieces.length}
             status="glazed"
           >
-            <div className="grid grid-cols-3 gap-2 px-5">
-              {glazedPieces.map((piece) => (
-                <Piece
-                  key={piece.imageUrl}
-                  imageUrl={piece.imageUrl}
-                  dayLabel={piece.dayLabel}
-                />
-              ))}
-            </div>
+            {glazedPieces.map((piece) => (
+              <Piece
+                key={piece.imageUrl}
+                imageUrl={piece.imageUrl}
+                dayLabel={piece.dayLabel}
+              />
+            ))}
           </PiecesSection>
 
           <PiecesSection
@@ -130,11 +124,9 @@ export const App = () => {
             count={completePieces.length}
             status="complete"
           >
-            <div className="grid grid-cols-3 gap-2 px-5">
-              {completePieces.map((piece) => (
-                <Piece key={piece.imageUrl} imageUrl={piece.imageUrl} />
-              ))}
-            </div>
+            {completePieces.map((piece) => (
+              <Piece key={piece.imageUrl} imageUrl={piece.imageUrl} />
+            ))}
           </PiecesSection>
         </main>
       </div>
