@@ -11,6 +11,10 @@ export default defineConfig({
       strategies: "injectManifest",
       srcDir: "src",
       filename: "service-worker.ts",
+      devOptions: {
+        enabled: true,
+        type: "module",
+      },
     }),
     react(),
   ],
