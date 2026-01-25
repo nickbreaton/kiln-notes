@@ -35,4 +35,17 @@
   --color-status-bisking-light: #D8957520;
   --color-status-glazed-light: #6B8EAE20;
   --color-status-complete-light: #3D8A5A20;
+
+  /* Danger/delete colors */
+  --color-danger-500: #DC4C4C;
+  --color-danger-light: #DC4C4C20;
+
+  /* Shadow colors for drag states */
+  --color-shadow-sm: #00000020;
+  --color-shadow-md: #00000025;
+  --color-shadow-lg: #00000035;
+  --color-shadow-badge: #00000030;
+
+  /* Opacity values for drag states */
+  --opacity-muted: 0.5;
 }

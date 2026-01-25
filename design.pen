@@ -720,6 +720,7 @@
                       "type": "frame",
                       "id": "4WLpP",
                       "name": "Piece 2",
+                      "opacity": 0.5,
                       "metadata": {
                         "type": "unsplash",
                         "username": "hdbernd",
@@ -740,6 +741,7 @@
                       "type": "frame",
                       "id": "YDyrv",
                       "name": "Piece 3",
+                      "opacity": 0.5,
                       "metadata": {
                         "type": "unsplash",
                         "username": "17allansfilms",
@@ -839,6 +841,7 @@
                       "type": "frame",
                       "id": "GshXu",
                       "name": "Bisking Piece 1",
+                      "opacity": 0.5,
                       "metadata": {
                         "type": "unsplash",
                         "username": "pawelmizia",
@@ -859,6 +862,7 @@
                       "type": "frame",
                       "id": "MsavW",
                       "name": "Bisking Piece 2",
+                      "opacity": 0.5,
                       "metadata": {
                         "type": "unsplash",
                         "username": "karim_manjra",
@@ -944,6 +948,7 @@
                       "type": "frame",
                       "id": "P2hb0",
                       "name": "Glazed Piece 1",
+                      "opacity": 0.5,
                       "metadata": {
                         "type": "unsplash",
                         "username": "ericatan5566",
@@ -1029,6 +1034,7 @@
                       "type": "frame",
                       "id": "5K6Ru",
                       "name": "Complete Piece 1",
+                      "opacity": 0.5,
                       "metadata": {
                         "type": "unsplash",
                         "username": "crazyivan_ita",
@@ -1049,6 +1055,7 @@
                       "type": "frame",
                       "id": "D3sqR",
                       "name": "Complete Piece 2",
+                      "opacity": 0.5,
                       "metadata": {
                         "type": "unsplash",
                         "username": "sadafradi",
@@ -1069,6 +1076,7 @@
                       "type": "frame",
                       "id": "UlWqt",
                       "name": "Complete Piece 3",
+                      "opacity": 0.5,
                       "metadata": {
                         "type": "unsplash",
                         "username": "dtrinksrph",
@@ -1089,6 +1097,7 @@
                       "type": "frame",
                       "id": "qNqdW",
                       "name": "Complete Piece 4",
+                      "opacity": 0.5,
                       "metadata": {
                         "type": "unsplash",
                         "username": "moniqa",
@@ -1137,6 +1146,694 @@
             },
             "blur": 32
           }
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "shyiq",
+      "x": 860,
+      "y": 0,
+      "name": "Kiln Notes - Multi-Select",
+      "clip": true,
+      "width": 390,
+      "height": 844,
+      "fill": "$bg-primary",
+      "layout": "none",
+      "children": [
+        {
+          "type": "frame",
+          "id": "qsqAt",
+          "x": 0,
+          "y": 0,
+          "name": "Header",
+          "width": 390,
+          "height": 56,
+          "fill": "$bg-surface",
+          "stroke": {
+            "align": "inside",
+            "thickness": {
+              "bottom": 1
+            },
+            "fill": "$border-subtle"
+          },
+          "padding": [
+            0,
+            20
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "44d9N",
+              "name": "title",
+              "fill": "$text-primary",
+              "content": "Kiln Notes",
+              "fontFamily": "Outfit",
+              "fontSize": 20,
+              "fontWeight": "600"
+            },
+            {
+              "type": "frame",
+              "id": "nTHwL",
+              "name": "addBtn",
+              "width": 36,
+              "height": 36,
+              "fill": "$accent-primary",
+              "cornerRadius": 100,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "TRPQ4",
+                  "name": "addIcon",
+                  "width": 20,
+                  "height": 20,
+                  "iconFontName": "plus",
+                  "iconFontFamily": "lucide",
+                  "fill": "#FFFFFF"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "a5mfm",
+          "x": 0,
+          "y": 56,
+          "name": "Content",
+          "width": 390,
+          "height": 788,
+          "layout": "vertical",
+          "gap": 24,
+          "padding": [
+            20,
+            0,
+            0,
+            0
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "M14Lm",
+              "name": "Drying Section",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "3QGBx",
+                  "name": "dryingHeader",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "padding": [
+                    0,
+                    20
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "ellipse",
+                      "id": "6b4Yz",
+                      "name": "dryingDot",
+                      "fill": "$status-drying",
+                      "width": 8,
+                      "height": 8
+                    },
+                    {
+                      "type": "text",
+                      "id": "uS2nE",
+                      "name": "dryingTitle",
+                      "fill": "$text-secondary",
+                      "content": "Drying",
+                      "fontFamily": "Outfit",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "uQFe9",
+                      "name": "dryingCount",
+                      "fill": "$text-tertiary",
+                      "content": "0",
+                      "fontFamily": "Outfit",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "8ZYJi",
+                  "name": "Drying Grid",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "padding": [
+                    0,
+                    20
+                  ],
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "0vWMx",
+                      "name": "Empty Slot",
+                      "metadata": {
+                        "type": "unsplash",
+                        "username": "artsmarts",
+                        "link": "https://unsplash.com/@artsmarts",
+                        "author": "Lindsey Elsey"
+                      },
+                      "width": 110,
+                      "height": 110,
+                      "fill": "transparent",
+                      "cornerRadius": 12,
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 2,
+                        "fill": "$border-subtle"
+                      }
+                    },
+                    {
+                      "type": "frame",
+                      "id": "XKsX2",
+                      "name": "Empty Slot 2",
+                      "metadata": {
+                        "type": "unsplash",
+                        "username": "hdbernd",
+                        "link": "https://unsplash.com/@hdbernd",
+                        "author": "Bernd 📷 Dittrich"
+                      },
+                      "width": 110,
+                      "height": 110,
+                      "fill": "transparent",
+                      "cornerRadius": 12,
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 2,
+                        "fill": "$border-subtle"
+                      }
+                    },
+                    {
+                      "type": "frame",
+                      "id": "d3SDT",
+                      "name": "Empty Slot 3",
+                      "metadata": {
+                        "type": "unsplash",
+                        "username": "17allansfilms",
+                        "link": "https://unsplash.com/@17allansfilms",
+                        "author": "ALLAN LAINEZ"
+                      },
+                      "width": 110,
+                      "height": 110,
+                      "fill": "transparent",
+                      "cornerRadius": 12,
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 2,
+                        "fill": "$border-subtle"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "8HXcr",
+              "name": "Bisking Section",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "lru02",
+                  "name": "biskingHeader",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "padding": [
+                    0,
+                    20
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "ellipse",
+                      "id": "Dc3Ud",
+                      "name": "biskingDot",
+                      "fill": "$status-bisking",
+                      "width": 8,
+                      "height": 8
+                    },
+                    {
+                      "type": "text",
+                      "id": "tM1OD",
+                      "name": "biskingTitle",
+                      "fill": "$text-secondary",
+                      "content": "Bisking",
+                      "fontFamily": "Outfit",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "F164f",
+                      "name": "biskingCount",
+                      "fill": "$text-tertiary",
+                      "content": "5",
+                      "fontFamily": "Outfit",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "oQRfh",
+                  "name": "Bisking Grid",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "padding": [
+                    0,
+                    20
+                  ],
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "yHrbb",
+                      "name": "Drop Target",
+                      "width": 110,
+                      "height": 110,
+                      "fill": "#D8957520",
+                      "cornerRadius": 12,
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 2,
+                        "fill": "$status-bisking"
+                      }
+                    },
+                    {
+                      "type": "frame",
+                      "id": "x5WaT",
+                      "name": "Bisking Piece 1",
+                      "opacity": 0.5,
+                      "metadata": {
+                        "type": "unsplash",
+                        "username": "pawelmizia",
+                        "link": "https://unsplash.com/@pawelmizia",
+                        "author": "Paweł Mizia"
+                      },
+                      "width": 110,
+                      "height": 110,
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "https://images.unsplash.com/photo-1564661637576-5e8123be07e6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NjkzNjczOTd8&ixlib=rb-4.1.0&q=80&w=1080",
+                        "mode": "fill"
+                      },
+                      "cornerRadius": 12
+                    },
+                    {
+                      "type": "frame",
+                      "id": "4LEG7",
+                      "name": "Bisking Piece 2",
+                      "opacity": 0.5,
+                      "metadata": {
+                        "type": "unsplash",
+                        "username": "karim_manjra",
+                        "link": "https://unsplash.com/@karim_manjra",
+                        "author": "Karim MANJRA"
+                      },
+                      "width": 110,
+                      "height": 110,
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "https://images.unsplash.com/photo-1555885424-77ccf23eaafb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NjkzNjczOTh8&ixlib=rb-4.1.0&q=80&w=1080",
+                        "mode": "fill"
+                      },
+                      "cornerRadius": 12
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "nFc0c",
+              "name": "Glazed Section",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "ouwr7",
+                  "name": "glazedHeader",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "padding": [
+                    0,
+                    20
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "ellipse",
+                      "id": "WcjZI",
+                      "name": "glazedDot",
+                      "fill": "$status-glazed",
+                      "width": 8,
+                      "height": 8
+                    },
+                    {
+                      "type": "text",
+                      "id": "otjXm",
+                      "name": "glazedTitle",
+                      "fill": "$text-secondary",
+                      "content": "Glazed",
+                      "fontFamily": "Outfit",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "YspQl",
+                      "name": "glazedCount",
+                      "fill": "$text-tertiary",
+                      "content": "1",
+                      "fontFamily": "Outfit",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "bwpQr",
+                  "name": "Glazed Grid",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "padding": [
+                    0,
+                    20
+                  ],
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "AFNIv",
+                      "name": "Glazed Piece 1",
+                      "opacity": 0.5,
+                      "metadata": {
+                        "type": "unsplash",
+                        "username": "ericatan5566",
+                        "link": "https://unsplash.com/@ericatan5566",
+                        "author": "TAN Erica"
+                      },
+                      "width": 110,
+                      "height": 110,
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "https://images.unsplash.com/photo-1510035618584-c442b241abe7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NjkzNjczOTh8&ixlib=rb-4.1.0&q=80&w=1080",
+                        "mode": "fill"
+                      },
+                      "cornerRadius": 12
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "4NIKS",
+              "name": "Complete Section",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "laPsy",
+                  "name": "completeHeader",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "padding": [
+                    0,
+                    20
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "ellipse",
+                      "id": "XSv0J",
+                      "name": "completeDot",
+                      "fill": "$status-complete",
+                      "width": 8,
+                      "height": 8
+                    },
+                    {
+                      "type": "text",
+                      "id": "3pwUp",
+                      "name": "completeTitle",
+                      "fill": "$text-secondary",
+                      "content": "Complete",
+                      "fontFamily": "Outfit",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "j66Wg",
+                      "name": "completeCount",
+                      "fill": "$text-tertiary",
+                      "content": "4",
+                      "fontFamily": "Outfit",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "0a7gt",
+                  "name": "Complete Grid",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "padding": [
+                    0,
+                    20
+                  ],
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "XVMN4",
+                      "name": "Complete Piece 1",
+                      "opacity": 0.5,
+                      "metadata": {
+                        "type": "unsplash",
+                        "username": "crazyivan_ita",
+                        "link": "https://unsplash.com/@crazyivan_ita",
+                        "author": "Ivan Pergasi"
+                      },
+                      "width": 110,
+                      "height": 110,
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "https://images.unsplash.com/photo-1703289627964-2f42da12eae1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NjkzNjczOTl8&ixlib=rb-4.1.0&q=80&w=1080",
+                        "mode": "fill"
+                      },
+                      "cornerRadius": 12
+                    },
+                    {
+                      "type": "frame",
+                      "id": "ZhqLU",
+                      "name": "Complete Piece 2",
+                      "opacity": 0.5,
+                      "metadata": {
+                        "type": "unsplash",
+                        "username": "sadafradi",
+                        "link": "https://unsplash.com/@sadafradi",
+                        "author": "sadaf radi"
+                      },
+                      "width": 110,
+                      "height": 110,
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "https://images.unsplash.com/photo-1652081489531-95f8b855bce3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NjkzNjczOTl8&ixlib=rb-4.1.0&q=80&w=1080",
+                        "mode": "fill"
+                      },
+                      "cornerRadius": 12
+                    },
+                    {
+                      "type": "frame",
+                      "id": "ywXSw",
+                      "name": "Complete Piece 3",
+                      "opacity": 0.5,
+                      "metadata": {
+                        "type": "unsplash",
+                        "username": "dtrinksrph",
+                        "link": "https://unsplash.com/@dtrinksrph",
+                        "author": "David Trinks"
+                      },
+                      "width": 110,
+                      "height": 110,
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "https://images.unsplash.com/photo-1722960926430-1b4975af415c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NjkzNjc0MDB8&ixlib=rb-4.1.0&q=80&w=1080",
+                        "mode": "fill"
+                      },
+                      "cornerRadius": 12
+                    },
+                    {
+                      "type": "frame",
+                      "id": "hDWXn",
+                      "name": "Complete Piece 4",
+                      "opacity": 0.5,
+                      "metadata": {
+                        "type": "unsplash",
+                        "username": "moniqa",
+                        "link": "https://unsplash.com/@moniqa",
+                        "author": "Monika Grabkowska"
+                      },
+                      "width": 110,
+                      "height": 110,
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "https://images.unsplash.com/photo-1503156958897-4c7b70dd4f5c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NjkzNjc0MDR8&ixlib=rb-4.1.0&q=80&w=1080",
+                        "mode": "fill"
+                      },
+                      "cornerRadius": 12
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "ejLU4",
+          "x": 135,
+          "y": 215,
+          "name": "Dragged Tile 3 (back)",
+          "rotation": 6.000000000000001,
+          "width": 110,
+          "height": 110,
+          "fill": {
+            "type": "image",
+            "enabled": true,
+            "url": "https://images.unsplash.com/photo-1708368952731-db40e6a86d21?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NjkzNjczOTd8&ixlib=rb-4.1.0&q=80&w=1080",
+            "mode": "fill"
+          },
+          "cornerRadius": 12,
+          "effect": {
+            "type": "shadow",
+            "shadowType": "outer",
+            "color": "#00000020",
+            "offset": {
+              "x": 0,
+              "y": 4
+            },
+            "blur": 12
+          }
+        },
+        {
+          "type": "frame",
+          "id": "ZlECW",
+          "x": 125,
+          "y": 225,
+          "name": "Dragged Tile 2 (middle)",
+          "rotation": -2,
+          "width": 110,
+          "height": 110,
+          "fill": {
+            "type": "image",
+            "enabled": true,
+            "url": "https://images.unsplash.com/photo-1767188949805-d8f83eabf8b9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NjkzNjczOTZ8&ixlib=rb-4.1.0&q=80&w=1080",
+            "mode": "fill"
+          },
+          "cornerRadius": 12,
+          "effect": {
+            "type": "shadow",
+            "shadowType": "outer",
+            "color": "#00000025",
+            "offset": {
+              "x": 0,
+              "y": 6
+            },
+            "blur": 16
+          }
+        },
+        {
+          "type": "frame",
+          "id": "JOysJ",
+          "x": 115,
+          "y": 235,
+          "name": "Dragged Tile 1 (front)",
+          "rotation": -5,
+          "width": 118,
+          "height": 118,
+          "fill": {
+            "type": "image",
+            "enabled": true,
+            "url": "https://images.unsplash.com/photo-1637548580984-10c48d61b168?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NjkzNjczOTZ8&ixlib=rb-4.1.0&q=80&w=1080",
+            "mode": "fill"
+          },
+          "cornerRadius": 14,
+          "effect": {
+            "type": "shadow",
+            "shadowType": "outer",
+            "color": "#00000035",
+            "offset": {
+              "x": 0,
+              "y": 12
+            },
+            "blur": 32
+          }
+        },
+        {
+          "type": "frame",
+          "id": "HdWWO",
+          "x": 205,
+          "y": 225,
+          "name": "Count Badge",
+          "width": 28,
+          "height": 28,
+          "fill": "$accent-primary",
+          "cornerRadius": 100,
+          "effect": {
+            "type": "shadow",
+            "shadowType": "outer",
+            "color": "#00000030",
+            "offset": {
+              "x": 0,
+              "y": 2
+            },
+            "blur": 8
+          },
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "ydAM0",
+              "name": "countText",
+              "fill": "#FFFFFF",
+              "content": "3",
+              "fontFamily": "Outfit",
+              "fontSize": 14,
+              "fontWeight": "600"
+            }
+          ]
         }
       ]
     }
