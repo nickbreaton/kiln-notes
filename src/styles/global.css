@@ -40,6 +40,10 @@
   --color-danger-500: #DC4C4C;
   --color-danger-light: #DC4C4C20;
 
+  /* Overlay colors */
+  --color-overlay-dark: #00000050;
+  --color-overlay-badge: #00000060;
+
   /* Shadow colors for drag states */
   --color-shadow-sm: #00000020;
   --color-shadow-md: #00000025;

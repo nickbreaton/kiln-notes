@@ -163,7 +163,37 @@
                         "url": "https://images.unsplash.com/photo-1637548580984-10c48d61b168?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NjkzNjczOTZ8&ixlib=rb-4.1.0&q=80&w=1080",
                         "mode": "fill"
                       },
-                      "cornerRadius": 12
+                      "cornerRadius": 12,
+                      "layout": "none",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "UZway",
+                          "x": 6,
+                          "y": 6,
+                          "name": "Day Badge",
+                          "fill": "#00000060",
+                          "cornerRadius": 6,
+                          "padding": [
+                            2,
+                            6
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "mr5Ws",
+                              "name": "badgeText1",
+                              "fill": "#FFFFFF",
+                              "content": "2d",
+                              "fontFamily": "Outfit",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        }
+                      ]
                     },
                     {
                       "type": "frame",
@@ -183,7 +213,37 @@
                         "url": "https://images.unsplash.com/photo-1767188949805-d8f83eabf8b9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NjkzNjczOTZ8&ixlib=rb-4.1.0&q=80&w=1080",
                         "mode": "fill"
                       },
-                      "cornerRadius": 12
+                      "cornerRadius": 12,
+                      "layout": "none",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "TYYre",
+                          "x": 6,
+                          "y": 6,
+                          "name": "Day Badge",
+                          "fill": "#00000060",
+                          "cornerRadius": 6,
+                          "padding": [
+                            2,
+                            6
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "FO6FG",
+                              "name": "badgeText2",
+                              "fill": "#FFFFFF",
+                              "content": "5d",
+                              "fontFamily": "Outfit",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        }
+                      ]
                     },
                     {
                       "type": "frame",
@@ -203,7 +263,37 @@
                         "url": "https://images.unsplash.com/photo-1708368952731-db40e6a86d21?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NjkzNjczOTd8&ixlib=rb-4.1.0&q=80&w=1080",
                         "mode": "fill"
                       },
-                      "cornerRadius": 12
+                      "cornerRadius": 12,
+                      "layout": "none",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "D9dbe",
+                          "x": 6,
+                          "y": 6,
+                          "name": "Day Badge",
+                          "fill": "#00000060",
+                          "cornerRadius": 6,
+                          "padding": [
+                            2,
+                            6
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "Hbv1l",
+                              "name": "badgeText3",
+                              "fill": "#FFFFFF",
+                              "content": "1d",
+                              "fontFamily": "Outfit",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        }
+                      ]
                     }
                   ]
                 }
@@ -288,7 +378,37 @@
                         "url": "https://images.unsplash.com/photo-1564661637576-5e8123be07e6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NjkzNjczOTd8&ixlib=rb-4.1.0&q=80&w=1080",
                         "mode": "fill"
                       },
-                      "cornerRadius": 12
+                      "cornerRadius": 12,
+                      "layout": "none",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "OtCie",
+                          "x": 6,
+                          "y": 6,
+                          "name": "Day Badge",
+                          "fill": "#00000060",
+                          "cornerRadius": 6,
+                          "padding": [
+                            2,
+                            6
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "hBZmJ",
+                              "name": "badgeText4",
+                              "fill": "#FFFFFF",
+                              "content": "3d",
+                              "fontFamily": "Outfit",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        }
+                      ]
                     },
                     {
                       "type": "frame",
@@ -308,7 +428,37 @@
                         "url": "https://images.unsplash.com/photo-1555885424-77ccf23eaafb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NjkzNjczOTh8&ixlib=rb-4.1.0&q=80&w=1080",
                         "mode": "fill"
                       },
-                      "cornerRadius": 12
+                      "cornerRadius": 12,
+                      "layout": "none",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "HErAc",
+                          "x": 6,
+                          "y": 6,
+                          "name": "Day Badge",
+                          "fill": "#00000060",
+                          "cornerRadius": 6,
+                          "padding": [
+                            2,
+                            6
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "sr8QS",
+                              "name": "badgeText5",
+                              "fill": "#FFFFFF",
+                              "content": "1d",
+                              "fontFamily": "Outfit",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        }
+                      ]
                     }
                   ]
                 }
@@ -393,7 +543,37 @@
                         "url": "https://images.unsplash.com/photo-1510035618584-c442b241abe7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NjkzNjczOTh8&ixlib=rb-4.1.0&q=80&w=1080",
                         "mode": "fill"
                       },
-                      "cornerRadius": 12
+                      "cornerRadius": 12,
+                      "layout": "none",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "E7nh7",
+                          "x": 6,
+                          "y": 6,
+                          "name": "Day Badge",
+                          "fill": "#00000060",
+                          "cornerRadius": 6,
+                          "padding": [
+                            2,
+                            6
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "r8QQq",
+                              "name": "badgeText6",
+                              "fill": "#FFFFFF",
+                              "content": "7d",
+                              "fontFamily": "Outfit",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        }
+                      ]
                     }
                   ]
                 }
@@ -735,7 +915,37 @@
                         "url": "https://images.unsplash.com/photo-1767188949805-d8f83eabf8b9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NjkzNjczOTZ8&ixlib=rb-4.1.0&q=80&w=1080",
                         "mode": "fill"
                       },
-                      "cornerRadius": 12
+                      "cornerRadius": 12,
+                      "layout": "none",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "bASWh",
+                          "x": 6,
+                          "y": 6,
+                          "name": "Day Badge",
+                          "fill": "#00000060",
+                          "cornerRadius": 6,
+                          "padding": [
+                            2,
+                            6
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "ea6N2",
+                              "name": "badgeText7",
+                              "fill": "#FFFFFF",
+                              "content": "5d",
+                              "fontFamily": "Outfit",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        }
+                      ]
                     },
                     {
                       "type": "frame",
@@ -756,7 +966,37 @@
                         "url": "https://images.unsplash.com/photo-1708368952731-db40e6a86d21?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NjkzNjczOTd8&ixlib=rb-4.1.0&q=80&w=1080",
                         "mode": "fill"
                       },
-                      "cornerRadius": 12
+                      "cornerRadius": 12,
+                      "layout": "none",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "ngCN6",
+                          "x": 6,
+                          "y": 6,
+                          "name": "Day Badge",
+                          "fill": "#00000060",
+                          "cornerRadius": 6,
+                          "padding": [
+                            2,
+                            6
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "vDmfC",
+                              "name": "badgeText8",
+                              "fill": "#FFFFFF",
+                              "content": "1d",
+                              "fontFamily": "Outfit",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        }
+                      ]
                     }
                   ]
                 }
@@ -856,7 +1096,37 @@
                         "url": "https://images.unsplash.com/photo-1564661637576-5e8123be07e6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NjkzNjczOTd8&ixlib=rb-4.1.0&q=80&w=1080",
                         "mode": "fill"
                       },
-                      "cornerRadius": 12
+                      "cornerRadius": 12,
+                      "layout": "none",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "468Tk",
+                          "x": 6,
+                          "y": 6,
+                          "name": "Day Badge",
+                          "fill": "#00000060",
+                          "cornerRadius": 6,
+                          "padding": [
+                            2,
+                            6
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "cZ1Dk",
+                              "name": "badgeText9",
+                              "fill": "#FFFFFF",
+                              "content": "3d",
+                              "fontFamily": "Outfit",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        }
+                      ]
                     },
                     {
                       "type": "frame",
@@ -877,7 +1147,37 @@
                         "url": "https://images.unsplash.com/photo-1555885424-77ccf23eaafb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NjkzNjczOTh8&ixlib=rb-4.1.0&q=80&w=1080",
                         "mode": "fill"
                       },
-                      "cornerRadius": 12
+                      "cornerRadius": 12,
+                      "layout": "none",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "arjbS",
+                          "x": 6,
+                          "y": 6,
+                          "name": "Day Badge",
+                          "fill": "#00000060",
+                          "cornerRadius": 6,
+                          "padding": [
+                            2,
+                            6
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "1MIQU",
+                              "name": "badgeText10",
+                              "fill": "#FFFFFF",
+                              "content": "1d",
+                              "fontFamily": "Outfit",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        }
+                      ]
                     }
                   ]
                 }
@@ -963,7 +1263,37 @@
                         "url": "https://images.unsplash.com/photo-1510035618584-c442b241abe7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NjkzNjczOTh8&ixlib=rb-4.1.0&q=80&w=1080",
                         "mode": "fill"
                       },
-                      "cornerRadius": 12
+                      "cornerRadius": 12,
+                      "layout": "none",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "1J6xk",
+                          "x": 6,
+                          "y": 6,
+                          "name": "Day Badge",
+                          "fill": "#00000060",
+                          "cornerRadius": 6,
+                          "padding": [
+                            2,
+                            6
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "tBP8z",
+                              "name": "badgeText11",
+                              "fill": "#FFFFFF",
+                              "content": "7d",
+                              "fontFamily": "Outfit",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        }
+                      ]
                     }
                   ]
                 }
@@ -1145,7 +1475,90 @@
               "y": 12
             },
             "blur": 32
-          }
+          },
+          "layout": "none",
+          "children": [
+            {
+              "type": "frame",
+              "id": "dax5T",
+              "x": 6,
+              "y": 6,
+              "name": "Day Badge",
+              "fill": "#00000060",
+              "cornerRadius": 6,
+              "padding": [
+                2,
+                6
+              ],
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "vYcXi",
+                  "name": "badgeText12",
+                  "fill": "#FFFFFF",
+                  "content": "2d",
+                  "fontFamily": "Outfit",
+                  "fontSize": 11,
+                  "fontWeight": "600"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "hQeVl",
+          "x": 0,
+          "y": 764,
+          "name": "Trash Zone",
+          "width": 390,
+          "height": 80,
+          "fill": {
+            "type": "gradient",
+            "gradientType": "linear",
+            "enabled": true,
+            "rotation": 180,
+            "size": {
+              "height": 1
+            },
+            "colors": [
+              {
+                "color": "#00000000",
+                "position": 0
+              },
+              {
+                "color": "#00000015",
+                "position": 1
+              }
+            ]
+          },
+          "gap": 8,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon_font",
+              "id": "d6j0d",
+              "name": "trashIcon",
+              "width": 24,
+              "height": 24,
+              "iconFontName": "trash-2",
+              "iconFontFamily": "lucide",
+              "fill": "$text-tertiary"
+            },
+            {
+              "type": "text",
+              "id": "uVJYT",
+              "name": "trashText",
+              "fill": "$text-tertiary",
+              "content": "Drop to delete",
+              "fontFamily": "Outfit",
+              "fontSize": 14,
+              "fontWeight": "500"
+            }
+          ]
         }
       ]
     },
@@ -1455,7 +1868,37 @@
                         "url": "https://images.unsplash.com/photo-1564661637576-5e8123be07e6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NjkzNjczOTd8&ixlib=rb-4.1.0&q=80&w=1080",
                         "mode": "fill"
                       },
-                      "cornerRadius": 12
+                      "cornerRadius": 12,
+                      "layout": "none",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "Hb8Jb",
+                          "x": 6,
+                          "y": 6,
+                          "name": "Day Badge",
+                          "fill": "#00000060",
+                          "cornerRadius": 6,
+                          "padding": [
+                            2,
+                            6
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "jVcTC",
+                              "name": "badgeText13",
+                              "fill": "#FFFFFF",
+                              "content": "3d",
+                              "fontFamily": "Outfit",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        }
+                      ]
                     },
                     {
                       "type": "frame",
@@ -1476,7 +1919,37 @@
                         "url": "https://images.unsplash.com/photo-1555885424-77ccf23eaafb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NjkzNjczOTh8&ixlib=rb-4.1.0&q=80&w=1080",
                         "mode": "fill"
                       },
-                      "cornerRadius": 12
+                      "cornerRadius": 12,
+                      "layout": "none",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "wiAIU",
+                          "x": 6,
+                          "y": 6,
+                          "name": "Day Badge",
+                          "fill": "#00000060",
+                          "cornerRadius": 6,
+                          "padding": [
+                            2,
+                            6
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "8RzuA",
+                              "name": "badgeText14",
+                              "fill": "#FFFFFF",
+                              "content": "1d",
+                              "fontFamily": "Outfit",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        }
+                      ]
                     }
                   ]
                 }
@@ -1562,7 +2035,37 @@
                         "url": "https://images.unsplash.com/photo-1510035618584-c442b241abe7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NjkzNjczOTh8&ixlib=rb-4.1.0&q=80&w=1080",
                         "mode": "fill"
                       },
-                      "cornerRadius": 12
+                      "cornerRadius": 12,
+                      "layout": "none",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "Gakqy",
+                          "x": 6,
+                          "y": 6,
+                          "name": "Day Badge",
+                          "fill": "#00000060",
+                          "cornerRadius": 6,
+                          "padding": [
+                            2,
+                            6
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "B0tkM",
+                              "name": "badgeText15",
+                              "fill": "#FFFFFF",
+                              "content": "7d",
+                              "fontFamily": "Outfit",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        }
+                      ]
                     }
                   ]
                 }
@@ -1744,7 +2247,37 @@
               "y": 4
             },
             "blur": 12
-          }
+          },
+          "layout": "none",
+          "children": [
+            {
+              "type": "frame",
+              "id": "pHQZ0",
+              "x": 6,
+              "y": 6,
+              "name": "Day Badge",
+              "fill": "#00000060",
+              "cornerRadius": 6,
+              "padding": [
+                2,
+                6
+              ],
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "muhiB",
+                  "name": "badgeText16",
+                  "fill": "#FFFFFF",
+                  "content": "1d",
+                  "fontFamily": "Outfit",
+                  "fontSize": 11,
+                  "fontWeight": "600"
+                }
+              ]
+            }
+          ]
         },
         {
           "type": "frame",
@@ -1771,7 +2304,37 @@
               "y": 6
             },
             "blur": 16
-          }
+          },
+          "layout": "none",
+          "children": [
+            {
+              "type": "frame",
+              "id": "hgthY",
+              "x": 6,
+              "y": 6,
+              "name": "Day Badge",
+              "fill": "#00000060",
+              "cornerRadius": 6,
+              "padding": [
+                2,
+                6
+              ],
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "C6l71",
+                  "name": "badgeText17",
+                  "fill": "#FFFFFF",
+                  "content": "5d",
+                  "fontFamily": "Outfit",
+                  "fontSize": 11,
+                  "fontWeight": "600"
+                }
+              ]
+            }
+          ]
         },
         {
           "type": "frame",
@@ -1798,7 +2361,37 @@
               "y": 12
             },
             "blur": 32
-          }
+          },
+          "layout": "none",
+          "children": [
+            {
+              "type": "frame",
+              "id": "Z5tay",
+              "x": 6,
+              "y": 6,
+              "name": "Day Badge",
+              "fill": "#00000060",
+              "cornerRadius": 6,
+              "padding": [
+                2,
+                6
+              ],
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "qVTRK",
+                  "name": "badgeText18",
+                  "fill": "#FFFFFF",
+                  "content": "2d",
+                  "fontFamily": "Outfit",
+                  "fontSize": 11,
+                  "fontWeight": "600"
+                }
+              ]
+            }
+          ]
         },
         {
           "type": "frame",
@@ -1832,6 +2425,883 @@
               "fontFamily": "Outfit",
               "fontSize": 14,
               "fontWeight": "600"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "G0aUz",
+          "x": 0,
+          "y": 764,
+          "name": "Trash Zone",
+          "width": 390,
+          "height": 80,
+          "fill": {
+            "type": "gradient",
+            "gradientType": "linear",
+            "enabled": true,
+            "rotation": 180,
+            "size": {
+              "height": 1
+            },
+            "colors": [
+              {
+                "color": "#00000000",
+                "position": 0
+              },
+              {
+                "color": "#00000015",
+                "position": 1
+              }
+            ]
+          },
+          "gap": 8,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon_font",
+              "id": "HgPJd",
+              "name": "trashIcon2",
+              "width": 24,
+              "height": 24,
+              "iconFontName": "trash-2",
+              "iconFontFamily": "lucide",
+              "fill": "$text-tertiary"
+            },
+            {
+              "type": "text",
+              "id": "bTUWb",
+              "name": "trashText2",
+              "fill": "$text-tertiary",
+              "content": "Drop to delete",
+              "fontFamily": "Outfit",
+              "fontSize": 14,
+              "fontWeight": "500"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "XuIa0",
+      "x": 1290,
+      "y": 0,
+      "name": "Kiln Notes - Delete Confirm",
+      "clip": true,
+      "width": 390,
+      "height": 844,
+      "fill": "$bg-primary",
+      "layout": "none",
+      "children": [
+        {
+          "type": "frame",
+          "id": "9YqiD",
+          "x": 0,
+          "y": 0,
+          "name": "Header",
+          "width": 390,
+          "height": 56,
+          "fill": "$bg-surface",
+          "stroke": {
+            "align": "inside",
+            "thickness": {
+              "bottom": 1
+            },
+            "fill": "$border-subtle"
+          },
+          "padding": [
+            0,
+            20
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "X05tb",
+              "name": "title",
+              "fill": "$text-primary",
+              "content": "Kiln Notes",
+              "fontFamily": "Outfit",
+              "fontSize": 20,
+              "fontWeight": "600"
+            },
+            {
+              "type": "frame",
+              "id": "tYbxq",
+              "name": "addBtn",
+              "width": 36,
+              "height": 36,
+              "fill": "$accent-primary",
+              "cornerRadius": 100,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "EbYXA",
+                  "name": "addIcon",
+                  "width": 20,
+                  "height": 20,
+                  "iconFontName": "plus",
+                  "iconFontFamily": "lucide",
+                  "fill": "#FFFFFF"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "Qw2UH",
+          "x": 0,
+          "y": 56,
+          "name": "Content",
+          "width": 390,
+          "height": 788,
+          "layout": "vertical",
+          "gap": 24,
+          "padding": [
+            20,
+            0,
+            0,
+            0
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "hdxBz",
+              "name": "Drying Section",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "qigxx",
+                  "name": "dryingHeader",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "padding": [
+                    0,
+                    20
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "ellipse",
+                      "id": "GDH0E",
+                      "name": "dryingDot",
+                      "fill": "$status-drying",
+                      "width": 8,
+                      "height": 8
+                    },
+                    {
+                      "type": "text",
+                      "id": "IdBB3",
+                      "name": "dryingTitle",
+                      "fill": "$text-secondary",
+                      "content": "Drying",
+                      "fontFamily": "Outfit",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "dif49",
+                      "name": "dryingCount",
+                      "fill": "$text-tertiary",
+                      "content": "0",
+                      "fontFamily": "Outfit",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "0N07b",
+                  "name": "Drying Grid",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "padding": [
+                    0,
+                    20
+                  ],
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "zk5TF",
+                      "name": "Empty Slot",
+                      "metadata": {
+                        "type": "unsplash",
+                        "username": "artsmarts",
+                        "link": "https://unsplash.com/@artsmarts",
+                        "author": "Lindsey Elsey"
+                      },
+                      "width": 110,
+                      "height": 110,
+                      "fill": "transparent",
+                      "cornerRadius": 12,
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 2,
+                        "fill": "$border-subtle"
+                      }
+                    },
+                    {
+                      "type": "frame",
+                      "id": "aoDsZ",
+                      "name": "Empty Slot 2",
+                      "metadata": {
+                        "type": "unsplash",
+                        "username": "hdbernd",
+                        "link": "https://unsplash.com/@hdbernd",
+                        "author": "Bernd 📷 Dittrich"
+                      },
+                      "width": 110,
+                      "height": 110,
+                      "fill": "transparent",
+                      "cornerRadius": 12,
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 2,
+                        "fill": "$border-subtle"
+                      }
+                    },
+                    {
+                      "type": "frame",
+                      "id": "zEagn",
+                      "name": "Empty Slot 3",
+                      "metadata": {
+                        "type": "unsplash",
+                        "username": "17allansfilms",
+                        "link": "https://unsplash.com/@17allansfilms",
+                        "author": "ALLAN LAINEZ"
+                      },
+                      "width": 110,
+                      "height": 110,
+                      "fill": "transparent",
+                      "cornerRadius": 12,
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 2,
+                        "fill": "$border-subtle"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "RHVBD",
+              "name": "Bisking Section",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "fJyYO",
+                  "name": "biskingHeader",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "padding": [
+                    0,
+                    20
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "ellipse",
+                      "id": "93bsA",
+                      "name": "biskingDot",
+                      "fill": "$status-bisking",
+                      "width": 8,
+                      "height": 8
+                    },
+                    {
+                      "type": "text",
+                      "id": "5nKLZ",
+                      "name": "biskingTitle",
+                      "fill": "$text-secondary",
+                      "content": "Bisking",
+                      "fontFamily": "Outfit",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "xMwpz",
+                      "name": "biskingCount",
+                      "fill": "$text-tertiary",
+                      "content": "5",
+                      "fontFamily": "Outfit",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "dJBal",
+                  "name": "Bisking Grid",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "padding": [
+                    0,
+                    20
+                  ],
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "ZM7lg",
+                      "name": "Drop Target",
+                      "width": 110,
+                      "height": 110,
+                      "fill": "#D8957520",
+                      "cornerRadius": 12,
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 2,
+                        "fill": "$status-bisking"
+                      }
+                    },
+                    {
+                      "type": "frame",
+                      "id": "FXc1h",
+                      "name": "Bisking Piece 1",
+                      "opacity": 0.5,
+                      "metadata": {
+                        "type": "unsplash",
+                        "username": "pawelmizia",
+                        "link": "https://unsplash.com/@pawelmizia",
+                        "author": "Paweł Mizia"
+                      },
+                      "width": 110,
+                      "height": 110,
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "https://images.unsplash.com/photo-1564661637576-5e8123be07e6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NjkzNjczOTd8&ixlib=rb-4.1.0&q=80&w=1080",
+                        "mode": "fill"
+                      },
+                      "cornerRadius": 12,
+                      "layout": "none",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "G0R7K",
+                          "x": 6,
+                          "y": 6,
+                          "name": "Day Badge",
+                          "fill": "#00000060",
+                          "cornerRadius": 6,
+                          "padding": [
+                            2,
+                            6
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "w09oq",
+                              "name": "badgeText19",
+                              "fill": "#FFFFFF",
+                              "content": "3d",
+                              "fontFamily": "Outfit",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "4TVnD",
+                      "name": "Bisking Piece 2",
+                      "opacity": 0.5,
+                      "metadata": {
+                        "type": "unsplash",
+                        "username": "karim_manjra",
+                        "link": "https://unsplash.com/@karim_manjra",
+                        "author": "Karim MANJRA"
+                      },
+                      "width": 110,
+                      "height": 110,
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "https://images.unsplash.com/photo-1555885424-77ccf23eaafb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NjkzNjczOTh8&ixlib=rb-4.1.0&q=80&w=1080",
+                        "mode": "fill"
+                      },
+                      "cornerRadius": 12,
+                      "layout": "none",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "LwvpV",
+                          "x": 6,
+                          "y": 6,
+                          "name": "Day Badge",
+                          "fill": "#00000060",
+                          "cornerRadius": 6,
+                          "padding": [
+                            2,
+                            6
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "fyvrZ",
+                              "name": "badgeText20",
+                              "fill": "#FFFFFF",
+                              "content": "1d",
+                              "fontFamily": "Outfit",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "iyNui",
+              "name": "Glazed Section",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "adhSy",
+                  "name": "glazedHeader",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "padding": [
+                    0,
+                    20
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "ellipse",
+                      "id": "xxaQw",
+                      "name": "glazedDot",
+                      "fill": "$status-glazed",
+                      "width": 8,
+                      "height": 8
+                    },
+                    {
+                      "type": "text",
+                      "id": "HJXGG",
+                      "name": "glazedTitle",
+                      "fill": "$text-secondary",
+                      "content": "Glazed",
+                      "fontFamily": "Outfit",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "BRFlF",
+                      "name": "glazedCount",
+                      "fill": "$text-tertiary",
+                      "content": "1",
+                      "fontFamily": "Outfit",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "uEEO8",
+                  "name": "Glazed Grid",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "padding": [
+                    0,
+                    20
+                  ],
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "dahOb",
+                      "name": "Glazed Piece 1",
+                      "opacity": 0.5,
+                      "metadata": {
+                        "type": "unsplash",
+                        "username": "ericatan5566",
+                        "link": "https://unsplash.com/@ericatan5566",
+                        "author": "TAN Erica"
+                      },
+                      "width": 110,
+                      "height": 110,
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "https://images.unsplash.com/photo-1510035618584-c442b241abe7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NjkzNjczOTh8&ixlib=rb-4.1.0&q=80&w=1080",
+                        "mode": "fill"
+                      },
+                      "cornerRadius": 12,
+                      "layout": "none",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "2PsJw",
+                          "x": 6,
+                          "y": 6,
+                          "name": "Day Badge",
+                          "fill": "#00000060",
+                          "cornerRadius": 6,
+                          "padding": [
+                            2,
+                            6
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "q3lhy",
+                              "name": "badgeText21",
+                              "fill": "#FFFFFF",
+                              "content": "7d",
+                              "fontFamily": "Outfit",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "v0JKK",
+              "name": "Complete Section",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "JVDRZ",
+                  "name": "completeHeader",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "padding": [
+                    0,
+                    20
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "ellipse",
+                      "id": "2s0cT",
+                      "name": "completeDot",
+                      "fill": "$status-complete",
+                      "width": 8,
+                      "height": 8
+                    },
+                    {
+                      "type": "text",
+                      "id": "7VCTa",
+                      "name": "completeTitle",
+                      "fill": "$text-secondary",
+                      "content": "Complete",
+                      "fontFamily": "Outfit",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "xPMb0",
+                      "name": "completeCount",
+                      "fill": "$text-tertiary",
+                      "content": "4",
+                      "fontFamily": "Outfit",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "RgVYc",
+                  "name": "Complete Grid",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "padding": [
+                    0,
+                    20
+                  ],
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "z8klv",
+                      "name": "Complete Piece 1",
+                      "opacity": 0.5,
+                      "metadata": {
+                        "type": "unsplash",
+                        "username": "crazyivan_ita",
+                        "link": "https://unsplash.com/@crazyivan_ita",
+                        "author": "Ivan Pergasi"
+                      },
+                      "width": 110,
+                      "height": 110,
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "https://images.unsplash.com/photo-1703289627964-2f42da12eae1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NjkzNjczOTl8&ixlib=rb-4.1.0&q=80&w=1080",
+                        "mode": "fill"
+                      },
+                      "cornerRadius": 12
+                    },
+                    {
+                      "type": "frame",
+                      "id": "hYDFJ",
+                      "name": "Complete Piece 2",
+                      "opacity": 0.5,
+                      "metadata": {
+                        "type": "unsplash",
+                        "username": "sadafradi",
+                        "link": "https://unsplash.com/@sadafradi",
+                        "author": "sadaf radi"
+                      },
+                      "width": 110,
+                      "height": 110,
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "https://images.unsplash.com/photo-1652081489531-95f8b855bce3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NjkzNjczOTl8&ixlib=rb-4.1.0&q=80&w=1080",
+                        "mode": "fill"
+                      },
+                      "cornerRadius": 12
+                    },
+                    {
+                      "type": "frame",
+                      "id": "ovJDS",
+                      "name": "Complete Piece 3",
+                      "opacity": 0.5,
+                      "metadata": {
+                        "type": "unsplash",
+                        "username": "dtrinksrph",
+                        "link": "https://unsplash.com/@dtrinksrph",
+                        "author": "David Trinks"
+                      },
+                      "width": 110,
+                      "height": 110,
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "https://images.unsplash.com/photo-1722960926430-1b4975af415c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NjkzNjc0MDB8&ixlib=rb-4.1.0&q=80&w=1080",
+                        "mode": "fill"
+                      },
+                      "cornerRadius": 12
+                    },
+                    {
+                      "type": "frame",
+                      "id": "qx3MP",
+                      "name": "Complete Piece 4",
+                      "opacity": 0.5,
+                      "metadata": {
+                        "type": "unsplash",
+                        "username": "moniqa",
+                        "link": "https://unsplash.com/@moniqa",
+                        "author": "Monika Grabkowska"
+                      },
+                      "width": 110,
+                      "height": 110,
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "https://images.unsplash.com/photo-1503156958897-4c7b70dd4f5c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NjkzNjc0MDR8&ixlib=rb-4.1.0&q=80&w=1080",
+                        "mode": "fill"
+                      },
+                      "cornerRadius": 12
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "9i8yv",
+          "x": 0,
+          "y": 0,
+          "name": "Modal Overlay",
+          "width": 390,
+          "height": 844,
+          "fill": "#00000050",
+          "layout": "vertical",
+          "padding": 24,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "KWGjr",
+              "name": "Modal Card",
+              "clip": true,
+              "width": 320,
+              "fill": "$bg-surface",
+              "cornerRadius": 16,
+              "effect": {
+                "type": "shadow",
+                "shadowType": "outer",
+                "color": "#00000025",
+                "offset": {
+                  "x": 0,
+                  "y": 8
+                },
+                "blur": 32
+              },
+              "layout": "vertical",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "dyPyn",
+                  "name": "Modal Header",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 12,
+                  "padding": 24,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "QYoNJ",
+                      "name": "Trash Icon Container",
+                      "width": 48,
+                      "height": 48,
+                      "fill": "#DC4C4C15",
+                      "cornerRadius": 100,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon_font",
+                          "id": "3v1Wg",
+                          "name": "trashIcon",
+                          "width": 24,
+                          "height": 24,
+                          "iconFontName": "trash-2",
+                          "iconFontFamily": "lucide",
+                          "fill": "#DC4C4C"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "U3Zxs",
+                      "name": "modalTitle",
+                      "fill": "$text-primary",
+                      "content": "Delete 3 pieces?",
+                      "fontFamily": "Outfit",
+                      "fontSize": 18,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "rlF6t",
+                      "name": "modalDesc",
+                      "fill": "$text-secondary",
+                      "textGrowth": "fixed-width",
+                      "width": 260,
+                      "content": "This action cannot be undone. These pieces will be permanently removed.",
+                      "textAlign": "center",
+                      "fontFamily": "Outfit",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "tL1BB",
+                  "name": "Divider",
+                  "width": "fill_container",
+                  "height": 1,
+                  "fill": "$border-subtle"
+                },
+                {
+                  "type": "frame",
+                  "id": "lTTtT",
+                  "name": "Buttons",
+                  "width": "fill_container",
+                  "height": 50,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "NtImV",
+                      "name": "Cancel Button",
+                      "width": "fill_container",
+                      "height": "fill_container",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": {
+                          "right": 1
+                        },
+                        "fill": "$border-subtle"
+                      },
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "iGeQq",
+                          "name": "cancelText",
+                          "fill": "$text-primary",
+                          "content": "Cancel",
+                          "fontFamily": "Outfit",
+                          "fontSize": 16,
+                          "fontWeight": "500"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "XXgvg",
+                      "name": "Delete Button",
+                      "width": "fill_container",
+                      "height": "fill_container",
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "syaUx",
+                          "name": "deleteText",
+                          "fill": "#DC4C4C",
+                          "content": "Delete",
+                          "fontFamily": "Outfit",
+                          "fontSize": 16,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
             }
           ]
         }
