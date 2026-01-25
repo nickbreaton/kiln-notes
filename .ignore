@@ -1,0 +1,4 @@
+# https://opencode.ai/docs/tools/#ignore-patterns
+
+# The agent gets confused and tries to read the Pen instead of via MCP
+design.pen
