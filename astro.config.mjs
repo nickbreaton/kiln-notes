@@ -23,7 +23,7 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
     server: {
-      allowedHosts: [".loca.lt"],
+      allowedHosts: [".loca.lt", ".trycloudflare.com"],
     },
   },
 });

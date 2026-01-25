@@ -73,69 +73,71 @@ export const App = () => {
   ];
 
   return (
-    <div className="mx-auto min-h-screen w-full max-w-97.5 bg-cream-50">
+    <div>
       <NavigationBar />
-      <main className="flex flex-col gap-6 pb-8 pt-5">
-        <PiecesSection
-          title="Drying"
-          count={dryingPieces.length}
-          status="drying"
-        >
-          <div className="grid grid-cols-3 gap-2 px-5">
-            {dryingPieces.map((piece) => (
-              <Piece
-                key={piece.imageUrl}
-                imageUrl={piece.imageUrl}
-                dayLabel={piece.dayLabel}
-              />
-            ))}
-          </div>
-        </PiecesSection>
+      <div className="mx-auto min-h-screen w-full max-w-97.5 bg-cream-50">
+        <main className="flex flex-col gap-6 pb-8 pt-5">
+          <PiecesSection
+            title="Drying"
+            count={dryingPieces.length}
+            status="drying"
+          >
+            <div className="grid grid-cols-3 gap-2 px-5">
+              {dryingPieces.map((piece) => (
+                <Piece
+                  key={piece.imageUrl}
+                  imageUrl={piece.imageUrl}
+                  dayLabel={piece.dayLabel}
+                />
+              ))}
+            </div>
+          </PiecesSection>
 
-        <PiecesSection
-          title="Bisking"
-          count={biskingPieces.length}
-          status="bisking"
-        >
-          <div className="grid grid-cols-3 gap-2 px-5">
-            {biskingPieces.map((piece) => (
-              <Piece
-                key={piece.imageUrl}
-                imageUrl={piece.imageUrl}
-                dayLabel={piece.dayLabel}
-              />
-            ))}
-          </div>
-        </PiecesSection>
+          <PiecesSection
+            title="Bisking"
+            count={biskingPieces.length}
+            status="bisking"
+          >
+            <div className="grid grid-cols-3 gap-2 px-5">
+              {biskingPieces.map((piece) => (
+                <Piece
+                  key={piece.imageUrl}
+                  imageUrl={piece.imageUrl}
+                  dayLabel={piece.dayLabel}
+                />
+              ))}
+            </div>
+          </PiecesSection>
 
-        <PiecesSection
-          title="Glazed"
-          count={glazedPieces.length}
-          status="glazed"
-        >
-          <div className="grid grid-cols-3 gap-2 px-5">
-            {glazedPieces.map((piece) => (
-              <Piece
-                key={piece.imageUrl}
-                imageUrl={piece.imageUrl}
-                dayLabel={piece.dayLabel}
-              />
-            ))}
-          </div>
-        </PiecesSection>
+          <PiecesSection
+            title="Glazed"
+            count={glazedPieces.length}
+            status="glazed"
+          >
+            <div className="grid grid-cols-3 gap-2 px-5">
+              {glazedPieces.map((piece) => (
+                <Piece
+                  key={piece.imageUrl}
+                  imageUrl={piece.imageUrl}
+                  dayLabel={piece.dayLabel}
+                />
+              ))}
+            </div>
+          </PiecesSection>
 
-        <PiecesSection
-          title="Complete"
-          count={completePieces.length}
-          status="complete"
-        >
-          <div className="grid grid-cols-3 gap-2 px-5">
-            {completePieces.map((piece) => (
-              <Piece key={piece.imageUrl} imageUrl={piece.imageUrl} />
-            ))}
-          </div>
-        </PiecesSection>
-      </main>
+          <PiecesSection
+            title="Complete"
+            count={completePieces.length}
+            status="complete"
+          >
+            <div className="grid grid-cols-3 gap-2 px-5">
+              {completePieces.map((piece) => (
+                <Piece key={piece.imageUrl} imageUrl={piece.imageUrl} />
+              ))}
+            </div>
+          </PiecesSection>
+        </main>
+      </div>
     </div>
   );
 };
