@@ -53,3 +53,14 @@
   /* Opacity values for drag states */
   --opacity-muted: 0.5;
 }
+
+body {
+  background: var(--color-cream-50);
+  color: var(--color-ink-900);
+  font-family: "Outfit", sans-serif;
+  position: relative;
+}
+
+.root {
+  isolation: isolate;
+}
