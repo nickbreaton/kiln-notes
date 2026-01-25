@@ -7,7 +7,11 @@ type DeleteModalProps = {
   onOpenChange?: (open: boolean) => void;
 };
 
-export const DeleteModal = ({ count = 3, open, onOpenChange }: DeleteModalProps) => {
+export const DeleteModal = ({
+  count = 3,
+  open,
+  onOpenChange,
+}: DeleteModalProps) => {
   const rootProps = open === undefined ? {} : { open, onOpenChange };
 
   return (
@@ -22,12 +26,13 @@ export const DeleteModal = ({ count = 3, open, onOpenChange }: DeleteModalProps)
             <AlertDialog.Title className="text-lg font-semibold text-ink-900">
               Delete {count} pieces?
             </AlertDialog.Title>
-            <AlertDialog.Description className="max-w-[260px] text-center text-sm text-ink-500">
-              This action cannot be undone. These pieces will be permanently removed.
+            <AlertDialog.Description className="max-w-65 text-center text-sm text-ink-500">
+              This action cannot be undone. These pieces will be permanently
+              removed.
             </AlertDialog.Description>
           </div>
           <div className="h-px w-full bg-cream-200" />
-          <div className="grid h-[50px] grid-cols-2">
+          <div className="grid `h-12.5` grid-cols-2">
             <AlertDialog.Close className="flex h-full items-center justify-center border-r border-cream-200 text-base font-medium text-ink-900">
               Cancel
             </AlertDialog.Close>

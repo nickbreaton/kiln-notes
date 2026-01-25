@@ -16,7 +16,12 @@ type PiecesSectionProps = {
   children: ReactNode;
 };
 
-export const PiecesSection = ({ title, count, status, children }: PiecesSectionProps) => {
+export const PiecesSection = ({
+  title,
+  count,
+  status,
+  children,
+}: PiecesSectionProps) => {
   return (
     <section className="flex flex-col gap-3">
       <div className="flex items-center gap-2 px-5">
