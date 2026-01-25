@@ -3,9 +3,9 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "bun --bun astro dev",
-    "build": "bun --bun astro build",
-    "preview": "bun --bun astro preview",
+    "dev": "bun astro dev",
+    "build": "bun astro build",
+    "preview": "wrangler pages dev ./dist",
     "astro": "astro"
   },
   "dependencies": {
@@ -21,6 +21,7 @@
   "devDependencies": {
     "@astrojs/cloudflare": "^12.6.12",
     "@astrojs/react": "^4.4.2",
+    "@vite-pwa/astro": "^1.2.0",
     "@vitejs/plugin-basic-ssl": "^2.1.4"
   }
 }
