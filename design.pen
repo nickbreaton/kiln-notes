@@ -3784,6 +3784,343 @@
           ]
         }
       ]
+    },
+    {
+      "type": "frame",
+      "id": "jBLPL",
+      "x": 2478,
+      "y": 0,
+      "name": "Kiln Notes - Install PWA",
+      "clip": true,
+      "width": 390,
+      "height": 844,
+      "fill": "$bg-primary",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "awaJa",
+          "name": "Header",
+          "width": "fill_container",
+          "height": 56,
+          "fill": "$bg-surface",
+          "stroke": {
+            "align": "inside",
+            "thickness": {
+              "bottom": 1
+            },
+            "fill": "$border-subtle"
+          },
+          "padding": [
+            0,
+            20
+          ],
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "bCNno",
+              "name": "title",
+              "fill": "$text-primary",
+              "content": "Kiln Notes",
+              "fontFamily": "Outfit",
+              "fontSize": 20,
+              "fontWeight": "600"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "KbqJX",
+          "name": "Content",
+          "width": "fill_container",
+          "height": "fill_container",
+          "layout": "vertical",
+          "gap": 32,
+          "padding": [
+            40,
+            20
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "6mDPb",
+              "name": "Icon Container",
+              "width": 80,
+              "height": 80,
+              "fill": "$accent-primary",
+              "cornerRadius": 20,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "9iMqj",
+                  "name": "icon",
+                  "width": 40,
+                  "height": 40,
+                  "iconFontName": "download",
+                  "iconFontFamily": "lucide",
+                  "fill": "#FFFFFF"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "Hsfkj",
+              "name": "Heading Section",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "n0Ud5",
+                  "name": "Heading",
+                  "fill": "$text-primary",
+                  "content": "Install Kiln Notes",
+                  "fontFamily": "Outfit",
+                  "fontSize": 24,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "OJMOy",
+                  "name": "Subheading",
+                  "fill": "$text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Add this app to your home screen for the best experience.",
+                  "textAlign": "center",
+                  "fontFamily": "Outfit",
+                  "fontSize": 16
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "OaRro",
+              "name": "Steps Container",
+              "width": "fill_container",
+              "fill": "$bg-surface",
+              "cornerRadius": 16,
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 20,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "NPp7N",
+                  "name": "Step 1",
+                  "width": "fill_container",
+                  "gap": 16,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "uCGkE",
+                      "name": "Step Number",
+                      "width": 28,
+                      "height": 28,
+                      "fill": "$accent-primary",
+                      "cornerRadius": 100,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "QREdq",
+                          "name": "step1NumText",
+                          "fill": "#FFFFFF",
+                          "content": "1",
+                          "fontFamily": "Outfit",
+                          "fontSize": 14,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "af6sC",
+                      "name": "Step Content",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "poLqb",
+                          "name": "step1Title",
+                          "fill": "$text-primary",
+                          "content": "Tap the Share button",
+                          "fontFamily": "Outfit",
+                          "fontSize": 16,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "4W275",
+                          "name": "step1Desc",
+                          "fill": "$text-secondary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Find the share icon at the bottom of Safari (square with an arrow pointing up).",
+                          "fontFamily": "Outfit",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "cd6TN",
+                  "name": "Step 2",
+                  "width": "fill_container",
+                  "gap": 16,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "4d9Au",
+                      "name": "Step Number",
+                      "width": 28,
+                      "height": 28,
+                      "fill": "$accent-primary",
+                      "cornerRadius": 100,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "aY2gv",
+                          "name": "step2NumText",
+                          "fill": "#FFFFFF",
+                          "content": "2",
+                          "fontFamily": "Outfit",
+                          "fontSize": 14,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Ne3g8",
+                      "name": "Step Content",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "uOSL7",
+                          "name": "step2Title",
+                          "fill": "$text-primary",
+                          "content": "Select \"Add to Home Screen\"",
+                          "fontFamily": "Outfit",
+                          "fontSize": 16,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "xU2rI",
+                          "name": "step2Desc",
+                          "fill": "$text-secondary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Scroll down in the share menu and tap \"Add to Home Screen\".",
+                          "fontFamily": "Outfit",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "6UCEt",
+                  "name": "Step 3",
+                  "width": "fill_container",
+                  "gap": 16,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "xN8A5",
+                      "name": "Step Number",
+                      "width": 28,
+                      "height": 28,
+                      "fill": "$accent-primary",
+                      "cornerRadius": 100,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "uBJXM",
+                          "name": "step3NumText",
+                          "fill": "#FFFFFF",
+                          "content": "3",
+                          "fontFamily": "Outfit",
+                          "fontSize": 14,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "iD2Zb",
+                      "name": "Step Content",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "a1UZJ",
+                          "name": "step3Title",
+                          "fill": "$text-primary",
+                          "content": "Tap \"Add\"",
+                          "fontFamily": "Outfit",
+                          "fontSize": 16,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "XQrtv",
+                          "name": "step3Desc",
+                          "fill": "$text-secondary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Confirm by tapping Add in the top right corner.",
+                          "fontFamily": "Outfit",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "uOCpY",
+              "name": "Note",
+              "fill": "$text-tertiary",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "This app works best when installed. You'll get a full-screen experience and offline access.",
+              "textAlign": "center",
+              "fontFamily": "Outfit",
+              "fontSize": 13,
+              "fontWeight": "normal"
+            }
+          ]
+        }
+      ]
     }
   ],
   "variables": {
