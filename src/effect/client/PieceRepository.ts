@@ -34,10 +34,13 @@ export class PieceRepository extends Effect.Service<PieceRepository>()(
 
             // ---
 
+            const now = yield* DateTime.now;
+
             const piece = Piece.make({
               id: crypto.randomUUID(),
               status: "drying",
-              statusUpdatedAt: yield* DateTime.now, // is this even right?
+              statusUpdatedAt: now,
+              updatedAt: now,
             });
 
             yield* store.modify(storeKey, (existing) => {
