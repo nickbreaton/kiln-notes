@@ -2,15 +2,20 @@ import { DateTime, Effect, Option, Schema, Stream } from "effect";
 import { KeyValueStore } from "@effect/platform";
 import { BrowserKeyValueStore } from "@effect/platform-browser";
 import { Collection, Piece } from "../schema";
+import { PhotoService } from "./PhotoService";
 
 export class PieceRepository extends Effect.Service<PieceRepository>()(
   "PieceRepository",
   {
-    dependencies: [BrowserKeyValueStore.layerLocalStorage],
+    dependencies: [
+      BrowserKeyValueStore.layerLocalStorage,
+      PhotoService.Default,
+    ],
     effect: Effect.gen(function* () {
       const kv = yield* KeyValueStore.KeyValueStore;
       const store = kv.forSchema(Collection);
       const storeKey = "piecesCollection";
+      const photoService = yield* PhotoService;
 
       if (!(yield* store.has(storeKey))) {
         yield* store.set(storeKey, {});
@@ -47,15 +52,7 @@ export class PieceRepository extends Effect.Service<PieceRepository>()(
               return { ...existing, [piece.id]: piece };
             });
 
-            yield* Effect.promise(async () => {
-              const keys = await caches.keys();
-
-              for (const key of keys) {
-                const cache = await caches.open(key);
-                await cache.put("/photo/" + piece.id, new Response(file));
-                console.log(await cache.keys());
-              }
-            });
+            yield* photoService.setCache(piece.id, file);
           }),
 
         movePiece: (uuid: Schema.UUID) =>

@@ -1,5 +1,5 @@
 type PieceProps = {
-  imageUrl: string;
+  imageUrl?: string;
   dayLabel?: string;
   muted?: boolean;
 };
@@ -7,7 +7,7 @@ type PieceProps = {
 export const Piece = ({ imageUrl, dayLabel, muted }: PieceProps) => {
   return (
     <div
-      className={`relative aspect-square w-full overflow-hidden rounded-xl bg-cream-10 cursor-grab 0 ${
+      className={`relative aspect-square w-full overflow-hidden rounded-xl bg-cream-10 cursor-pointer 0 ${
         muted ? "opacity-50" : "opacity-100"
       }`}
       style={{
