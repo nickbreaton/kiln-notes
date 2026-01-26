@@ -1,7 +1,9 @@
 import { registerSW } from "virtual:pwa-register";
 import { NavigationBar } from "./NavigationBar";
 import { Piece } from "./Piece";
+import { useAtomValue } from "@effect-atom/atom-react";
 import { PiecesSection } from "./PiecesSection";
+import { collectionAtom } from "../effect/client/atom";
 
 registerSW({
   immediate: true,
@@ -71,6 +73,8 @@ export const App = () => {
         "https://images.unsplash.com/photo-1503156958897-4c7b70dd4f5c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NjkzNjc0MDR8&ixlib=rb-4.1.0&q=80&w=1080",
     },
   ];
+
+  console.log(useAtomValue(collectionAtom));
 
   return (
     <div>
