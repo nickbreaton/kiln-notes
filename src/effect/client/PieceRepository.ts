@@ -1,4 +1,11 @@
-import { DateTime, Effect, Option, Schema, Stream } from "effect";
+import {
+  DateTime,
+  Effect,
+  Option,
+  Schema,
+  Stream,
+  SubscriptionRef,
+} from "effect";
 import { KeyValueStore } from "@effect/platform";
 import { BrowserKeyValueStore } from "@effect/platform-browser";
 import { Collection, Piece } from "../schema";
@@ -16,13 +23,15 @@ export class PieceRepository extends Effect.Service<PieceRepository>()(
       const store = kv.forSchema(Collection);
       const storeKey = "piecesCollection";
       const photoService = yield* PhotoService;
+      const notifyRef = yield* SubscriptionRef.make(Symbol());
 
       if (!(yield* store.has(storeKey))) {
         yield* store.set(storeKey, {});
       }
 
       return {
-        pieces: Stream.fromEffect(store.get(storeKey)).pipe(
+        pieces: notifyRef.changes.pipe(
+          Stream.flatMap(() => store.get(storeKey), { switch: true }),
           Stream.map((option) => (Option.isSome(option) ? option.value : {})),
         ),
 
@@ -53,6 +62,7 @@ export class PieceRepository extends Effect.Service<PieceRepository>()(
             });
 
             yield* photoService.setCache(piece.id, file);
+            yield* SubscriptionRef.set(notifyRef, Symbol());
           }),
 
         movePiece: (uuid: Schema.UUID) =>
