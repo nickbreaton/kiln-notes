@@ -302,7 +302,7 @@
             {
               "type": "frame",
               "id": "8iq81",
-              "name": "Bisking Section",
+              "name": "Bisquing Section",
               "width": "fill_container",
               "layout": "vertical",
               "gap": 12,
@@ -310,7 +310,7 @@
                 {
                   "type": "frame",
                   "id": "QfUo4",
-                  "name": "biskingHeader",
+                  "name": "bisquingHeader",
                   "width": "fill_container",
                   "gap": 8,
                   "padding": [
@@ -322,17 +322,17 @@
                     {
                       "type": "ellipse",
                       "id": "ImKpw",
-                      "name": "biskingDot",
-                      "fill": "$status-bisking",
+                      "name": "bisquingDot",
+                      "fill": "$status-bisquing",
                       "width": 8,
                       "height": 8
                     },
                     {
                       "type": "text",
                       "id": "wIPTv",
-                      "name": "biskingTitle",
+                      "name": "bisquingTitle",
                       "fill": "$text-secondary",
-                      "content": "Bisking",
+                      "content": "Bisquing",
                       "fontFamily": "Outfit",
                       "fontSize": 14,
                       "fontWeight": "600"
@@ -340,7 +340,7 @@
                     {
                       "type": "text",
                       "id": "Y9EAG",
-                      "name": "biskingCount",
+                      "name": "bisquingCount",
                       "fill": "$text-tertiary",
                       "content": "2",
                       "fontFamily": "Outfit",
@@ -352,7 +352,7 @@
                 {
                   "type": "frame",
                   "id": "Nk7ad",
-                  "name": "Bisking Grid",
+                  "name": "Bisquing Grid",
                   "width": "fill_container",
                   "gap": 8,
                   "padding": [
@@ -363,7 +363,7 @@
                     {
                       "type": "frame",
                       "id": "2kFd8",
-                      "name": "Bisking Piece 1",
+                      "name": "Bisquing Piece 1",
                       "metadata": {
                         "type": "unsplash",
                         "username": "pawelmizia",
@@ -413,7 +413,7 @@
                     {
                       "type": "frame",
                       "id": "6wWkx",
-                      "name": "Bisking Piece 2",
+                      "name": "Bisquing Piece 2",
                       "metadata": {
                         "type": "unsplash",
                         "username": "karim_manjra",
@@ -1015,7 +1015,7 @@
             {
               "type": "frame",
               "id": "lBjia",
-              "name": "Bisking Section",
+              "name": "Bisquing Section",
               "width": "fill_container",
               "layout": "vertical",
               "gap": 12,
@@ -1023,7 +1023,7 @@
                 {
                   "type": "frame",
                   "id": "jzd1m",
-                  "name": "biskingHeader",
+                  "name": "bisquingHeader",
                   "width": "fill_container",
                   "gap": 8,
                   "padding": [
@@ -1035,17 +1035,17 @@
                     {
                       "type": "ellipse",
                       "id": "WQ2Mj",
-                      "name": "biskingDot",
-                      "fill": "$status-bisking",
+                      "name": "bisquingDot",
+                      "fill": "$status-bisquing",
                       "width": 8,
                       "height": 8
                     },
                     {
                       "type": "text",
                       "id": "3T9eq",
-                      "name": "biskingTitle",
+                      "name": "bisquingTitle",
                       "fill": "$text-secondary",
-                      "content": "Bisking",
+                      "content": "Bisquing",
                       "fontFamily": "Outfit",
                       "fontSize": 14,
                       "fontWeight": "600"
@@ -1053,7 +1053,7 @@
                     {
                       "type": "text",
                       "id": "hBVzv",
-                      "name": "biskingCount",
+                      "name": "bisquingCount",
                       "fill": "$text-tertiary",
                       "content": "3",
                       "fontFamily": "Outfit",
@@ -1065,7 +1065,7 @@
                 {
                   "type": "frame",
                   "id": "GcX1C",
-                  "name": "Bisking Grid",
+                  "name": "Bisquing Grid",
                   "width": "fill_container",
                   "gap": 8,
                   "padding": [
@@ -1084,13 +1084,13 @@
                       "stroke": {
                         "align": "inside",
                         "thickness": 2,
-                        "fill": "$status-bisking"
+                        "fill": "$status-bisquing"
                       }
                     },
                     {
                       "type": "frame",
                       "id": "GshXu",
-                      "name": "Bisking Piece 1",
+                      "name": "Bisquing Piece 1",
                       "opacity": 0.5,
                       "metadata": {
                         "type": "unsplash",
@@ -1141,7 +1141,7 @@
                     {
                       "type": "frame",
                       "id": "MsavW",
-                      "name": "Bisking Piece 2",
+                      "name": "Bisquing Piece 2",
                       "opacity": 0.5,
                       "metadata": {
                         "type": "unsplash",
@@ -1696,7 +1696,7 @@
             {
               "type": "frame",
               "id": "XPPmt",
-              "name": "Bisking Section",
+              "name": "Bisquing Section",
               "width": "fill_container",
               "layout": "vertical",
               "gap": 12,
@@ -1704,7 +1704,7 @@
                 {
                   "type": "frame",
                   "id": "Svc9U",
-                  "name": "biskingHeader",
+                  "name": "bisquingHeader",
                   "width": "fill_container",
                   "gap": 8,
                   "padding": [
@@ -1716,17 +1716,17 @@
                     {
                       "type": "ellipse",
                       "id": "jnBO7",
-                      "name": "biskingDot",
-                      "fill": "$status-bisking",
+                      "name": "bisquingDot",
+                      "fill": "$status-bisquing",
                       "width": 8,
                       "height": 8
                     },
                     {
                       "type": "text",
                       "id": "j6i46",
-                      "name": "biskingTitle",
+                      "name": "bisquingTitle",
                       "fill": "$text-secondary",
-                      "content": "Bisking",
+                      "content": "Bisquing",
                       "fontFamily": "Outfit",
                       "fontSize": 14,
                       "fontWeight": "600"
@@ -1734,7 +1734,7 @@
                     {
                       "type": "text",
                       "id": "XS29U",
-                      "name": "biskingCount",
+                      "name": "bisquingCount",
                       "fill": "$text-tertiary",
                       "content": "0",
                       "fontFamily": "Outfit",
@@ -1746,7 +1746,7 @@
                 {
                   "type": "frame",
                   "id": "mB2RJ",
-                  "name": "Bisking Grid",
+                  "name": "Bisquing Grid",
                   "width": "fill_container",
                   "padding": [
                     0,
@@ -1756,7 +1756,7 @@
                     {
                       "type": "frame",
                       "id": "N2Pdp",
-                      "name": "Bisking Empty",
+                      "name": "Bisquing Empty",
                       "width": "fill_container",
                       "height": 110,
                       "cornerRadius": 12,
@@ -1771,9 +1771,9 @@
                         {
                           "type": "text",
                           "id": "GrIIj",
-                          "name": "biskingEmptyText",
+                          "name": "bisquingEmptyText",
                           "fill": "$text-tertiary",
-                          "content": "No pieces bisking",
+                          "content": "No pieces bisquing",
                           "fontFamily": "Outfit",
                           "fontSize": 14,
                           "fontWeight": "normal"
@@ -3495,7 +3495,7 @@
       "type": "string",
       "value": "Outfit"
     },
-    "status-bisking": {
+    "status-bisquing": {
       "type": "color",
       "value": "#D89575"
     },
@@ -3543,7 +3543,7 @@
       "type": "color",
       "value": "#e7e5e4"
     },
-    "tw-status-bisking": {
+    "tw-status-bisquing": {
       "type": "color",
       "value": "#fb923c"
     },

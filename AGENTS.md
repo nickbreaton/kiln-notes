@@ -7,7 +7,7 @@
 - Local-first app: always save data back to server, while keeping the app responsive in low-signal/offline conditions.
 
 ## Status model
-- Statuses are flexible; initial set: Drying, Bisking, Glazed, Complete.
+- Statuses are flexible; initial set: Drying, Bisquing, Glazed, Complete.
 
 ## Tech stack
 - Client: React + Effect + Effect Atom + LiveStore + Tailwind.

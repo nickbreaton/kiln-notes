@@ -1,6 +1,11 @@
 import { Schema } from "effect";
 
-export const Status = Schema.Literal("drying", "bisking", "glazed", "complete");
+export const Status = Schema.Literal(
+  "drying",
+  "bisquing",
+  "glazed",
+  "complete",
+);
 
 export const Piece = Schema.Struct({
   id: Schema.UUID,

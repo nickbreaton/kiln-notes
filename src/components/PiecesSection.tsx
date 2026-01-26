@@ -1,10 +1,10 @@
 import type { ReactNode } from "react";
 
-type SectionStatus = "drying" | "bisking" | "glazed" | "complete";
+type SectionStatus = "drying" | "bisquing" | "glazed" | "complete";
 
 const statusDotClasses: Record<SectionStatus, string> = {
   drying: "bg-status-drying",
-  bisking: "bg-status-bisking",
+  bisquing: "bg-status-bisquing",
   glazed: "bg-status-glazed",
   complete: "bg-status-complete",
 };

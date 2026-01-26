@@ -26,13 +26,13 @@
 
   /* Status colors */
   --color-status-drying: #d4a64a;
-  --color-status-bisking: #d89575;
+  --color-status-bisquing: #d89575;
   --color-status-glazed: #6b8eae;
   --color-status-complete: #3d8a5a;
 
   /* Status colors - light variants for drop targets */
   --color-status-drying-light: #d4a64a20;
-  --color-status-bisking-light: #d8957520;
+  --color-status-bisquing-light: #d8957520;
   --color-status-glazed-light: #6b8eae20;
   --color-status-complete-light: #3d8a5a20;
 

@@ -1,4 +1,4 @@
-type SlotStatus = "drying" | "bisking" | "glazed" | "complete";
+type SlotStatus = "drying" | "bisquing" | "glazed" | "complete";
 
 type PieceSlotProps = {
   variant: "empty" | "target";
@@ -7,14 +7,14 @@ type PieceSlotProps = {
 
 const borderByStatus: Record<SlotStatus, string> = {
   drying: "border-status-drying",
-  bisking: "border-status-bisking",
+  bisquing: "border-status-bisquing",
   glazed: "border-status-glazed",
   complete: "border-status-complete",
 };
 
 const bgByStatus: Record<SlotStatus, string> = {
   drying: "bg-status-drying-light",
-  bisking: "bg-status-bisking-light",
+  bisquing: "bg-status-bisquing-light",
   glazed: "bg-status-glazed-light",
   complete: "bg-status-complete-light",
 };
