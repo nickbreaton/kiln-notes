@@ -302,7 +302,7 @@
             {
               "type": "frame",
               "id": "8iq81",
-              "name": "Bisquing Section",
+              "name": "Bisking Section",
               "width": "fill_container",
               "layout": "vertical",
               "gap": 12,
@@ -310,7 +310,7 @@
                 {
                   "type": "frame",
                   "id": "QfUo4",
-                  "name": "bisquingHeader",
+                  "name": "biskingHeader",
                   "width": "fill_container",
                   "gap": 8,
                   "padding": [
@@ -322,17 +322,17 @@
                     {
                       "type": "ellipse",
                       "id": "ImKpw",
-                      "name": "bisquingDot",
-                      "fill": "$status-bisquing",
+                      "name": "biskingDot",
+                      "fill": "$status-bisking",
                       "width": 8,
                       "height": 8
                     },
                     {
                       "type": "text",
                       "id": "wIPTv",
-                      "name": "bisquingTitle",
+                      "name": "biskingTitle",
                       "fill": "$text-secondary",
-                      "content": "Bisquing",
+                      "content": "Bisking",
                       "fontFamily": "Outfit",
                       "fontSize": 14,
                       "fontWeight": "600"
@@ -340,7 +340,7 @@
                     {
                       "type": "text",
                       "id": "Y9EAG",
-                      "name": "bisquingCount",
+                      "name": "biskingCount",
                       "fill": "$text-tertiary",
                       "content": "2",
                       "fontFamily": "Outfit",
@@ -352,7 +352,7 @@
                 {
                   "type": "frame",
                   "id": "Nk7ad",
-                  "name": "Bisquing Grid",
+                  "name": "Bisking Grid",
                   "width": "fill_container",
                   "gap": 8,
                   "padding": [
@@ -363,7 +363,7 @@
                     {
                       "type": "frame",
                       "id": "2kFd8",
-                      "name": "Bisquing Piece 1",
+                      "name": "Bisking Piece 1",
                       "metadata": {
                         "type": "unsplash",
                         "username": "pawelmizia",
@@ -413,7 +413,7 @@
                     {
                       "type": "frame",
                       "id": "6wWkx",
-                      "name": "Bisquing Piece 2",
+                      "name": "Bisking Piece 2",
                       "metadata": {
                         "type": "unsplash",
                         "username": "karim_manjra",
@@ -1015,7 +1015,7 @@
             {
               "type": "frame",
               "id": "lBjia",
-              "name": "Bisquing Section",
+              "name": "Bisking Section",
               "width": "fill_container",
               "layout": "vertical",
               "gap": 12,
@@ -1023,7 +1023,7 @@
                 {
                   "type": "frame",
                   "id": "jzd1m",
-                  "name": "bisquingHeader",
+                  "name": "biskingHeader",
                   "width": "fill_container",
                   "gap": 8,
                   "padding": [
@@ -1035,17 +1035,17 @@
                     {
                       "type": "ellipse",
                       "id": "WQ2Mj",
-                      "name": "bisquingDot",
-                      "fill": "$status-bisquing",
+                      "name": "biskingDot",
+                      "fill": "$status-bisking",
                       "width": 8,
                       "height": 8
                     },
                     {
                       "type": "text",
                       "id": "3T9eq",
-                      "name": "bisquingTitle",
+                      "name": "biskingTitle",
                       "fill": "$text-secondary",
-                      "content": "Bisquing",
+                      "content": "Bisking",
                       "fontFamily": "Outfit",
                       "fontSize": 14,
                       "fontWeight": "600"
@@ -1053,7 +1053,7 @@
                     {
                       "type": "text",
                       "id": "hBVzv",
-                      "name": "bisquingCount",
+                      "name": "biskingCount",
                       "fill": "$text-tertiary",
                       "content": "3",
                       "fontFamily": "Outfit",
@@ -1065,7 +1065,7 @@
                 {
                   "type": "frame",
                   "id": "GcX1C",
-                  "name": "Bisquing Grid",
+                  "name": "Bisking Grid",
                   "width": "fill_container",
                   "gap": 8,
                   "padding": [
@@ -1084,13 +1084,13 @@
                       "stroke": {
                         "align": "inside",
                         "thickness": 2,
-                        "fill": "$status-bisquing"
+                        "fill": "$status-bisking"
                       }
                     },
                     {
                       "type": "frame",
                       "id": "GshXu",
-                      "name": "Bisquing Piece 1",
+                      "name": "Bisking Piece 1",
                       "opacity": 0.5,
                       "metadata": {
                         "type": "unsplash",
@@ -1141,7 +1141,7 @@
                     {
                       "type": "frame",
                       "id": "MsavW",
-                      "name": "Bisquing Piece 2",
+                      "name": "Bisking Piece 2",
                       "opacity": 0.5,
                       "metadata": {
                         "type": "unsplash",
@@ -1696,7 +1696,7 @@
             {
               "type": "frame",
               "id": "XPPmt",
-              "name": "Bisquing Section",
+              "name": "Bisking Section",
               "width": "fill_container",
               "layout": "vertical",
               "gap": 12,
@@ -1704,7 +1704,7 @@
                 {
                   "type": "frame",
                   "id": "Svc9U",
-                  "name": "bisquingHeader",
+                  "name": "biskingHeader",
                   "width": "fill_container",
                   "gap": 8,
                   "padding": [
@@ -1716,17 +1716,17 @@
                     {
                       "type": "ellipse",
                       "id": "jnBO7",
-                      "name": "bisquingDot",
-                      "fill": "$status-bisquing",
+                      "name": "biskingDot",
+                      "fill": "$status-bisking",
                       "width": 8,
                       "height": 8
                     },
                     {
                       "type": "text",
                       "id": "j6i46",
-                      "name": "bisquingTitle",
+                      "name": "biskingTitle",
                       "fill": "$text-secondary",
-                      "content": "Bisquing",
+                      "content": "Bisking",
                       "fontFamily": "Outfit",
                       "fontSize": 14,
                       "fontWeight": "600"
@@ -1734,7 +1734,7 @@
                     {
                       "type": "text",
                       "id": "XS29U",
-                      "name": "bisquingCount",
+                      "name": "biskingCount",
                       "fill": "$text-tertiary",
                       "content": "0",
                       "fontFamily": "Outfit",
@@ -1746,7 +1746,7 @@
                 {
                   "type": "frame",
                   "id": "mB2RJ",
-                  "name": "Bisquing Grid",
+                  "name": "Bisking Grid",
                   "width": "fill_container",
                   "padding": [
                     0,
@@ -1756,7 +1756,7 @@
                     {
                       "type": "frame",
                       "id": "N2Pdp",
-                      "name": "Bisquing Empty",
+                      "name": "Bisking Empty",
                       "width": "fill_container",
                       "height": 110,
                       "cornerRadius": 12,
@@ -1771,9 +1771,9 @@
                         {
                           "type": "text",
                           "id": "GrIIj",
-                          "name": "bisquingEmptyText",
+                          "name": "biskingEmptyText",
                           "fill": "$text-tertiary",
-                          "content": "No pieces bisquing",
+                          "content": "No pieces bisking",
                           "fontFamily": "Outfit",
                           "fontSize": 14,
                           "fontWeight": "normal"
@@ -2464,44 +2464,7 @@
                 "mode": "fill"
               },
               "cornerRadius": 16,
-              "layout": "none",
-              "children": [
-                {
-                  "type": "frame",
-                  "id": "3X2F0",
-                  "x": 8,
-                  "y": 8,
-                  "name": "Photo Label",
-                  "fill": "#00000080",
-                  "cornerRadius": 6,
-                  "gap": 6,
-                  "padding": [
-                    4,
-                    8
-                  ],
-                  "alignItems": "center",
-                  "children": [
-                    {
-                      "type": "ellipse",
-                      "id": "1qWu6",
-                      "name": "photo1Dot",
-                      "fill": "$status-drying",
-                      "width": 6,
-                      "height": 6
-                    },
-                    {
-                      "type": "text",
-                      "id": "WCX33",
-                      "name": "photo1Text",
-                      "fill": "#FFFFFF",
-                      "content": "Drying",
-                      "fontFamily": "Outfit",
-                      "fontSize": 12,
-                      "fontWeight": "500"
-                    }
-                  ]
-                }
-              ]
+              "layout": "none"
             },
             {
               "type": "frame",
@@ -2580,71 +2543,11 @@
           "children": [
             {
               "type": "frame",
-              "id": "bzEmg",
-              "name": "Notes Section",
-              "width": "fill_container",
-              "layout": "vertical",
-              "gap": 10,
-              "children": [
-                {
-                  "type": "text",
-                  "id": "7iOod",
-                  "name": "pageNotesLabel",
-                  "fill": "$text-secondary",
-                  "content": "Notes",
-                  "fontFamily": "Outfit",
-                  "fontSize": 14,
-                  "fontWeight": "600"
-                },
-                {
-                  "type": "frame",
-                  "id": "hcX6X",
-                  "name": "Notes Textarea",
-                  "width": "fill_container",
-                  "height": 120,
-                  "fill": "$bg-surface",
-                  "cornerRadius": 12,
-                  "stroke": {
-                    "thickness": 1,
-                    "fill": "$border-subtle"
-                  },
-                  "layout": "vertical",
-                  "padding": 14,
-                  "children": [
-                    {
-                      "type": "text",
-                      "id": "WxYqH",
-                      "name": "pageNotesPlaceholder",
-                      "fill": "$text-tertiary",
-                      "content": "Add notes about this piece...\n\nGlaze ideas, firing temperature, clay type, etc.",
-                      "lineHeight": 1.5,
-                      "fontFamily": "Outfit",
-                      "fontSize": 14,
-                      "fontWeight": "normal"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "type": "frame",
               "id": "gURmf",
               "name": "Metadata Section",
               "width": "fill_container",
-              "stroke": {
-                "thickness": {
-                  "top": 1
-                },
-                "fill": "$border-subtle"
-              },
               "layout": "vertical",
               "gap": 12,
-              "padding": [
-                20,
-                0,
-                0,
-                0
-              ],
               "children": [
                 {
                   "type": "text",
@@ -2755,6 +2658,66 @@
                       "name": "pageMetaValue2",
                       "fill": "$text-secondary",
                       "content": "Jan 25, 2026 at 2:30pm",
+                      "fontFamily": "Outfit",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "bzEmg",
+              "name": "Notes Section",
+              "width": "fill_container",
+              "stroke": {
+                "thickness": {
+                  "top": 1
+                },
+                "fill": "$border-subtle"
+              },
+              "layout": "vertical",
+              "gap": 10,
+              "padding": [
+                20,
+                0,
+                0,
+                0
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "7iOod",
+                  "name": "pageNotesLabel",
+                  "fill": "$text-secondary",
+                  "content": "Notes",
+                  "fontFamily": "Outfit",
+                  "fontSize": 14,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "hcX6X",
+                  "name": "Notes Textarea",
+                  "width": "fill_container",
+                  "height": 120,
+                  "fill": "$bg-surface",
+                  "cornerRadius": 12,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "$border-subtle"
+                  },
+                  "layout": "vertical",
+                  "padding": 14,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "WxYqH",
+                      "name": "pageNotesPlaceholder",
+                      "fill": "$text-tertiary",
+                      "content": "Add notes about this piece...\n\nGlaze ideas, firing temperature, clay type, etc.",
+                      "lineHeight": 1.5,
                       "fontFamily": "Outfit",
                       "fontSize": 14,
                       "fontWeight": "normal"
@@ -2963,44 +2926,7 @@
                 "mode": "fill"
               },
               "cornerRadius": 16,
-              "layout": "none",
-              "children": [
-                {
-                  "type": "frame",
-                  "id": "Mhyrq",
-                  "x": 8,
-                  "y": 8,
-                  "name": "Photo Label",
-                  "fill": "#00000080",
-                  "cornerRadius": 6,
-                  "gap": 6,
-                  "padding": [
-                    4,
-                    8
-                  ],
-                  "alignItems": "center",
-                  "children": [
-                    {
-                      "type": "ellipse",
-                      "id": "Z6piV",
-                      "name": "photo1Dot",
-                      "fill": "$status-drying",
-                      "width": 6,
-                      "height": 6
-                    },
-                    {
-                      "type": "text",
-                      "id": "1KLwK",
-                      "name": "photo1Text",
-                      "fill": "#FFFFFF",
-                      "content": "Drying",
-                      "fontFamily": "Outfit",
-                      "fontSize": 12,
-                      "fontWeight": "500"
-                    }
-                  ]
-                }
-              ]
+              "layout": "none"
             },
             {
               "type": "frame",
@@ -3081,71 +3007,11 @@
           "children": [
             {
               "type": "frame",
-              "id": "ZgGOK",
-              "name": "Notes Section",
-              "width": "fill_container",
-              "layout": "vertical",
-              "gap": 10,
-              "children": [
-                {
-                  "type": "text",
-                  "id": "TH2cX",
-                  "name": "pageNotesLabel",
-                  "fill": "$text-secondary",
-                  "content": "Notes",
-                  "fontFamily": "Outfit",
-                  "fontSize": 14,
-                  "fontWeight": "600"
-                },
-                {
-                  "type": "frame",
-                  "id": "QoUB8",
-                  "name": "Notes Textarea",
-                  "width": "fill_container",
-                  "height": 120,
-                  "fill": "$bg-surface",
-                  "cornerRadius": 12,
-                  "stroke": {
-                    "thickness": 1,
-                    "fill": "$border-subtle"
-                  },
-                  "layout": "vertical",
-                  "padding": 14,
-                  "children": [
-                    {
-                      "type": "text",
-                      "id": "gBpaq",
-                      "name": "pageNotesPlaceholder",
-                      "fill": "$text-tertiary",
-                      "content": "Add notes about this piece...\n\nGlaze ideas, firing temperature, clay type, etc.",
-                      "lineHeight": 1.5,
-                      "fontFamily": "Outfit",
-                      "fontSize": 14,
-                      "fontWeight": "normal"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "type": "frame",
               "id": "Ezzua",
               "name": "Metadata Section",
               "width": "fill_container",
-              "stroke": {
-                "thickness": {
-                  "top": 1
-                },
-                "fill": "$border-subtle"
-              },
               "layout": "vertical",
               "gap": 12,
-              "padding": [
-                20,
-                0,
-                0,
-                0
-              ],
               "children": [
                 {
                   "type": "text",
@@ -3256,6 +3122,66 @@
                       "name": "pageMetaValue2",
                       "fill": "$text-secondary",
                       "content": "Jan 25, 2026 at 2:30pm",
+                      "fontFamily": "Outfit",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "ZgGOK",
+              "name": "Notes Section",
+              "width": "fill_container",
+              "stroke": {
+                "thickness": {
+                  "top": 1
+                },
+                "fill": "$border-subtle"
+              },
+              "layout": "vertical",
+              "gap": 10,
+              "padding": [
+                20,
+                0,
+                0,
+                0
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "TH2cX",
+                  "name": "pageNotesLabel",
+                  "fill": "$text-secondary",
+                  "content": "Notes",
+                  "fontFamily": "Outfit",
+                  "fontSize": 14,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "QoUB8",
+                  "name": "Notes Textarea",
+                  "width": "fill_container",
+                  "height": 120,
+                  "fill": "$bg-surface",
+                  "cornerRadius": 12,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "$border-subtle"
+                  },
+                  "layout": "vertical",
+                  "padding": 14,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "gBpaq",
+                      "name": "pageNotesPlaceholder",
+                      "fill": "$text-tertiary",
+                      "content": "Add notes about this piece...\n\nGlaze ideas, firing temperature, clay type, etc.",
+                      "lineHeight": 1.5,
                       "fontFamily": "Outfit",
                       "fontSize": 14,
                       "fontWeight": "normal"
@@ -3495,7 +3421,7 @@
       "type": "string",
       "value": "Outfit"
     },
-    "status-bisquing": {
+    "status-bisking": {
       "type": "color",
       "value": "#D89575"
     },
@@ -3543,7 +3469,7 @@
       "type": "color",
       "value": "#e7e5e4"
     },
-    "tw-status-bisquing": {
+    "tw-status-bisking": {
       "type": "color",
       "value": "#fb923c"
     },
