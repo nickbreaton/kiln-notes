@@ -12,6 +12,10 @@ export class PieceRepository extends Effect.Service<PieceRepository>()(
       const store = kv.forSchema(Collection);
       const storeKey = "piecesCollection";
 
+      if (!(yield* store.has(storeKey))) {
+        yield* store.set(storeKey, {});
+      }
+
       return {
         pieces: Stream.fromEffect(store.get(storeKey)).pipe(
           Stream.map((option) => (Option.isSome(option) ? option.value : {})),
@@ -46,6 +50,7 @@ export class PieceRepository extends Effect.Service<PieceRepository>()(
               for (const key of keys) {
                 const cache = await caches.open(key);
                 await cache.put("/photo/" + piece.id, new Response(file));
+                console.log(await cache.keys());
               }
             });
           }),

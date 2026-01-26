@@ -1,19 +1,11 @@
 import { registerSW } from "virtual:pwa-register";
 import { NavigationBar } from "./NavigationBar";
 import { Piece } from "./Piece";
-import { useAtomValue } from "@effect-atom/atom-react";
+import { Result, useAtomValue } from "@effect-atom/atom-react";
 import { PiecesSection } from "./PiecesSection";
 import { collectionAtom } from "../effect/client/atom";
 
-registerSW({
-  immediate: true,
-  onRegisteredSW(swScriptUrl) {
-    console.log("SW registered: ", swScriptUrl);
-  },
-  onOfflineReady() {
-    console.log("PWA application ready to work offline");
-  },
-});
+registerSW({ immediate: true });
 
 export const App = () => {
   const dryingPieces = [
@@ -74,13 +66,19 @@ export const App = () => {
     },
   ];
 
-  console.log(useAtomValue(collectionAtom));
+  const atomValue = useAtomValue(collectionAtom);
 
   return (
     <div>
       <NavigationBar />
       <div className="mx-auto min-h-screen w-full max-w-97.5 bg-cream-50">
         <main className="flex flex-col gap-6 pb-8 pt-5">
+          {/* tmp */}
+          {Result.isSuccess(atomValue) &&
+            Object.values(atomValue.value).map(({ id }) => (
+              <img src={`/photo/${id}`} key={id} />
+            ))}
+
           <PiecesSection
             title="Drying"
             count={dryingPieces.length}

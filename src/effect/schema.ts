@@ -16,7 +16,7 @@ export const Piece = Schema.Struct({
 
 export type Piece = typeof Piece.Encoded;
 
-export const Collection = Schema.HashMap({
+export const Collection = Schema.Record({
   key: Schema.UUID,
   value: Piece,
 });
