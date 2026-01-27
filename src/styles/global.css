@@ -61,6 +61,6 @@ body {
   position: relative;
 }
 
-.dynamic-range-constrained {
-  dynamic-range-limit: constrained;
+.dynamic-range-standard {
+  dynamic-range-limit: standard;
 }
