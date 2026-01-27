@@ -21,6 +21,11 @@ export class PhotoService extends Effect.Service<PhotoService>()(
             return new Blob([buffer]);
           }),
 
+        delete: (id: string) =>
+          Effect.gen(function* () {
+            yield* Effect.promise(() => photosHandle.removeEntry(id));
+          }),
+
         setCache: (id: string, blob: Blob) =>
           Effect.gen(function* () {
             const fileHandle = yield* Effect.promise(() =>

@@ -1,9 +1,13 @@
 import { registerSW } from "virtual:pwa-register";
 import { NavigationBar } from "./NavigationBar";
 import { Piece } from "./Piece";
-import { Result, useAtomValue } from "@effect-atom/atom-react";
+import { Result, useAtomSet, useAtomValue } from "@effect-atom/atom-react";
 import { PiecesSection } from "./PiecesSection";
-import { collectionAtom, getPhotoUrlAtom } from "../effect/client/atom";
+import {
+  collectionAtom,
+  deletePieceAtom,
+  getPhotoUrlAtom,
+} from "../effect/client/atom";
 
 registerSW({ immediate: true });
 
@@ -20,6 +24,7 @@ const Photo = ({
 
 export const App = () => {
   const atomValue = useAtomValue(collectionAtom);
+  const deletePiece = useAtomSet(deletePieceAtom);
 
   return (
     <div>
@@ -41,9 +46,11 @@ export const App = () => {
               {Object.values(atomValue.value).map(
                 ({ id, status }) =>
                   status === "drying" && (
-                    <Photo id={id} key={id}>
-                      {(src) => (src ? <Piece imageUrl={src} /> : null)}
-                    </Photo>
+                    <button onClick={() => deletePiece(id)} key={id}>
+                      <Photo id={id}>
+                        {(src) => (src ? <Piece imageUrl={src} /> : null)}
+                      </Photo>
+                    </button>
                   ),
               )}
             </PiecesSection>

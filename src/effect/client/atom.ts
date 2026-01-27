@@ -1,5 +1,5 @@
 import { Atom } from "@effect-atom/atom-react";
-import { Effect, Layer, Stream } from "effect";
+import { Effect, Layer, Schema, Stream } from "effect";
 import { PieceRepository } from "./PieceRepository";
 import { PhotoService } from "./PhotoService";
 
@@ -32,3 +32,10 @@ export const getPhotoUrlAtom = Atom.family((id: string) =>
     });
   }),
 );
+
+export const deletePieceAtom = runtime.fn((id: string) => {
+  return Effect.gen(function* () {
+    const repo = yield* PieceRepository;
+    yield* repo.deletePiece(id);
+  });
+});

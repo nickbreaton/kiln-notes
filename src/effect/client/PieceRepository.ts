@@ -24,6 +24,7 @@ export class PieceRepository extends Effect.Service<PieceRepository>()(
       const storeKey = "piecesCollection";
       const photoService = yield* PhotoService;
       const notifyRef = yield* SubscriptionRef.make(Symbol());
+      const invalidate = SubscriptionRef.set(notifyRef, Symbol());
 
       if (!(yield* store.has(storeKey))) {
         yield* store.set(storeKey, {});
@@ -37,7 +38,7 @@ export class PieceRepository extends Effect.Service<PieceRepository>()(
 
         createPieces: (files: File[]) =>
           Effect.gen(function* () {
-            // Master plan:
+            // Plan
             // 1. Generate piece
             // 2. Adds image to service worker cache
             // 3. Merges into local storage state
@@ -59,25 +60,36 @@ export class PieceRepository extends Effect.Service<PieceRepository>()(
               });
 
               yield* store.modify(storeKey, (existing) => {
-                return { ...existing, [piece.id]: piece };
+                return { [piece.id]: piece, ...existing };
               });
 
               yield* photoService.setCache(piece.id, file);
             }
 
-            yield* SubscriptionRef.set(notifyRef, Symbol());
+            yield* invalidate;
           }),
 
         movePiece: (uuid: Schema.UUID) =>
           Effect.gen(function* () {
+            // Plan
             // 1. Call API to update piece with new status and tiemstamp
             // 2. Invaliates local storage stream
           }),
 
-        deletePiece: (uuid: Schema.UUID) =>
+        deletePiece: (id: string) =>
           Effect.gen(function* () {
+            // Plan
             // 1. Call API to delete piece
             // 2. Invalidates local storage stream
+
+            yield* photoService.delete(id);
+
+            yield* store.modify(storeKey, (existing) => {
+              const { [id]: _, ...rest } = existing;
+              return rest;
+            });
+
+            yield* invalidate;
           }),
       };
     }),
