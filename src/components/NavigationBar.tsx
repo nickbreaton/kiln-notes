@@ -9,8 +9,9 @@ const FilePickerButton = ({
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }) => (
   <IconButton render={<label />} aria-label="Add piece" nativeButton={false}>
-    <input type="file" aria-label="Add piece" hidden onChange={onChange} />
-    <Plus className="h-5 w-5" aria-hidden="true" />
+    <span className="sr-only">Add piece</span>
+    <input type="file" hidden onChange={onChange} multiple />
+    <Plus className="h-5 w-5" aria-hidden />
   </IconButton>
 );
 

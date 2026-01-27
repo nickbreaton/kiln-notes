@@ -18,9 +18,7 @@ import { App } from "../components/App";
     <meta name="generator" content={Astro.generator} />
     <title>Kiln Notes</title>
   </head>
-  <body>
-    <div class="root">
-      <App client:only="react" />
-    </div>
+  <body class="relative select-none pointer-fine:select-auto">
+    <App client:only="react" />
   </body>
 </html>
