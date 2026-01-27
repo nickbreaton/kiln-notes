@@ -14,60 +14,11 @@
       "layout": "vertical",
       "children": [
         {
-          "type": "frame",
-          "id": "MfMMr",
-          "name": "Header",
+          "id": "Q7XFx",
+          "type": "ref",
+          "ref": "I4NW7",
           "width": "fill_container",
-          "height": 56,
-          "fill": "$bg-surface",
-          "stroke": {
-            "align": "inside",
-            "thickness": {
-              "bottom": 1
-            },
-            "fill": "$border-subtle"
-          },
-          "padding": [
-            0,
-            20
-          ],
-          "justifyContent": "space_between",
-          "alignItems": "center",
-          "children": [
-            {
-              "type": "text",
-              "id": "de7Ub",
-              "name": "title",
-              "fill": "$text-primary",
-              "content": "Kiln Notes",
-              "fontFamily": "Outfit",
-              "fontSize": 20,
-              "fontWeight": "600"
-            },
-            {
-              "type": "frame",
-              "id": "G56dF",
-              "name": "addBtn",
-              "width": 36,
-              "height": 36,
-              "fill": "$bg-primary",
-              "cornerRadius": 100,
-              "justifyContent": "center",
-              "alignItems": "center",
-              "children": [
-                {
-                  "type": "icon_font",
-                  "id": "wIY46",
-                  "name": "addIcon",
-                  "width": 20,
-                  "height": 20,
-                  "iconFontName": "plus",
-                  "iconFontFamily": "lucide",
-                  "fill": "$text-secondary"
-                }
-              ]
-            }
-          ]
+          "name": "newGalleryHeader"
         },
         {
           "type": "frame",
@@ -1532,60 +1483,11 @@
       "layout": "vertical",
       "children": [
         {
-          "type": "frame",
-          "id": "KdRyN",
-          "name": "Header",
+          "id": "gKupU",
+          "type": "ref",
+          "ref": "I4NW7",
           "width": "fill_container",
-          "height": 56,
-          "fill": "$bg-surface",
-          "stroke": {
-            "align": "inside",
-            "thickness": {
-              "bottom": 1
-            },
-            "fill": "$border-subtle"
-          },
-          "padding": [
-            0,
-            20
-          ],
-          "justifyContent": "space_between",
-          "alignItems": "center",
-          "children": [
-            {
-              "type": "text",
-              "id": "9jOAz",
-              "name": "title",
-              "fill": "$text-primary",
-              "content": "Kiln Notes",
-              "fontFamily": "Outfit",
-              "fontSize": 20,
-              "fontWeight": "600"
-            },
-            {
-              "type": "frame",
-              "id": "de764",
-              "name": "addBtn",
-              "width": 36,
-              "height": 36,
-              "fill": "$bg-primary",
-              "cornerRadius": 100,
-              "justifyContent": "center",
-              "alignItems": "center",
-              "children": [
-                {
-                  "type": "icon_font",
-                  "id": "RtqGV",
-                  "name": "addIcon",
-                  "width": 20,
-                  "height": 20,
-                  "iconFontName": "plus",
-                  "iconFontFamily": "lucide",
-                  "fill": "$text-secondary"
-                }
-              ]
-            }
-          ]
+          "name": "newEmptyHeader"
         },
         {
           "type": "frame",
@@ -2321,66 +2223,11 @@
       "layout": "vertical",
       "children": [
         {
-          "type": "frame",
-          "id": "Xgs7w",
-          "name": "Header",
+          "id": "Y8xlk",
+          "type": "ref",
+          "ref": "XqXMO",
           "width": "fill_container",
-          "height": 56,
-          "fill": "$bg-surface",
-          "stroke": {
-            "thickness": {
-              "bottom": 1
-            },
-            "fill": "$border-subtle"
-          },
-          "padding": [
-            0,
-            16
-          ],
-          "justifyContent": "space_between",
-          "alignItems": "center",
-          "children": [
-            {
-              "type": "frame",
-              "id": "O9Nnp",
-              "name": "Back Button",
-              "width": 36,
-              "height": 36,
-              "fill": "$bg-primary",
-              "cornerRadius": 18,
-              "justifyContent": "center",
-              "alignItems": "center",
-              "children": [
-                {
-                  "type": "icon_font",
-                  "id": "Gm2NR",
-                  "name": "backIcon",
-                  "width": 20,
-                  "height": 20,
-                  "iconFontName": "arrow-left",
-                  "iconFontFamily": "lucide",
-                  "fill": "$text-secondary"
-                }
-              ]
-            },
-            {
-              "type": "text",
-              "id": "VP4Ik",
-              "name": "pageTitle",
-              "fill": "$text-primary",
-              "content": "Piece Details",
-              "fontFamily": "Outfit",
-              "fontSize": 17,
-              "fontWeight": "600"
-            },
-            {
-              "type": "frame",
-              "id": "HdZOc",
-              "name": "Spacer",
-              "width": 36,
-              "height": 24
-            }
-          ]
+          "name": "newDetailHeader"
         },
         {
           "type": "frame",
@@ -2727,40 +2574,16 @@
               ]
             },
             {
-              "type": "frame",
-              "id": "yiOrc",
-              "name": "Delete Button",
+              "id": "eoUYz",
+              "type": "ref",
+              "ref": "gOh8Z",
               "width": "fill_container",
-              "cornerRadius": 10,
-              "gap": 6,
-              "padding": [
-                12,
-                16
-              ],
-              "justifyContent": "center",
-              "alignItems": "center",
-              "children": [
-                {
-                  "type": "icon_font",
-                  "id": "l6lTb",
-                  "name": "deleteIcon",
-                  "width": 16,
-                  "height": 16,
-                  "iconFontName": "trash-2",
-                  "iconFontFamily": "lucide",
-                  "fill": "$danger"
-                },
-                {
-                  "type": "text",
-                  "id": "63ExI",
-                  "name": "deleteText",
-                  "fill": "$danger",
-                  "content": "Delete Piece",
-                  "fontFamily": "Outfit",
-                  "fontSize": 14,
-                  "fontWeight": "500"
+              "name": "newDeleteBtn",
+              "descendants": {
+                "u3FHs": {
+                  "content": "Delete Piece"
                 }
-              ]
+              }
             }
           ]
         }
@@ -3380,6 +3203,1918 @@
                           "fontFamily": "Outfit",
                           "fontSize": 16,
                           "fontWeight": "600"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "BkSrr",
+      "x": 2740,
+      "y": 0,
+      "name": "Component Library",
+      "width": 1000,
+      "fill": "$bg-muted",
+      "layout": "vertical",
+      "gap": 60,
+      "padding": 40,
+      "children": [
+        {
+          "type": "text",
+          "id": "mIyEZ",
+          "name": "title",
+          "fill": "$text-primary",
+          "content": "Component Library",
+          "fontFamily": "Outfit",
+          "fontSize": 32,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "KLzZn",
+          "name": "subtitle",
+          "fill": "$text-secondary",
+          "content": "Reusable components for Kiln Notes",
+          "fontFamily": "Outfit",
+          "fontSize": 16,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "frame",
+          "id": "XMhlf",
+          "name": "Buttons",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 24,
+          "children": [
+            {
+              "type": "text",
+              "id": "HqRoR",
+              "name": "btnLabel",
+              "fill": "$text-primary",
+              "content": "Buttons",
+              "fontFamily": "Outfit",
+              "fontSize": 20,
+              "fontWeight": "600"
+            },
+            {
+              "type": "frame",
+              "id": "XOyOC",
+              "name": "Button Components",
+              "width": "fill_container",
+              "gap": 40,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "54S3X",
+                  "name": "Icon Button",
+                  "layout": "vertical",
+                  "gap": 16,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "av9hv",
+                      "name": "iconBtnLabel",
+                      "fill": "$text-secondary",
+                      "content": "Icon Button",
+                      "fontFamily": "Outfit",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "nj4UI",
+                      "name": "States",
+                      "gap": 12,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "HgjT1",
+                          "name": "Icon Button / Default",
+                          "reusable": true,
+                          "width": 36,
+                          "height": 36,
+                          "fill": "$bg-primary",
+                          "cornerRadius": 100,
+                          "layout": "vertical",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon_font",
+                              "id": "iRH2p",
+                              "name": "icon",
+                              "width": 20,
+                              "height": 20,
+                              "iconFontName": "plus",
+                              "iconFontFamily": "lucide",
+                              "fill": "$text-secondary"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "X6Aeg",
+                          "name": "Icon Button / Pressed",
+                          "reusable": true,
+                          "width": 36,
+                          "height": 36,
+                          "fill": "$bg-muted",
+                          "cornerRadius": 100,
+                          "layout": "vertical",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon_font",
+                              "id": "JxYF3",
+                              "name": "icon",
+                              "width": 20,
+                              "height": 20,
+                              "iconFontName": "plus",
+                              "iconFontFamily": "lucide",
+                              "fill": "$text-primary"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "O0Lkl",
+                      "name": "State Labels",
+                      "gap": 12,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "fVapm",
+                          "name": "defaultLabel",
+                          "fill": "$text-tertiary",
+                          "content": "Default",
+                          "textAlign": "center",
+                          "fontFamily": "Outfit",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "xYBGc",
+                          "name": "pressedLabel",
+                          "fill": "$text-tertiary",
+                          "content": "Pressed",
+                          "textAlign": "center",
+                          "fontFamily": "Outfit",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "jgYDH",
+                  "name": "Secondary Button",
+                  "layout": "vertical",
+                  "gap": 16,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "230IQ",
+                      "name": "secBtnLabel",
+                      "fill": "$text-secondary",
+                      "content": "Secondary Button",
+                      "fontFamily": "Outfit",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Hndib",
+                      "name": "States",
+                      "gap": 12,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "HByW7",
+                          "name": "Secondary Button / Default",
+                          "reusable": true,
+                          "height": 36,
+                          "fill": "$bg-primary",
+                          "cornerRadius": 100,
+                          "gap": 6,
+                          "padding": [
+                            0,
+                            16
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "tVnpq",
+                              "name": "label",
+                              "fill": "$text-secondary",
+                              "content": "Button",
+                              "fontFamily": "Outfit",
+                              "fontSize": 14,
+                              "fontWeight": "500"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "ktSad",
+                          "name": "Secondary Button / Pressed",
+                          "reusable": true,
+                          "height": 36,
+                          "fill": "$bg-muted",
+                          "cornerRadius": 100,
+                          "gap": 6,
+                          "padding": [
+                            0,
+                            16
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "njGQ7",
+                              "name": "label",
+                              "fill": "$text-primary",
+                              "content": "Button",
+                              "fontFamily": "Outfit",
+                              "fontSize": 14,
+                              "fontWeight": "500"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "vCBJQ",
+                      "name": "State Labels",
+                      "gap": 12,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "FJCjr",
+                          "name": "secDefaultLabel",
+                          "fill": "$text-tertiary",
+                          "content": "Default",
+                          "fontFamily": "Outfit",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "WoHfh",
+                          "name": "secPressedLabel",
+                          "fill": "$text-tertiary",
+                          "content": "Pressed",
+                          "fontFamily": "Outfit",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "AOotF",
+                  "name": "Destructive Ghost Button",
+                  "layout": "vertical",
+                  "gap": 16,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "CiXOc",
+                      "name": "destBtnLabel",
+                      "fill": "$text-secondary",
+                      "content": "Destructive Ghost Button",
+                      "fontFamily": "Outfit",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "S0BHr",
+                      "name": "States",
+                      "gap": 12,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "gOh8Z",
+                          "name": "Destructive Ghost Button / Default",
+                          "reusable": true,
+                          "cornerRadius": 10,
+                          "gap": 6,
+                          "padding": [
+                            12,
+                            16
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon_font",
+                              "id": "4Mo40",
+                              "name": "icon",
+                              "width": 16,
+                              "height": 16,
+                              "iconFontName": "trash-2",
+                              "iconFontFamily": "lucide",
+                              "fill": "$danger"
+                            },
+                            {
+                              "type": "text",
+                              "id": "u3FHs",
+                              "name": "label",
+                              "fill": "$danger",
+                              "content": "Delete",
+                              "fontFamily": "Outfit",
+                              "fontSize": 14,
+                              "fontWeight": "500"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "SJPPv",
+                          "name": "Destructive Ghost Button / Pressed",
+                          "reusable": true,
+                          "fill": "#DC4C4C10",
+                          "cornerRadius": 10,
+                          "gap": 6,
+                          "padding": [
+                            12,
+                            16
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon_font",
+                              "id": "cuzeP",
+                              "name": "icon",
+                              "width": 16,
+                              "height": 16,
+                              "iconFontName": "trash-2",
+                              "iconFontFamily": "lucide",
+                              "fill": "$danger"
+                            },
+                            {
+                              "type": "text",
+                              "id": "DAnFP",
+                              "name": "label",
+                              "fill": "$danger",
+                              "content": "Delete",
+                              "fontFamily": "Outfit",
+                              "fontSize": 14,
+                              "fontWeight": "500"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "QWq48",
+                      "name": "State Labels",
+                      "gap": 12,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "qiujA",
+                          "name": "destDefaultLabel",
+                          "fill": "$text-tertiary",
+                          "content": "Default",
+                          "fontFamily": "Outfit",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "dTiiM",
+                          "name": "destPressedLabel",
+                          "fill": "$text-tertiary",
+                          "content": "Pressed",
+                          "fontFamily": "Outfit",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "G4oPS",
+          "name": "Badges & Indicators",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 24,
+          "children": [
+            {
+              "type": "text",
+              "id": "FZZ7J",
+              "name": "badgeSectionLabel",
+              "fill": "$text-primary",
+              "content": "Badges & Indicators",
+              "fontFamily": "Outfit",
+              "fontSize": 20,
+              "fontWeight": "600"
+            },
+            {
+              "type": "frame",
+              "id": "Q8SF1",
+              "name": "Badge Components",
+              "width": "fill_container",
+              "gap": 40,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "KD7vl",
+                  "name": "Day Badge",
+                  "layout": "vertical",
+                  "gap": 16,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "TT5m2",
+                      "name": "dayBadgeLabel",
+                      "fill": "$text-secondary",
+                      "content": "Day Badge",
+                      "fontFamily": "Outfit",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "pCzJt",
+                      "name": "Day Badge",
+                      "reusable": true,
+                      "fill": "#00000060",
+                      "cornerRadius": 6,
+                      "padding": [
+                        2,
+                        6
+                      ],
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "W5oMj",
+                          "name": "text",
+                          "fill": "#FFFFFF",
+                          "content": "2d",
+                          "fontFamily": "Outfit",
+                          "fontSize": 11,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "cab1D",
+                  "name": "Status Badge",
+                  "layout": "vertical",
+                  "gap": 16,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "36SrN",
+                      "name": "statusBadgeLabel",
+                      "fill": "$text-secondary",
+                      "content": "Status Badge",
+                      "fontFamily": "Outfit",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "sTTOO",
+                      "name": "States",
+                      "gap": 16,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "ZCYqE",
+                          "name": "Status Badge",
+                          "reusable": true,
+                          "gap": 6,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "ellipse",
+                              "id": "5bAE6",
+                              "name": "dot",
+                              "fill": "$status-drying",
+                              "width": 8,
+                              "height": 8
+                            },
+                            {
+                              "type": "text",
+                              "id": "5HB9E",
+                              "name": "text",
+                              "fill": "$text-secondary",
+                              "content": "Drying",
+                              "fontFamily": "Outfit",
+                              "fontSize": 14,
+                              "fontWeight": "500"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "qdqlv",
+                  "name": "Section Header",
+                  "layout": "vertical",
+                  "gap": 16,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "mjO2m",
+                      "name": "sectionHeaderLabel",
+                      "fill": "$text-secondary",
+                      "content": "Section Header",
+                      "fontFamily": "Outfit",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "IxhaF",
+                      "name": "Section Header",
+                      "reusable": true,
+                      "width": 350,
+                      "gap": 8,
+                      "padding": [
+                        0,
+                        20
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "ellipse",
+                          "id": "0AO3G",
+                          "name": "dot",
+                          "fill": "$status-drying",
+                          "width": 8,
+                          "height": 8
+                        },
+                        {
+                          "type": "text",
+                          "id": "v6c9x",
+                          "name": "title",
+                          "fill": "$text-secondary",
+                          "content": "Drying",
+                          "fontFamily": "Outfit",
+                          "fontSize": 14,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "6W0PL",
+                          "name": "count",
+                          "fill": "$text-tertiary",
+                          "content": "3",
+                          "fontFamily": "Outfit",
+                          "fontSize": 14,
+                          "fontWeight": "500"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "csHSp",
+                  "name": "Photo Label Overlay",
+                  "layout": "vertical",
+                  "gap": 16,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "Lxa3U",
+                      "name": "photoLabelLabel",
+                      "fill": "$text-secondary",
+                      "content": "Photo Label Overlay",
+                      "fontFamily": "Outfit",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "moCIf",
+                      "name": "Photo Label Overlay",
+                      "reusable": true,
+                      "fill": "#00000080",
+                      "cornerRadius": 6,
+                      "gap": 6,
+                      "padding": [
+                        4,
+                        8
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "ellipse",
+                          "id": "isYJ0",
+                          "name": "dot",
+                          "fill": "#8B7355",
+                          "width": 6,
+                          "height": 6
+                        },
+                        {
+                          "type": "text",
+                          "id": "Zs34y",
+                          "name": "text",
+                          "fill": "#FFFFFF",
+                          "content": "Wet Clay",
+                          "fontFamily": "Outfit",
+                          "fontSize": 12,
+                          "fontWeight": "500"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "PeYyd",
+          "name": "Piece Tiles",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 24,
+          "children": [
+            {
+              "type": "text",
+              "id": "MmDLN",
+              "name": "tileSectionLabel",
+              "fill": "$text-primary",
+              "content": "Piece Tiles",
+              "fontFamily": "Outfit",
+              "fontSize": 20,
+              "fontWeight": "600"
+            },
+            {
+              "type": "frame",
+              "id": "Fyl2e",
+              "name": "Tile Components",
+              "width": "fill_container",
+              "gap": 24,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "qXS8n",
+                  "name": "Default",
+                  "layout": "vertical",
+                  "gap": 12,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "xJ6F8",
+                      "name": "Piece Tile / Default",
+                      "reusable": true,
+                      "width": 110,
+                      "height": 110,
+                      "fill": "$bg-surface",
+                      "cornerRadius": 12,
+                      "layout": "none",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "9mA6D",
+                          "x": 6,
+                          "y": 6,
+                          "name": "badge",
+                          "fill": "#00000060",
+                          "cornerRadius": 6,
+                          "padding": [
+                            2,
+                            6
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "77TZs",
+                              "name": "text",
+                              "fill": "#FFFFFF",
+                              "content": "2d",
+                              "fontFamily": "Outfit",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "FmBmV",
+                      "name": "tileDefaultLabel",
+                      "fill": "$text-tertiary",
+                      "content": "Default",
+                      "fontFamily": "Outfit",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "KNOVh",
+                  "name": "Empty",
+                  "layout": "vertical",
+                  "gap": 12,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "bd4Lm",
+                      "name": "Piece Tile / Empty",
+                      "reusable": true,
+                      "width": 110,
+                      "height": 110,
+                      "cornerRadius": 12,
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$border-subtle"
+                      },
+                      "layout": "vertical",
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "N4N6v",
+                          "name": "text",
+                          "fill": "$text-tertiary",
+                          "content": "No pieces",
+                          "fontFamily": "Outfit",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "AKyRR",
+                      "name": "tileEmptyLabel",
+                      "fill": "$text-tertiary",
+                      "content": "Empty",
+                      "fontFamily": "Outfit",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "88U1M",
+                  "name": "Dragging",
+                  "layout": "vertical",
+                  "gap": 12,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "hjE5v",
+                      "name": "Piece Tile / Dragging",
+                      "reusable": true,
+                      "rotation": -4,
+                      "width": 118,
+                      "height": 118,
+                      "fill": "$bg-surface",
+                      "cornerRadius": 14,
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#00000035",
+                        "offset": {
+                          "x": 0,
+                          "y": 12
+                        },
+                        "blur": 32
+                      },
+                      "layout": "none",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "AA832",
+                          "x": 6,
+                          "y": 6,
+                          "name": "badge",
+                          "fill": "#00000060",
+                          "cornerRadius": 6,
+                          "padding": [
+                            2,
+                            6
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "Y2TEX",
+                              "name": "text",
+                              "fill": "#FFFFFF",
+                              "content": "2d",
+                              "fontFamily": "Outfit",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "6zFF0",
+                      "name": "tileDraggingLabel",
+                      "fill": "$text-tertiary",
+                      "content": "Dragging",
+                      "fontFamily": "Outfit",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Tqlcz",
+                  "name": "Selected",
+                  "layout": "vertical",
+                  "gap": 12,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "OlGRv",
+                      "name": "Piece Tile / Selected",
+                      "reusable": true,
+                      "width": 110,
+                      "height": 110,
+                      "fill": "$bg-surface",
+                      "cornerRadius": 12,
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 3,
+                        "fill": "$accent-primary"
+                      },
+                      "layout": "none",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "YkvyD",
+                          "x": 6,
+                          "y": 6,
+                          "name": "badge",
+                          "fill": "#00000060",
+                          "cornerRadius": 6,
+                          "padding": [
+                            2,
+                            6
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "9f7ke",
+                              "name": "text",
+                              "fill": "#FFFFFF",
+                              "content": "2d",
+                              "fontFamily": "Outfit",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "tCtzO",
+                          "x": 80,
+                          "y": 80,
+                          "name": "checkmark",
+                          "width": 24,
+                          "height": 24,
+                          "fill": "$accent-primary",
+                          "cornerRadius": 100,
+                          "layout": "vertical",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon_font",
+                              "id": "6uNLl",
+                              "name": "icon",
+                              "width": 14,
+                              "height": 14,
+                              "iconFontName": "check",
+                              "iconFontFamily": "lucide",
+                              "fill": "#FFFFFF"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "QsY7V",
+                      "name": "tileSelectedLabel",
+                      "fill": "$text-tertiary",
+                      "content": "Selected",
+                      "fontFamily": "Outfit",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "ZzZ5k",
+          "name": "Photo Carousel Cards",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 24,
+          "children": [
+            {
+              "type": "text",
+              "id": "fvgL6",
+              "name": "carouselSectionLabel",
+              "fill": "$text-primary",
+              "content": "Photo Carousel Cards",
+              "fontFamily": "Outfit",
+              "fontSize": 20,
+              "fontWeight": "600"
+            },
+            {
+              "type": "frame",
+              "id": "W5TvH",
+              "name": "Carousel Components",
+              "width": "fill_container",
+              "gap": 24,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "PRfiC",
+                  "name": "Default",
+                  "layout": "vertical",
+                  "gap": 12,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "EcvQz",
+                      "name": "Carousel Card / Default",
+                      "reusable": true,
+                      "width": 200,
+                      "height": 280,
+                      "fill": "$bg-surface",
+                      "cornerRadius": 16,
+                      "layout": "none"
+                    },
+                    {
+                      "type": "text",
+                      "id": "0BzIT",
+                      "name": "carouselDefaultLabel",
+                      "fill": "$text-tertiary",
+                      "content": "Default",
+                      "fontFamily": "Outfit",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "HFAmq",
+                  "name": "Add Placeholder",
+                  "layout": "vertical",
+                  "gap": 12,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "EiFkh",
+                      "name": "Carousel Card / Add",
+                      "reusable": true,
+                      "width": 200,
+                      "height": 280,
+                      "fill": "$bg-surface",
+                      "cornerRadius": 16,
+                      "stroke": {
+                        "thickness": 2,
+                        "fill": "$border-subtle"
+                      },
+                      "layout": "vertical",
+                      "gap": 12,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon_font",
+                          "id": "szqhU",
+                          "name": "icon",
+                          "width": 40,
+                          "height": 40,
+                          "iconFontName": "camera",
+                          "iconFontFamily": "lucide",
+                          "fill": "$text-tertiary"
+                        },
+                        {
+                          "type": "text",
+                          "id": "6NtTe",
+                          "name": "title",
+                          "fill": "$text-secondary",
+                          "content": "Add Next Status",
+                          "fontFamily": "Outfit",
+                          "fontSize": 16,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "KPlRG",
+                          "name": "subtitle",
+                          "fill": "$text-tertiary",
+                          "content": "Capture this piece's progress",
+                          "textAlign": "center",
+                          "fontFamily": "Outfit",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "uxNbU",
+                      "name": "carouselAddLabel",
+                      "fill": "$text-tertiary",
+                      "content": "Add Placeholder",
+                      "fontFamily": "Outfit",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "uX1bw",
+          "name": "Form Elements",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 24,
+          "children": [
+            {
+              "type": "text",
+              "id": "SnsEV",
+              "name": "formSectionLabel",
+              "fill": "$text-primary",
+              "content": "Form Elements",
+              "fontFamily": "Outfit",
+              "fontSize": 20,
+              "fontWeight": "600"
+            },
+            {
+              "type": "frame",
+              "id": "7QLmK",
+              "name": "Form Components",
+              "width": "fill_container",
+              "gap": 40,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "VjclO",
+                  "name": "Metadata Row",
+                  "layout": "vertical",
+                  "gap": 16,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "JVR2N",
+                      "name": "metaRowLabel",
+                      "fill": "$text-secondary",
+                      "content": "Metadata Row",
+                      "fontFamily": "Outfit",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "baarC",
+                      "name": "Metadata Row",
+                      "reusable": true,
+                      "width": 300,
+                      "justifyContent": "space_between",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "iOOhi",
+                          "name": "label",
+                          "fill": "$text-tertiary",
+                          "content": "Status changed",
+                          "fontFamily": "Outfit",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "cSQ18",
+                          "name": "value",
+                          "fill": "$text-secondary",
+                          "content": "January 20, 2026",
+                          "fontFamily": "Outfit",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "78UCY",
+                  "name": "Textarea",
+                  "layout": "vertical",
+                  "gap": 16,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "tx9n7",
+                      "name": "textareaLabel",
+                      "fill": "$text-secondary",
+                      "content": "Textarea",
+                      "fontFamily": "Outfit",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "c8pCN",
+                      "name": "Textarea",
+                      "reusable": true,
+                      "width": 300,
+                      "height": 120,
+                      "fill": "$bg-surface",
+                      "cornerRadius": 12,
+                      "stroke": {
+                        "thickness": 1,
+                        "fill": "$border-subtle"
+                      },
+                      "layout": "vertical",
+                      "padding": 14,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "S6Y0R",
+                          "name": "placeholder",
+                          "fill": "$text-tertiary",
+                          "content": "Add notes about this piece...",
+                          "lineHeight": 1.5,
+                          "fontFamily": "Outfit",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "bIoSU",
+                  "name": "Empty State Card",
+                  "layout": "vertical",
+                  "gap": 16,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "guHMd",
+                      "name": "emptyStateLabel",
+                      "fill": "$text-secondary",
+                      "content": "Empty State Card",
+                      "fontFamily": "Outfit",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "vx45N",
+                      "name": "Empty State Card",
+                      "reusable": true,
+                      "width": "fill_container",
+                      "height": 110,
+                      "cornerRadius": 12,
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$border-subtle"
+                      },
+                      "layout": "vertical",
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "GyJo7",
+                          "name": "text",
+                          "fill": "$text-tertiary",
+                          "content": "No pieces drying",
+                          "fontFamily": "Outfit",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "gTGAV",
+          "name": "Modals",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 24,
+          "children": [
+            {
+              "type": "text",
+              "id": "b020h",
+              "name": "modalSectionLabel",
+              "fill": "$text-primary",
+              "content": "Modals",
+              "fontFamily": "Outfit",
+              "fontSize": 20,
+              "fontWeight": "600"
+            },
+            {
+              "type": "frame",
+              "id": "SRSOA",
+              "name": "Modal Components",
+              "width": "fill_container",
+              "gap": 40,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "ZodeU",
+                  "name": "Delete Confirmation",
+                  "layout": "vertical",
+                  "gap": 16,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "aoVNX",
+                      "name": "deleteModalLabel",
+                      "fill": "$text-secondary",
+                      "content": "Delete Confirmation Modal",
+                      "fontFamily": "Outfit",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "wdV3O",
+                      "name": "Delete Confirmation Modal",
+                      "reusable": true,
+                      "clip": true,
+                      "width": 320,
+                      "fill": "$bg-surface",
+                      "cornerRadius": 16,
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#00000025",
+                        "offset": {
+                          "x": 0,
+                          "y": 8
+                        },
+                        "blur": 32
+                      },
+                      "layout": "vertical",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "3ZELv",
+                          "name": "header",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 12,
+                          "padding": 24,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "KdJCS",
+                              "name": "iconContainer",
+                              "width": 48,
+                              "height": 48,
+                              "fill": "#DC4C4C15",
+                              "cornerRadius": 100,
+                              "layout": "vertical",
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "icon_font",
+                                  "id": "tqA8T",
+                                  "name": "icon",
+                                  "width": 24,
+                                  "height": 24,
+                                  "iconFontName": "trash-2",
+                                  "iconFontFamily": "lucide",
+                                  "fill": "#DC4C4C"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "text",
+                              "id": "lxv0L",
+                              "name": "title",
+                              "fill": "$text-primary",
+                              "content": "Delete this piece?",
+                              "fontFamily": "Outfit",
+                              "fontSize": 18,
+                              "fontWeight": "600"
+                            },
+                            {
+                              "type": "text",
+                              "id": "zb7Vl",
+                              "name": "description",
+                              "fill": "$text-secondary",
+                              "textGrowth": "fixed-width",
+                              "width": 260,
+                              "content": "This action cannot be undone. This piece will be permanently removed.",
+                              "textAlign": "center",
+                              "fontFamily": "Outfit",
+                              "fontSize": 14,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "MYJZl",
+                          "name": "divider",
+                          "width": "fill_container",
+                          "height": 1,
+                          "fill": "$border-subtle"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "6Mdz5",
+                          "name": "buttons",
+                          "width": "fill_container",
+                          "height": 50,
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "q2u9l",
+                              "name": "cancelButton",
+                              "width": "fill_container",
+                              "height": "fill_container",
+                              "stroke": {
+                                "align": "inside",
+                                "thickness": {
+                                  "right": 1
+                                },
+                                "fill": "$border-subtle"
+                              },
+                              "layout": "vertical",
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "zsd9j",
+                                  "name": "cancelText",
+                                  "fill": "$text-primary",
+                                  "content": "Cancel",
+                                  "fontFamily": "Outfit",
+                                  "fontSize": 16,
+                                  "fontWeight": "500"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "ZNkrr",
+                              "name": "deleteButton",
+                              "width": "fill_container",
+                              "height": "fill_container",
+                              "layout": "vertical",
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "HneDm",
+                                  "name": "deleteText",
+                                  "fill": "#DC4C4C",
+                                  "content": "Delete",
+                                  "fontFamily": "Outfit",
+                                  "fontSize": 16,
+                                  "fontWeight": "600"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "RKwo6",
+          "name": "Icons & Steps",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 24,
+          "children": [
+            {
+              "type": "text",
+              "id": "Nf6Rh",
+              "name": "iconsSectionLabel",
+              "fill": "$text-primary",
+              "content": "Icons & Steps",
+              "fontFamily": "Outfit",
+              "fontSize": 20,
+              "fontWeight": "600"
+            },
+            {
+              "type": "frame",
+              "id": "iWsm4",
+              "name": "Icon Components",
+              "width": "fill_container",
+              "gap": 40,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "dcEYz",
+                  "name": "Icon Circle",
+                  "layout": "vertical",
+                  "gap": 16,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "PvsCw",
+                      "name": "iconCircleLabel",
+                      "fill": "$text-secondary",
+                      "content": "Icon Circle",
+                      "fontFamily": "Outfit",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "JFQWl",
+                      "name": "States",
+                      "gap": 16,
+                      "alignItems": "end",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "9uey6",
+                          "name": "Icon Circle / Accent",
+                          "reusable": true,
+                          "width": 80,
+                          "height": 80,
+                          "fill": "$accent-primary",
+                          "cornerRadius": 20,
+                          "layout": "vertical",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon_font",
+                              "id": "Y84Fz",
+                              "name": "icon",
+                              "width": 40,
+                              "height": 40,
+                              "iconFontName": "download",
+                              "iconFontFamily": "lucide",
+                              "fill": "#FFFFFF"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "K4i3h",
+                          "name": "Icon Circle / Danger",
+                          "reusable": true,
+                          "width": 48,
+                          "height": 48,
+                          "fill": "#DC4C4C15",
+                          "cornerRadius": 100,
+                          "layout": "vertical",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon_font",
+                              "id": "QdU4j",
+                              "name": "icon",
+                              "width": 24,
+                              "height": 24,
+                              "iconFontName": "trash-2",
+                              "iconFontFamily": "lucide",
+                              "fill": "#DC4C4C"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "C54sH",
+                      "name": "Labels",
+                      "gap": 16,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "p3InT",
+                          "name": "accentLabel",
+                          "fill": "$text-tertiary",
+                          "content": "Accent (large)",
+                          "fontFamily": "Outfit",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "urIAp",
+                          "name": "dangerLabel",
+                          "fill": "$text-tertiary",
+                          "content": "Danger (small)",
+                          "fontFamily": "Outfit",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "zYCPF",
+                  "name": "Step Item",
+                  "layout": "vertical",
+                  "gap": 16,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "01Jyu",
+                      "name": "stepGroupLabel",
+                      "fill": "$text-secondary",
+                      "content": "Step Item",
+                      "fontFamily": "Outfit",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "xQzjR",
+                      "name": "Step Item",
+                      "reusable": true,
+                      "width": 350,
+                      "gap": 16,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "t1yBv",
+                          "name": "number",
+                          "width": 28,
+                          "height": 28,
+                          "fill": "$accent-primary",
+                          "cornerRadius": 100,
+                          "layout": "vertical",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "unI3R",
+                              "name": "text",
+                              "fill": "#FFFFFF",
+                              "content": "1",
+                              "fontFamily": "Outfit",
+                              "fontSize": 14,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "nWpIf",
+                          "name": "content",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 4,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "0wJC6",
+                              "name": "title",
+                              "fill": "$text-primary",
+                              "content": "Tap the Share button",
+                              "fontFamily": "Outfit",
+                              "fontSize": 16,
+                              "fontWeight": "600"
+                            },
+                            {
+                              "type": "text",
+                              "id": "SFsZI",
+                              "name": "description",
+                              "fill": "$text-secondary",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "Find the share icon at the bottom of Safari.",
+                              "fontFamily": "Outfit",
+                              "fontSize": 14,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "kWZs2",
+                  "name": "Step Number Badge",
+                  "layout": "vertical",
+                  "gap": 16,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "upeaa",
+                      "name": "stepBadgeLabel",
+                      "fill": "$text-secondary",
+                      "content": "Step Number Badge",
+                      "fontFamily": "Outfit",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "OYHXz",
+                      "name": "Step Number Badge",
+                      "reusable": true,
+                      "width": 28,
+                      "height": 28,
+                      "fill": "$accent-primary",
+                      "cornerRadius": 100,
+                      "layout": "vertical",
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "uZORS",
+                          "name": "text",
+                          "fill": "#FFFFFF",
+                          "content": "1",
+                          "fontFamily": "Outfit",
+                          "fontSize": 14,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "vPJ53",
+          "name": "App Headers",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 24,
+          "children": [
+            {
+              "type": "text",
+              "id": "bfDfF",
+              "name": "headerSectionLabel",
+              "fill": "$text-primary",
+              "content": "App Headers",
+              "fontFamily": "Outfit",
+              "fontSize": 20,
+              "fontWeight": "600"
+            },
+            {
+              "type": "frame",
+              "id": "10Jjs",
+              "name": "Header Components",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 24,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "qFBZs",
+                  "name": "Gallery Header",
+                  "layout": "vertical",
+                  "gap": 16,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "1rF1v",
+                      "name": "galleryHeaderLabel",
+                      "fill": "$text-secondary",
+                      "content": "Gallery Header",
+                      "fontFamily": "Outfit",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "I4NW7",
+                      "name": "App Header / Gallery",
+                      "reusable": true,
+                      "width": 390,
+                      "height": 56,
+                      "fill": "$bg-surface",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": {
+                          "bottom": 1
+                        },
+                        "fill": "$border-subtle"
+                      },
+                      "padding": [
+                        0,
+                        20
+                      ],
+                      "justifyContent": "space_between",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "ek6On",
+                          "name": "title",
+                          "fill": "$text-primary",
+                          "content": "Kiln Notes",
+                          "fontFamily": "Outfit",
+                          "fontSize": 20,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "9bG1S",
+                          "name": "addButton",
+                          "width": 36,
+                          "height": 36,
+                          "fill": "$bg-primary",
+                          "cornerRadius": 100,
+                          "layout": "vertical",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon_font",
+                              "id": "qNqDj",
+                              "name": "icon",
+                              "width": 20,
+                              "height": 20,
+                              "iconFontName": "plus",
+                              "iconFontFamily": "lucide",
+                              "fill": "$text-secondary"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "MPq3d",
+                  "name": "Detail Header",
+                  "layout": "vertical",
+                  "gap": 16,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "pPsrM",
+                      "name": "detailHeaderLabel",
+                      "fill": "$text-secondary",
+                      "content": "Detail Header",
+                      "fontFamily": "Outfit",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "XqXMO",
+                      "name": "App Header / Detail",
+                      "reusable": true,
+                      "width": 390,
+                      "height": 56,
+                      "fill": "$bg-surface",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": {
+                          "bottom": 1
+                        },
+                        "fill": "$border-subtle"
+                      },
+                      "padding": [
+                        0,
+                        16
+                      ],
+                      "justifyContent": "space_between",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "S3wS0",
+                          "name": "backButton",
+                          "width": 36,
+                          "height": 36,
+                          "fill": "$bg-primary",
+                          "cornerRadius": 18,
+                          "layout": "vertical",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon_font",
+                              "id": "H2oyT",
+                              "name": "icon",
+                              "width": 20,
+                              "height": 20,
+                              "iconFontName": "arrow-left",
+                              "iconFontFamily": "lucide",
+                              "fill": "$text-secondary"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "hmgMn",
+                          "name": "title",
+                          "fill": "$text-primary",
+                          "content": "Piece Details",
+                          "fontFamily": "Outfit",
+                          "fontSize": 17,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "sRuMG",
+                          "name": "spacer",
+                          "width": 36,
+                          "height": 24
                         }
                       ]
                     }
