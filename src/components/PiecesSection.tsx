@@ -32,7 +32,7 @@ export const PiecesSection = ({
         <span className="text-sm font-semibold text-ink-500">{title}</span>
         <span className="text-sm font-medium text-ink-400">{count}</span>
       </h2>
-      <div className="grid grid-cols-3 md:grid-cols-4 gap-2 px-5">
+      <div className="grid grid-cols-3 md:grid-cols-4 gap-1.5 md:gap-2 px-5">
         {children}
       </div>
     </section>
