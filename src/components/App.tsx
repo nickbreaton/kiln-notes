@@ -24,7 +24,7 @@ export const App = () => {
   return (
     <div>
       <NavigationBar />
-      <div className="mx-auto min-h-screen w-full max-w-97.5 bg-cream-50">
+      <div className="mx-auto min-h-screen max-w-lg w-full">
         <main className="flex flex-col gap-6 pb-8 pt-5">
           {/* tmp */}
 
