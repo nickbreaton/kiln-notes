@@ -35,7 +35,7 @@ export class PieceRepository extends Effect.Service<PieceRepository>()(
           Stream.map((option) => (Option.isSome(option) ? option.value : {})),
         ),
 
-        createPiece: (file: File) =>
+        createPieces: (files: File[]) =>
           Effect.gen(function* () {
             // Master plan:
             // 1. Generate piece
@@ -48,20 +48,23 @@ export class PieceRepository extends Effect.Service<PieceRepository>()(
 
             // ---
 
-            const now = yield* DateTime.now;
+            for (const file of files) {
+              const now = yield* DateTime.now;
 
-            const piece = Piece.make({
-              id: crypto.randomUUID(),
-              status: "drying",
-              statusUpdatedAt: now,
-              updatedAt: now,
-            });
+              const piece = Piece.make({
+                id: crypto.randomUUID(),
+                status: "drying",
+                statusUpdatedAt: now,
+                updatedAt: now,
+              });
 
-            yield* store.modify(storeKey, (existing) => {
-              return { ...existing, [piece.id]: piece };
-            });
+              yield* store.modify(storeKey, (existing) => {
+                return { ...existing, [piece.id]: piece };
+              });
 
-            yield* photoService.setCache(piece.id, file);
+              yield* photoService.setCache(piece.id, file);
+            }
+
             yield* SubscriptionRef.set(notifyRef, Symbol());
           }),
 

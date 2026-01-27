@@ -1,6 +1,6 @@
 import { useAtomSet } from "@effect-atom/atom-react";
 import { Plus } from "lucide-react";
-import { createPieceAtom } from "../effect/client/atom";
+import { createPiecesAtom } from "../effect/client/atom";
 import { IconButton } from "./IconButton";
 
 const FilePickerButton = ({
@@ -16,7 +16,7 @@ const FilePickerButton = ({
 );
 
 export const NavigationBar = () => {
-  const createPiece = useAtomSet(createPieceAtom, { mode: "promise" });
+  const createPieces = useAtomSet(createPiecesAtom, { mode: "promise" });
 
   return (
     <div className="h-14">
@@ -25,13 +25,10 @@ export const NavigationBar = () => {
           <h1 className="text-xl font-semibold text-ink-900">Kiln Notes</h1>
           <FilePickerButton
             onChange={(event) => {
-              const file = event.target.files?.[0];
-              if (file)
-                createPiece(file)
-                  .then(() => {
-                    event.target.value = "";
-                  })
-                  .catch(console.error);
+              const files = Array.from(event?.target?.files ?? []);
+              createPieces(files).then(() => {
+                event.target.value = "";
+              });
             }}
           />
         </div>

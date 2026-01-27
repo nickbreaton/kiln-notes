@@ -60,3 +60,7 @@ body {
   font-family: "Outfit", sans-serif;
   position: relative;
 }
+
+.dynamic-range-constrained {
+  dynamic-range-limit: constrained;
+}

@@ -14,10 +14,10 @@ export const collectionAtom = runtime.atom(() => {
   }).pipe(Stream.unwrap);
 });
 
-export const createPieceAtom = runtime.fn((file: File) => {
+export const createPiecesAtom = runtime.fn((files: File[]) => {
   return Effect.gen(function* () {
     const repo = yield* PieceRepository;
-    yield* repo.createPiece(file);
+    yield* repo.createPieces(files);
   });
 });
 
