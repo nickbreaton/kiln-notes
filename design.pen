@@ -4160,6 +4160,108 @@
                       "fontWeight": "normal"
                     }
                   ]
+                },
+                {
+                  "type": "frame",
+                  "id": "3Y0AL",
+                  "name": "Dragging From",
+                  "layout": "vertical",
+                  "gap": 12,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "hEnon",
+                      "name": "Piece Tile / Dragging From",
+                      "reusable": true,
+                      "opacity": 0.4,
+                      "width": 110,
+                      "height": 110,
+                      "fill": "$bg-surface",
+                      "cornerRadius": 12,
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$border-subtle"
+                      },
+                      "layout": "none",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "9xFcJ",
+                          "x": 6,
+                          "y": 6,
+                          "name": "badge",
+                          "fill": "#00000060",
+                          "cornerRadius": 6,
+                          "padding": [
+                            2,
+                            6
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "aaJPX",
+                              "name": "text",
+                              "fill": "#FFFFFF",
+                              "content": "2d",
+                              "fontFamily": "Outfit",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "oaz7f",
+                      "name": "tileDragFromLabel",
+                      "fill": "$text-tertiary",
+                      "content": "Dragging From",
+                      "fontFamily": "Outfit",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "uTufe",
+                  "name": "Dragging To",
+                  "layout": "vertical",
+                  "gap": 12,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "PX8Dy",
+                      "name": "Piece Tile / Dragging To",
+                      "reusable": true,
+                      "width": 110,
+                      "height": 110,
+                      "fill": "#D8957520",
+                      "cornerRadius": 12,
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 2,
+                        "fill": "$status-bisking"
+                      },
+                      "layout": "none"
+                    },
+                    {
+                      "type": "text",
+                      "id": "2G597",
+                      "name": "tileDragToLabel",
+                      "fill": "$text-tertiary",
+                      "content": "Dragging To",
+                      "fontFamily": "Outfit",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
                 }
               ]
             }
