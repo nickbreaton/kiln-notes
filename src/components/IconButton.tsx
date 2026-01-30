@@ -16,6 +16,7 @@ export const IconButton = ({
   render,
   ...props
 }: IconButtonProps) => {
+  // TODO: left is not okay in the generic component
   const mobileTouchArea =
     "before:content-[''] before:absolute before:-inset-3 before:-left-10 pointer-fine:before:hidden";
 

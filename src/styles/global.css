@@ -61,6 +61,10 @@ body {
   position: relative;
 }
 
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
 .dynamic-range-standard {
   dynamic-range-limit: standard;
 }

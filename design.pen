@@ -2054,10 +2054,10 @@
                           "id": "HgjT1",
                           "name": "Icon Button / Default",
                           "reusable": true,
-                          "width": 36,
-                          "height": 36,
-                          "fill": "$bg-primary",
-                          "cornerRadius": 100,
+                          "width": 44,
+                          "height": 44,
+                          "fill": "$bg-muted",
+                          "cornerRadius": 12,
                           "layout": "vertical",
                           "justifyContent": "center",
                           "alignItems": "center",
@@ -2066,11 +2066,11 @@
                               "type": "icon_font",
                               "id": "iRH2p",
                               "name": "icon",
-                              "width": 20,
-                              "height": 20,
+                              "width": 22,
+                              "height": 22,
                               "iconFontName": "plus",
                               "iconFontFamily": "lucide",
-                              "fill": "$text-secondary"
+                              "fill": "$text-primary"
                             }
                           ]
                         },
@@ -3786,7 +3786,7 @@
                       "name": "App Header / Gallery",
                       "reusable": true,
                       "width": 390,
-                      "height": 56,
+                      "height": 64,
                       "fill": "$bg-surface",
                       "stroke": {
                         "align": "inside",
@@ -3816,10 +3816,10 @@
                           "type": "frame",
                           "id": "9bG1S",
                           "name": "addButton",
-                          "width": 36,
-                          "height": 36,
-                          "fill": "$bg-primary",
-                          "cornerRadius": 100,
+                          "width": 44,
+                          "height": 44,
+                          "fill": "$accent-primary",
+                          "cornerRadius": 12,
                           "layout": "vertical",
                           "justifyContent": "center",
                           "alignItems": "center",
@@ -3828,11 +3828,11 @@
                               "type": "icon_font",
                               "id": "qNqDj",
                               "name": "icon",
-                              "width": 20,
-                              "height": 20,
-                              "iconFontName": "plus",
+                              "width": 22,
+                              "height": 22,
+                              "iconFontName": "camera",
                               "iconFontFamily": "lucide",
-                              "fill": "$text-secondary"
+                              "fill": "#FFFFFF"
                             }
                           ]
                         }
@@ -3863,7 +3863,7 @@
                       "name": "App Header / Detail",
                       "reusable": true,
                       "width": 390,
-                      "height": 56,
+                      "height": 64,
                       "fill": "$bg-surface",
                       "stroke": {
                         "align": "inside",
@@ -3883,10 +3883,10 @@
                           "type": "frame",
                           "id": "S3wS0",
                           "name": "backButton",
-                          "width": 36,
-                          "height": 36,
-                          "fill": "$bg-primary",
-                          "cornerRadius": 18,
+                          "width": 44,
+                          "height": 44,
+                          "fill": "$bg-muted",
+                          "cornerRadius": 12,
                           "layout": "vertical",
                           "justifyContent": "center",
                           "alignItems": "center",
@@ -3895,11 +3895,11 @@
                               "type": "icon_font",
                               "id": "H2oyT",
                               "name": "icon",
-                              "width": 20,
-                              "height": 20,
+                              "width": 22,
+                              "height": 22,
                               "iconFontName": "arrow-left",
                               "iconFontFamily": "lucide",
-                              "fill": "$text-secondary"
+                              "fill": "$text-primary"
                             }
                           ]
                         },
@@ -3917,8 +3917,8 @@
                           "type": "frame",
                           "id": "sRuMG",
                           "name": "spacer",
-                          "width": 36,
-                          "height": 24
+                          "width": 44,
+                          "height": 44
                         }
                       ]
                     }
