@@ -3828,9 +3828,9 @@
                               "type": "icon_font",
                               "id": "qNqDj",
                               "name": "icon",
-                              "width": 22,
-                              "height": 22,
-                              "iconFontName": "camera",
+                              "width": 28,
+                              "height": 28,
+                              "iconFontName": "plus",
                               "iconFontFamily": "lucide",
                               "fill": "#FFFFFF"
                             }
