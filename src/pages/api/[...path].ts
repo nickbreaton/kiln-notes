@@ -1,44 +1,64 @@
 import {
-  HttpApp,
-  HttpRouter,
-  HttpServerRequest,
-  HttpServerResponse,
+  HttpApi,
+  HttpApiBuilder,
+  HttpApiClient,
+  HttpApiEndpoint,
+  HttpApiGroup,
+  HttpServer,
+  FetchHttpClient,
 } from "@effect/platform";
-import { Effect } from "effect";
+import { Effect, Layer } from "effect";
+import { Schema } from "effect";
 import type { APIRoute } from "astro";
 
-// Server-rendered API route - no static paths needed
-export const prerender = false;
+// =============================================================================
+// SHARED API DEFINITION (used by both server and client)
+// =============================================================================
 
-// Create the Effect HTTP router with just health endpoint
-const router = HttpRouter.empty.pipe(
-  // Health check endpoint
-  HttpRouter.get(
-    "/api/health",
-    Effect.gen(function* () {
-      return yield* HttpServerResponse.text("ok");
-    }),
-  ),
+// Define schemas
+class HealthResponse extends Schema.Class<HealthResponse>("HealthResponse")({
+  status: Schema.String,
+  timestamp: Schema.String,
+}) {}
 
-  // Catch-all for unmatched routes
-  HttpRouter.all(
-    "*",
-    Effect.gen(function* () {
-      const req = yield* HttpServerRequest.HttpServerRequest;
-      return yield* HttpServerResponse.json(
-        {
-          error: "Not Found",
-          path: req.url,
-          method: req.method,
-        },
-        { status: 404 },
-      );
-    }),
+// Define the API group (topLevel: true means no group prefix)
+class ApiGroup extends HttpApiGroup.make("api", { topLevel: true }).add(
+  HttpApiEndpoint.get("health", "/api/health").addSuccess(HealthResponse),
+) {}
+
+// Define the API
+export class KilnApi extends HttpApi.make("kiln").add(ApiGroup) {}
+
+// =============================================================================
+// SERVER IMPLEMENTATION
+// =============================================================================
+
+// Create the group handlers layer (provides the actual endpoint implementations)
+const ApiGroupLive = HttpApiBuilder.group(KilnApi, "api", (handlers) =>
+  handlers.handle("health", () =>
+    Effect.succeed(
+      new HealthResponse({
+        status: "ok",
+        timestamp: new Date().toISOString(),
+      }),
+    ),
   ),
 );
 
-// Convert router to web handler that can process Request objects
-const handler = HttpApp.toWebHandler(router);
+// Create the API layer and provide the group implementations
+const ApiLayer = HttpApiBuilder.api(KilnApi).pipe(Layer.provide(ApiGroupLive));
+
+// Merge with HttpServer.layerContext for toWebHandler
+const { handler } = HttpApiBuilder.toWebHandler(
+  Layer.mergeAll(ApiLayer, HttpServer.layerContext),
+);
+
+// =============================================================================
+// ASTRO API ROUTE
+// =============================================================================
+
+// Server-rendered API route - no static paths needed
+export const prerender = false;
 
 // Handle all HTTP methods with the Effect router
 export const ALL: APIRoute = async ({ request }) => handler(request);
