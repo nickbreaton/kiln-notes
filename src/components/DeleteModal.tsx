@@ -2,15 +2,15 @@ import { AlertDialog } from "@base-ui/react/alert-dialog";
 import { Trash2 } from "lucide-react";
 
 type DeleteModalProps = {
-  count?: number;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
+  onConfirm?: () => void;
 };
 
 export const DeleteModal = ({
-  count = 3,
   open,
   onOpenChange,
+  onConfirm,
 }: DeleteModalProps) => {
   const rootProps = open === undefined ? {} : { open, onOpenChange };
 
@@ -24,19 +24,23 @@ export const DeleteModal = ({
               <Trash2 className="h-6 w-6 text-danger-500" aria-hidden="true" />
             </div>
             <AlertDialog.Title className="text-lg font-semibold text-ink-900">
-              Delete {count} pieces?
+              {" "}
+              Delete this piece?
             </AlertDialog.Title>
             <AlertDialog.Description className="max-w-65 text-center text-sm text-ink-500">
-              This action cannot be undone. These pieces will be permanently
+              This action cannot be undone. This piece will be permanently
               removed.
             </AlertDialog.Description>
           </div>
           <div className="h-px w-full bg-cream-200" />
-          <div className="grid `h-12.5` grid-cols-2">
-            <AlertDialog.Close className="flex h-full items-center justify-center border-r border-cream-200 text-base font-medium text-ink-900">
+          <div className="grid h-12.5 grid-cols-2">
+            <AlertDialog.Close className="flex h-full items-center justify-center border-r border-cream-200 text-base font-medium text-ink-900 active:bg-cream-100">
               Cancel
             </AlertDialog.Close>
-            <AlertDialog.Close className="flex h-full items-center justify-center text-base font-semibold text-danger-500">
+            <AlertDialog.Close
+              onClick={onConfirm}
+              className="flex h-full items-center justify-center text-base font-semibold text-danger-500 active:bg-danger-500/10"
+            >
               Delete
             </AlertDialog.Close>
           </div>
