@@ -1,5 +1,6 @@
 import { Result, useAtomSet, useAtomValue } from "@effect-atom/atom-react";
 import { PiecesSection } from "../PiecesSection";
+import { NavigationBar } from "../NavigationBar";
 import {
   collectionAtom,
   deletePieceAtom,
@@ -26,6 +27,7 @@ export const Board = () => {
 
   return (
     <>
+      <NavigationBar />
       {Result.isSuccess(atomValue) && (
         <PiecesSection
           title="Drying"
