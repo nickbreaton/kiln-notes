@@ -19,7 +19,8 @@
     "lucide-react": "^0.563.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
-    "tailwindcss": "^4.1.18"
+    "tailwindcss": "^4.1.18",
+    "wouter": "^3.9.0"
   },
   "devDependencies": {
     "@astrojs/cloudflare": "^12.6.12",
