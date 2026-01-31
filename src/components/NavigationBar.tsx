@@ -7,13 +7,17 @@ const FilePickerButton = ({
 }: {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }) => (
-  <label
-    className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-xl bg-kiln-600 active:bg-kiln-500"
-    aria-label="Add piece"
-  >
-    <span className="sr-only">Add piece</span>
-    <input type="file" hidden onChange={onChange} multiple />
-    <Plus className="h-7 w-7 text-white" aria-hidden />
+  <label className="relative flex h-11 w-11 cursor-pointer items-center justify-center rounded-xl bg-kiln-600 active:bg-kiln-500">
+    <input
+      type="file"
+      accept="image/*"
+      capture="environment"
+      multiple
+      onChange={onChange}
+      className="absolute inset-0 opacity-0 cursor-pointer"
+      aria-label="Add piece"
+    />
+    <Plus className="h-7 w-7 text-white pointer-events-none" aria-hidden />
   </label>
 );
 
