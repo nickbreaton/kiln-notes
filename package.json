@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "bun astro dev",
     "build": "bun astro build",
-    "lt": "bunx localtunnel -p 4321",
+    "tunnel": "ngrok http 4321",
     "preview": "wrangler pages dev ./dist",
     "astro": "astro"
   },
