@@ -22,7 +22,6 @@ const Photo = ({
 
 export const Board = () => {
   const atomValue = useAtomValue(collectionAtom);
-  // const deletePiece = useAtomSet(deletePieceAtom);
   const [, navigate] = useLocation();
 
   return (

@@ -9,7 +9,7 @@ export const App = () => {
   return (
     <div>
       <div className="mx-auto min-h-screen max-w-lg w-full">
-        <main className="flex flex-col gap-6 pb-8 pt-5">
+        <main className="flex flex-col gap-5 pb-8">
           <Switch>
             <Route path="/" component={Board} />
             <Route path="/piece/:id" component={Detail} />
