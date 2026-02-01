@@ -74,9 +74,9 @@ AUTH_COOKIE_SECRET="change-me"
 
 ### Phase 2: Remove LiveStore
 
-- [ ] Remove LiveStore dependencies (`@livestore/*`)
-- [ ] Refactor `PieceRepository` to remove `SubscriptionRef`
-- [ ] Prepare for Y.js integration (keep repo in working state)
+- [x] Remove LiveStore dependencies (`@livestore/*`)
+- [x] Remove LiveStore references from AGENTS.md
+- [x] Drop LiveStore WIP git stash
 
 ### Phase 3: Y.js Core Setup
 

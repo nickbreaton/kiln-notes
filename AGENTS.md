@@ -10,7 +10,7 @@
 - Statuses are flexible; initial set: Drying, Bisquing, Glazed, Complete.
 
 ## Tech stack
-- Client: React + Effect + Effect Atom + LiveStore + Tailwind.
+- Client: React + Effect + Effect Atom + Tailwind.
 - Server: Astro API endpoints; single Astro route serves HTML with one top-level React component.
 - Deployment: Cloudflare.
 - Auth: passkeys.
@@ -23,9 +23,7 @@
 
 ## Agent guidance
 - Use bun commands only (no npm).
-- Check for project skills when working with unfamiliar tech (e.g., LiveStore, Effect).
-- Use the LiveStore skill when touching LiveStore code.
-- Depend on LiveStore for local-first tasks.
+- Check for project skills when working with unfamiliar tech (e.g., Effect).
 
 ## Design
 - Design is being complete in Pencil.dev via Pencil MCP and rule.
