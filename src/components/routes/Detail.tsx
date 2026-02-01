@@ -36,7 +36,6 @@ export const Detail = () => {
         </button>
       </div>
       <DeleteModal
-        count={1}
         open={showDeleteModal}
         onOpenChange={setShowDeleteModal}
         onConfirm={handleDelete}
