@@ -54,23 +54,43 @@ AUTH_COOKIE_SECRET="change-me"
 
 ### Phase 1: Passkey Authentication
 
+#### Chunk 1: Dependencies & Environment Setup
 - [ ] Add SimpleWebAuthn dependencies (`@simplewebauthn/browser`, `@simplewebauthn/server`)
-- [ ] Implement server-side auth API:
-  - [ ] Load credentials from env vars (`USER_[N]` pattern)
-  - [ ] Registration ceremony endpoints (do not store server-side):
-    - [ ] Generate registration options (`POST /api/auth/register/options`)
-    - [ ] Verify registration response and return credential JSON to client (`POST /api/auth/register/verify`)
-  - [ ] Login ceremony endpoints (only for env-configured users):
-    - [ ] Generate authentication options (`POST /api/auth/options`) using `allowCredentials` from env vars
-    - [ ] Verify authentication response (`POST /api/auth/verify`)
-  - [ ] Set signed HttpOnly session cookie containing `{ userId, exp }`
-  - [ ] Store the login challenge in a signed HttpOnly cookie (integrity-protected; encryption optional)
-- [ ] Implement client-side auth service:
-  - [ ] Login flow (get options → authenticate → verify → accept session cookie)
-  - [ ] Logout flow
-  - [ ] Session cookie handling
-- [ ] Add protected route guards
-- [ ] Test auth flow locally
+- [ ] Add cookie utilities for signing/validation
+- [ ] Create env var parsing for `USER_[N]` pattern (name + base64 credential JSON)
+- [ ] Add `AUTH_COOKIE_SECRET` validation
+
+#### Chunk 2: Effect HTTP Routes (Server)
+- [ ] Create Effect-based HTTP router using `@effect/platform`
+- [ ] Implement cookie signing/validation Effect service
+- [ ] Create session management Effect service
+- [ ] Registration ceremony routes:
+  - [ ] `POST /api/auth/register/options` - Generate registration options
+  - [ ] `POST /api/auth/register/verify` - Verify and return credential JSON
+- [ ] Login ceremony routes:
+  - [ ] `POST /api/auth/options` - Generate auth options with `allowCredentials`
+  - [ ] `POST /api/auth/verify` - Verify response, set session cookie
+- [ ] Session cookie handling:
+  - [ ] Set signed HttpOnly cookie with `{ userId, exp }`
+  - [ ] Store challenge in signed HttpOnly cookie during login flow
+- [ ] Protected route middleware using Effect
+
+#### Chunk 3: Client Auth UI & Services
+- [ ] Create Effect service for WebAuthn browser operations
+- [ ] Login flow component:
+  - [ ] Get options from server → authenticate → verify → accept session cookie
+  - [ ] Handle errors gracefully
+- [ ] Registration flow component:
+  - [ ] Generate credential → display JSON for manual env var setup
+  - [ ] Copy-to-clipboard functionality
+- [ ] Logout button (clear cookie + reset state)
+- [ ] Session state management in Effect Atom
+
+#### Chunk 4: Integration & Testing
+- [ ] Protected route guards (redirect unauthenticated to login)
+- [ ] Test registration flow locally
+- [ ] Test login flow locally
+- [ ] Test protected route access with/without session
 
 ### Phase 2: Remove LiveStore
 
