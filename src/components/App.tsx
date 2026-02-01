@@ -1,6 +1,6 @@
 import { registerSW } from "virtual:pwa-register";
-import { Board } from "./routes/Board";
 import { Route, Switch } from "wouter";
+import { Board } from "./routes/Board";
 import { Detail } from "./routes/Detail";
 
 registerSW({ immediate: true });

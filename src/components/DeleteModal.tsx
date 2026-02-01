@@ -28,8 +28,7 @@ export const DeleteModal = ({
               Delete this piece?
             </AlertDialog.Title>
             <AlertDialog.Description className="max-w-65 text-center text-sm text-ink-500">
-              This action cannot be undone. This piece will be permanently
-              removed.
+              This action cannot be undone. This piece will be permanently removed.
             </AlertDialog.Description>
           </div>
           <div className="h-px w-full bg-cream-200" />

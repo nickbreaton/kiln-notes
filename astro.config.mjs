@@ -1,8 +1,8 @@
-import { defineConfig } from "astro/config";
+import cloudflare from "@astrojs/cloudflare";
 import react from "@astrojs/react";
 import tailwindcss from "@tailwindcss/vite";
-import cloudflare from "@astrojs/cloudflare";
 import AstroPWA from "@vite-pwa/astro";
+import { defineConfig } from "astro/config";
 
 export default defineConfig({
   integrations: [

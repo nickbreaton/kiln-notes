@@ -1,0 +1,8 @@
+{
+  "formatter": {
+    "language_server": {
+      "name": "dprint"
+    }
+  },
+  "format_on_save": "on"
+}

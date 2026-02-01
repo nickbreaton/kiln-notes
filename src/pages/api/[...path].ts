@@ -1,15 +1,15 @@
 import {
+  FetchHttpClient,
   HttpApi,
   HttpApiBuilder,
   HttpApiClient,
   HttpApiEndpoint,
   HttpApiGroup,
   HttpServer,
-  FetchHttpClient,
 } from "@effect/platform";
+import type { APIRoute } from "astro";
 import { Effect, Layer } from "effect";
 import { Schema } from "effect";
-import type { APIRoute } from "astro";
 
 // =============================================================================
 // SHARED API DEFINITION (used by both server and client)
@@ -41,9 +41,7 @@ const ApiGroupLive = HttpApiBuilder.group(KilnApi, "api", (handlers) =>
         status: "ok",
         timestamp: new Date().toISOString(),
       }),
-    ),
-  ),
-);
+    )));
 
 // Create the API layer and provide the group implementations
 const ApiLayer = HttpApiBuilder.api(KilnApi).pipe(Layer.provide(ApiGroupLive));

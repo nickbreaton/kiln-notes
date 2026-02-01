@@ -28,7 +28,5 @@ export const PieceSlot = ({ variant, status = "drying" }: PieceSlotProps) => {
     );
   }
 
-  return (
-    <div className="h-27.5 w-27.5 rounded-xl border-2 border-cream-200 bg-transparent" />
-  );
+  return <div className="h-27.5 w-27.5 rounded-xl border-2 border-cream-200 bg-transparent" />;
 };

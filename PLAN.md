@@ -7,8 +7,9 @@ This document tracks the technical implementation plan for migrating Kiln Notes 
 ## Key Decisions (Avoid Re-researching)
 
 ### Authentication
+
 - **Limited-user passkeys**: Support 1-2 users via environment variables (`USERS=username1,username2` + `PASSKEY_[username]=base64value`)
-- **No server-side credential enrollment**: The site can run a WebAuthn *registration ceremony* and return the resulting credential JSON to the operator, but the server never auto-adds it to any user list.
+- **No server-side credential enrollment**: The site can run a WebAuthn _registration ceremony_ and return the resulting credential JSON to the operator, but the server never auto-adds it to any user list.
   - Anyone can create a credential in the browser.
   - Only credentials manually copied into server secrets/env vars become valid login credentials.
 - No database storage for credentials, no user management UI
@@ -16,6 +17,7 @@ This document tracks the technical implementation plan for migrating Kiln Notes 
 - **Session**: HttpOnly cookie, `SameSite=Strict`, `Secure`, max age 7 days (offline usable up to 1 week).
 
 ### Data Architecture
+
 - **Y.js over LiveStore**: Better ecosystem, more documentation, proven CRDT implementation
 - **Effect throughout**: All APIs must use Effect for consistency and error handling
 - **Swappable layers**: Local and production environments use same business logic, different storage
@@ -23,17 +25,20 @@ This document tracks the technical implementation plan for migrating Kiln Notes 
 - **No collaboration**: Users only access their own isolated data
 
 ### WebSocket & Sync
+
 - **WebSocket over HTTP**: Real-time sync requires persistent connection
 - **Hibernatable WebSockets**: Use CF's hibernation API—clients stay connected while DO sleeps, no billing during idle
 - **Offline conflicts**: Use simplest approach. Very rare scenario (likely single device). Y.js mainly for offline sync capability.
 
 ### Image Handling
+
 - **Image upload flow**: Client generates image ID, registers it with server first (via Y.js), then uploads
 - Prevents orphaned images and makes cleanup easier
 - Server periodically scans for orphaned images (images in storage but not referenced in Y.js)
 - **Production storage**: R2 for images (DO storage has 128KB limit per key)
 
 ### Storage Strategy
+
 - **Client**: y-indexeddb for persistence (separate DB per user)
 - **Local dev**: File-based storage (`./data/{userId}.yjs`)
 - **Cloudflare**: Durable Object per user using Durable Object storage (no SQL required)
@@ -58,6 +63,7 @@ AUTH_COOKIE_SECRET="change-me"
 ### Phase 1: Passkey Authentication
 
 #### Chunk 1: Dependencies & Environment Setup
+
 - [ ] Add SimpleWebAuthn dependencies (`@simplewebauthn/browser`, `@simplewebauthn/server`)
 - [ ] Add cookie utilities for signing/validation
 - [ ] Create Effect service to parse `USERS` and `PASSKEY_*` env vars
@@ -67,6 +73,7 @@ AUTH_COOKIE_SECRET="change-me"
 - [ ] Add `AUTH_COOKIE_SECRET` validation
 
 #### Chunk 2: Effect HTTP Routes (Server)
+
 - [ ] Create Effect-based HTTP router using `@effect/platform`
 - [ ] Implement cookie signing/validation Effect service
 - [ ] Create session management Effect service
@@ -82,6 +89,7 @@ AUTH_COOKIE_SECRET="change-me"
 - [ ] Protected route middleware using Effect
 
 #### Chunk 3: Client Auth UI & Services
+
 - [ ] Create Effect service for WebAuthn browser operations
 - [ ] Login flow component:
   - [ ] Get options from server → authenticate → verify → accept session cookie
@@ -93,6 +101,7 @@ AUTH_COOKIE_SECRET="change-me"
 - [ ] Session state management in Effect Atom
 
 #### Chunk 4: Integration & Testing
+
 - [ ] Protected route guards (redirect unauthenticated to login)
 - [ ] Test registration flow locally
 - [ ] Test login flow locally

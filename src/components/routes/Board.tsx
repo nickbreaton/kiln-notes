@@ -1,13 +1,9 @@
 import { Result, useAtomSet, useAtomValue } from "@effect-atom/atom-react";
-import { PiecesSection } from "../PiecesSection";
-import { NavigationBar } from "../NavigationBar";
-import {
-  collectionAtom,
-  deletePieceAtom,
-  getPhotoUrlAtom,
-} from "../../effect/client/atom";
-import { Piece } from "../Piece";
 import { useLocation } from "wouter";
+import { collectionAtom, deletePieceAtom, getPhotoUrlAtom } from "../../effect/client/atom";
+import { NavigationBar } from "../NavigationBar";
+import { Piece } from "../Piece";
+import { PiecesSection } from "../PiecesSection";
 
 const Photo = ({
   id,
@@ -30,11 +26,9 @@ export const Board = () => {
       {Result.isSuccess(atomValue) && (
         <PiecesSection
           title="Drying"
-          count={
-            Object.values(atomValue.value).filter(
-              (piece) => piece.status === "drying",
-            ).length
-          }
+          count={Object.values(atomValue.value).filter(
+            (piece) => piece.status === "drying",
+          ).length}
           status="drying"
         >
           {Object.values(atomValue.value).map(

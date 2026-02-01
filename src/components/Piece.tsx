@@ -16,11 +16,13 @@ export const Piece = ({ imageUrl, dayLabel, muted }: PieceProps) => {
         backgroundPosition: "center",
       }}
     >
-      {dayLabel ? (
-        <div className="absolute left-1.5 top-1.5 rounded-md bg-black/60 px-1.5 py-0.5 text-[11px] font-semibold text-white">
-          {dayLabel}
-        </div>
-      ) : null}
+      {dayLabel
+        ? (
+          <div className="absolute left-1.5 top-1.5 rounded-md bg-black/60 px-1.5 py-0.5 text-[11px] font-semibold text-white">
+            {dayLabel}
+          </div>
+        )
+        : null}
     </div>
   );
 };

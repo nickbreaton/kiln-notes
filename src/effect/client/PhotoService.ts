@@ -4,7 +4,7 @@ export class PhotoService extends Effect.Service<PhotoService>()(
   "PhotoService",
   {
     dependencies: [],
-    effect: Effect.gen(function* () {
+    effect: Effect.gen(function*() {
       const photosHandle = yield* Effect.promise(async () => {
         const opfsRoot = await navigator.storage.getDirectory();
         return await opfsRoot.getDirectoryHandle("photos", { create: true });
@@ -12,28 +12,22 @@ export class PhotoService extends Effect.Service<PhotoService>()(
 
       return {
         get: (id: string) =>
-          Effect.gen(function* () {
-            const fileHandle = yield* Effect.promise(() =>
-              photosHandle.getFileHandle(id),
-            );
+          Effect.gen(function*() {
+            const fileHandle = yield* Effect.promise(() => photosHandle.getFileHandle(id));
             const file = yield* Effect.promise(() => fileHandle.getFile());
             const buffer = yield* Effect.promise(() => file.arrayBuffer());
             return new Blob([buffer]);
           }),
 
         delete: (id: string) =>
-          Effect.gen(function* () {
+          Effect.gen(function*() {
             yield* Effect.promise(() => photosHandle.removeEntry(id));
           }),
 
         setCache: (id: string, blob: Blob) =>
-          Effect.gen(function* () {
-            const fileHandle = yield* Effect.promise(() =>
-              photosHandle.getFileHandle(id, { create: true }),
-            );
-            const file = yield* Effect.promise(() =>
-              fileHandle.createWritable(),
-            );
+          Effect.gen(function*() {
+            const fileHandle = yield* Effect.promise(() => photosHandle.getFileHandle(id, { create: true }));
+            const file = yield* Effect.promise(() => fileHandle.createWritable());
             yield* Effect.promise(() => file.write(blob));
             yield* Effect.promise(() => file.close());
           }),

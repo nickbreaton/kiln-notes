@@ -1,5 +1,5 @@
 import { useAtomSet } from "@effect-atom/atom-react";
-import { Plus, ArrowLeft } from "lucide-react";
+import { ArrowLeft, Plus } from "lucide-react";
 import { createPiecesAtom } from "../effect/client/atom";
 
 const FilePickerButton = ({
@@ -36,33 +36,35 @@ export const NavigationBar = ({
     <div className="h-16">
       <header className="fixed top-0 left-0 right-0 z-10 border-b border-cream-200 bg-white h-16 flex items-center">
         <div className="w-full mx-auto max-w-lg justify-between px-5 flex items-center">
-          {variant === "gallery" ? (
-            <>
-              <h1 className="text-xl font-semibold text-ink-900">Kiln Notes</h1>
-              <FilePickerButton
-                onChange={(event) => {
-                  const files = Array.from(event?.target?.files ?? []);
-                  createPieces(files).then(() => {
-                    event.target.value = "";
-                  });
-                }}
-              />
-            </>
-          ) : (
-            <>
-              <button
-                onClick={onBack}
-                className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-xl bg-cream-100 active:bg-cream-200"
-                aria-label="Go back"
-              >
-                <ArrowLeft className="h-5.5 w-5.5 text-ink-900" />
-              </button>
-              <h1 className="text-lg font-semibold text-ink-900">
-                Piece Details
-              </h1>
-              <div className="h-11 w-11" />
-            </>
-          )}
+          {variant === "gallery"
+            ? (
+              <>
+                <h1 className="text-xl font-semibold text-ink-900">Kiln Notes</h1>
+                <FilePickerButton
+                  onChange={(event) => {
+                    const files = Array.from(event?.target?.files ?? []);
+                    createPieces(files).then(() => {
+                      event.target.value = "";
+                    });
+                  }}
+                />
+              </>
+            )
+            : (
+              <>
+                <button
+                  onClick={onBack}
+                  className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-xl bg-cream-100 active:bg-cream-200"
+                  aria-label="Go back"
+                >
+                  <ArrowLeft className="h-5.5 w-5.5 text-ink-900" />
+                </button>
+                <h1 className="text-lg font-semibold text-ink-900">
+                  Piece Details
+                </h1>
+                <div className="h-11 w-11" />
+              </>
+            )}
         </div>
       </header>
     </div>

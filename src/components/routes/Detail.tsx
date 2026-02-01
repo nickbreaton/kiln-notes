@@ -1,10 +1,10 @@
 import { Result, useAtomSet, useAtomValue } from "@effect-atom/atom-react";
-import { deletePieceAtom, getPhotoUrlAtom } from "../../effect/client/atom";
-import { NavigationBar } from "../NavigationBar";
-import { DeleteModal } from "../DeleteModal";
-import { useLocation, useParams } from "wouter";
-import { useState } from "react";
 import { Trash2 } from "lucide-react";
+import { useState } from "react";
+import { useLocation, useParams } from "wouter";
+import { deletePieceAtom, getPhotoUrlAtom } from "../../effect/client/atom";
+import { DeleteModal } from "../DeleteModal";
+import { NavigationBar } from "../NavigationBar";
 
 export const Detail = () => {
   const { id } = useParams();

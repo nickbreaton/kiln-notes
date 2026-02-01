@@ -7,5 +7,5 @@
     "jsxImportSource": "react",
     "plugins": [{ "name": "@effect/language-service" }],
     "verbatimModuleSyntax": true
-  },
+  }
 }

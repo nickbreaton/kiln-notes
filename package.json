@@ -7,7 +7,9 @@
     "build": "bun astro build",
     "tunnel": "ngrok http 4321",
     "preview": "wrangler pages dev ./dist",
-    "astro": "astro"
+    "astro": "astro",
+    "format": "dprint fmt",
+    "format:check": "dprint check"
   },
   "dependencies": {
     "@base-ui/react": "^1.1.0",
@@ -32,6 +34,7 @@
     "@effect/platform": "^0.94.2",
     "@effect/platform-browser": "^0.74.0",
     "@vite-pwa/astro": "^1.2.0",
+    "dprint": "^0.51.1",
     "effect": "^3.19.15",
     "localtunnel": "^2.0.2",
     "typescript": "^5.9.3"

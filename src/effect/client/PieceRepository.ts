@@ -1,13 +1,6 @@
-import {
-  DateTime,
-  Effect,
-  Option,
-  Schema,
-  Stream,
-  SubscriptionRef,
-} from "effect";
 import { KeyValueStore } from "@effect/platform";
 import { BrowserKeyValueStore } from "@effect/platform-browser";
+import { DateTime, Effect, Option, Schema, Stream, SubscriptionRef } from "effect";
 import { Collection, Piece } from "../schema";
 import { PhotoService } from "./PhotoService";
 
@@ -18,7 +11,7 @@ export class PieceRepository extends Effect.Service<PieceRepository>()(
       BrowserKeyValueStore.layerLocalStorage,
       PhotoService.Default,
     ],
-    effect: Effect.gen(function* () {
+    effect: Effect.gen(function*() {
       const kv = yield* KeyValueStore.KeyValueStore;
       const store = kv.forSchema(Collection);
       const storeKey = "piecesCollection";
@@ -37,7 +30,7 @@ export class PieceRepository extends Effect.Service<PieceRepository>()(
         ),
 
         createPieces: (files: File[]) =>
-          Effect.gen(function* () {
+          Effect.gen(function*() {
             // Plan
             // 1. Generate piece
             // 2. Adds image to service worker cache
@@ -70,14 +63,14 @@ export class PieceRepository extends Effect.Service<PieceRepository>()(
           }),
 
         movePiece: (uuid: Schema.UUID) =>
-          Effect.gen(function* () {
+          Effect.gen(function*() {
             // Plan
             // 1. Call API to update piece with new status and tiemstamp
             // 2. Invaliates local storage stream
           }),
 
         deletePiece: (id: string) =>
-          Effect.gen(function* () {
+          Effect.gen(function*() {
             // Plan
             // 1. Call API to delete piece
             // 2. Invalidates local storage stream
