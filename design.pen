@@ -3929,6 +3929,1456 @@
           ]
         }
       ]
+    },
+    {
+      "type": "frame",
+      "id": "settingsScreen",
+      "x": 2250,
+      "y": 0,
+      "name": "Kiln Notes - Settings",
+      "clip": true,
+      "width": 390,
+      "height": 844,
+      "fill": "$bg-primary",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "settingsHeader",
+          "name": "Settings Header",
+          "width": "fill_container",
+          "height": 64,
+          "fill": "$bg-surface",
+          "stroke": {
+            "align": "inside",
+            "thickness": {
+              "bottom": 1
+            },
+            "fill": "$border-subtle"
+          },
+          "padding": [
+            0,
+            16
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "settingsBackBtn",
+              "name": "Back Button",
+              "width": 44,
+              "height": 44,
+              "fill": "$bg-muted",
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "settingsBackIcon",
+                  "name": "Back Icon",
+                  "width": 22,
+                  "height": 22,
+                  "iconFontName": "arrow-left",
+                  "iconFontFamily": "lucide",
+                  "fill": "$text-primary"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "settingsTitle",
+              "name": "Settings Title",
+              "fill": "$text-primary",
+              "content": "Settings",
+              "fontFamily": "Outfit",
+              "fontSize": 17,
+              "fontWeight": "600"
+            },
+            {
+              "type": "frame",
+              "id": "settingsHeaderSpacer",
+              "name": "Spacer",
+              "width": 44,
+              "height": 44
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "settingsContent",
+          "name": "Settings Content",
+          "width": "fill_container",
+          "height": "fill_container",
+          "layout": "vertical",
+          "gap": 24,
+          "padding": [
+            24,
+            20
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "userProfileCard",
+              "name": "User Profile Card",
+              "width": "fill_container",
+              "fill": "$bg-surface",
+              "cornerRadius": 16,
+              "gap": 16,
+              "padding": 20,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "profileAvatar",
+                  "name": "Profile Avatar",
+                  "width": 56,
+                  "height": 56,
+                  "fill": "$accent-primary",
+                  "cornerRadius": 100,
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "profileAvatarInitials",
+                      "name": "Avatar Initials",
+                      "fill": "#FFFFFF",
+                      "content": "AL",
+                      "fontFamily": "Outfit",
+                      "fontSize": 18,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "profileInfo",
+                  "name": "Profile Info",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "profileName",
+                      "name": "Profile Name",
+                      "fill": "$text-primary",
+                      "content": "Alice",
+                      "fontFamily": "Outfit",
+                      "fontSize": 18,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "profileEmail",
+                      "name": "Profile Status",
+                      "fill": "$text-secondary",
+                      "content": "Passkey enabled",
+                      "fontFamily": "Outfit",
+                      "fontSize": 14
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "settingsSectionSecurity",
+              "name": "Security Section",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "securitySectionLabel",
+                  "name": "Section Label",
+                  "fill": "$text-secondary",
+                  "content": "Security",
+                  "fontFamily": "Outfit",
+                  "fontSize": 13,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "sessionInfoCard",
+                  "name": "Session Info Card",
+                  "width": "fill_container",
+                  "fill": "$bg-surface",
+                  "cornerRadius": 12,
+                  "gap": 12,
+                  "padding": [
+                    16,
+                    20
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "sessionCardIcon",
+                      "name": "Session Icon",
+                      "width": 20,
+                      "height": 20,
+                      "iconFontName": "shield",
+                      "iconFontFamily": "lucide",
+                      "fill": "$status-complete"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "sessionCardInfo",
+                      "name": "Session Info",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 2,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "sessionCardTitle",
+                          "name": "Session Title",
+                          "fill": "$text-primary",
+                          "content": "Active Session",
+                          "fontFamily": "Outfit",
+                          "fontSize": 15,
+                          "fontWeight": "500"
+                        },
+                        {
+                          "type": "text",
+                          "id": "sessionCardSubtitle",
+                          "name": "Session Subtitle",
+                          "fill": "$text-tertiary",
+                          "content": "Expires in 5 days",
+                          "fontFamily": "Outfit",
+                          "fontSize": 13
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "settingsSectionActions",
+              "name": "Actions Section",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "actionsSectionLabel",
+                  "name": "Section Label",
+                  "fill": "$text-secondary",
+                  "content": "Actions",
+                  "fontFamily": "Outfit",
+                  "fontSize": 13,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "logoutActionBtn",
+                  "name": "Logout Action Button",
+                  "width": "fill_container",
+                  "fill": "$bg-surface",
+                  "cornerRadius": 12,
+                  "gap": 12,
+                  "padding": [
+                    16,
+                    20
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "logoutActionIcon",
+                      "name": "Logout Icon",
+                      "width": 20,
+                      "height": 20,
+                      "iconFontName": "log-out",
+                      "iconFontFamily": "lucide",
+                      "fill": "$danger"
+                    },
+                    {
+                      "type": "text",
+                      "id": "logoutActionText",
+                      "name": "Logout Text",
+                      "fill": "$danger",
+                      "content": "Log Out",
+                      "fontFamily": "Outfit",
+                      "fontSize": 15,
+                      "fontWeight": "500"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "authLoginScreen",
+      "x": 4000,
+      "y": 0,
+      "name": "Kiln Notes - Login",
+      "clip": true,
+      "width": 390,
+      "height": 844,
+      "fill": "$bg-primary",
+      "layout": "vertical",
+      "padding": [
+        0,
+        32
+      ],
+      "justifyContent": "center",
+      "alignItems": "center",
+      "children": [
+        {
+          "type": "frame",
+          "id": "loginLogoContainer",
+          "name": "Logo Container",
+          "layout": "vertical",
+          "gap": 16,
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "loginLogo",
+              "name": "App Logo",
+              "width": 80,
+              "height": 80,
+              "fill": "$accent-primary",
+              "cornerRadius": 20,
+              "layout": "vertical",
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "loginLogoIcon",
+                  "name": "Logo Icon",
+                  "width": 40,
+                  "height": 40,
+                  "iconFontName": "flame",
+                  "iconFontFamily": "lucide",
+                  "fill": "#FFFFFF"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "loginAppName",
+              "name": "App Name",
+              "fill": "$text-primary",
+              "content": "Kiln Notes",
+              "fontFamily": "Outfit",
+              "fontSize": 28,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "loginTagline",
+              "name": "Tagline",
+              "fill": "$text-secondary",
+              "content": "Track your pottery pieces",
+              "fontFamily": "Outfit",
+              "fontSize": 16
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "loginSpacer1",
+          "name": "Spacer",
+          "width": "fit_content(0)",
+          "height": 64
+        },
+        {
+          "type": "frame",
+          "id": "loginButtonContainer",
+          "name": "Login Button Container",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 16,
+          "children": [
+            {
+              "type": "frame",
+              "id": "passkeyLoginBtn",
+              "name": "Passkey Login Button",
+              "reusable": true,
+              "width": "fill_container",
+              "height": 56,
+              "fill": "$bg-surface",
+              "cornerRadius": 14,
+              "stroke": {
+                "align": "inside",
+                "thickness": 1,
+                "fill": "$border-subtle"
+              },
+              "gap": 12,
+              "padding": [
+                0,
+                20
+              ],
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "passkeyIcon",
+                  "name": "Passkey Icon",
+                  "width": 24,
+                  "height": 24,
+                  "iconFontName": "fingerprint",
+                  "iconFontFamily": "lucide",
+                  "fill": "$text-primary"
+                },
+                {
+                  "type": "text",
+                  "id": "passkeyBtnText",
+                  "name": "Button Text",
+                  "fill": "$text-primary",
+                  "content": "Sign in with Passkey",
+                  "fontFamily": "Outfit",
+                  "fontSize": 16,
+                  "fontWeight": "600"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "loginHelpText",
+              "name": "Login Help Text",
+              "fill": "$text-tertiary",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Use your device's biometric authentication",
+              "textAlign": "center",
+              "fontFamily": "Outfit",
+              "fontSize": 14
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "loginSpacer2",
+          "name": "Spacer",
+          "width": "fit_content(0)",
+          "height": 40
+        },
+        {
+          "type": "frame",
+          "id": "Kn6u1",
+          "name": "registerLink",
+          "gap": 6,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "yHIDz",
+              "name": "registerText",
+              "fill": "$text-tertiary",
+              "content": "Need access?",
+              "fontFamily": "Outfit",
+              "fontSize": 14,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "text",
+              "id": "W2cHf",
+              "name": "registerAction",
+              "fill": "$accent-primary",
+              "content": "Create Passkey",
+              "fontFamily": "Outfit",
+              "fontSize": 14,
+              "fontWeight": "600"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "loginSessionInfo",
+          "name": "Session Info",
+          "gap": 6,
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon_font",
+              "id": "sessionIcon",
+              "name": "Session Icon",
+              "width": 14,
+              "height": 14,
+              "iconFontName": "shield-check",
+              "iconFontFamily": "lucide",
+              "fill": "$text-tertiary"
+            },
+            {
+              "type": "text",
+              "id": "sessionInfoText",
+              "name": "Session Info Text",
+              "fill": "$text-tertiary",
+              "content": "Secure session • 7 days",
+              "fontFamily": "Outfit",
+              "fontSize": 12
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "Q1Zxn",
+      "x": 4457,
+      "y": 0,
+      "name": "Kiln Notes - Register Passkey",
+      "clip": true,
+      "width": 390,
+      "height": 844,
+      "fill": "$bg-primary",
+      "layout": "vertical",
+      "padding": [
+        0,
+        32
+      ],
+      "justifyContent": "center",
+      "alignItems": "center",
+      "children": [
+        {
+          "type": "frame",
+          "id": "KxsOh",
+          "name": "logoContainer",
+          "layout": "vertical",
+          "gap": 16,
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "e5nQX",
+              "name": "logo",
+              "width": 80,
+              "height": 80,
+              "fill": "$accent-primary",
+              "cornerRadius": 20,
+              "layout": "vertical",
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "ocfQR",
+                  "name": "logoIcon",
+                  "width": 40,
+                  "height": 40,
+                  "iconFontName": "flame",
+                  "iconFontFamily": "lucide",
+                  "fill": "#FFFFFF"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "qdGux",
+              "name": "appName",
+              "fill": "$text-primary",
+              "content": "Kiln Notes",
+              "fontFamily": "Outfit",
+              "fontSize": 28,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "N6J1e",
+              "name": "subtitle",
+              "fill": "$text-secondary",
+              "content": "Create New Passkey",
+              "fontFamily": "Outfit",
+              "fontSize": 16,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "FguPV",
+          "name": "spacer1",
+          "width": "fit_content(0)",
+          "height": 32
+        },
+        {
+          "type": "frame",
+          "id": "0bvHW",
+          "name": "infoCard",
+          "width": "fill_container",
+          "fill": "$bg-surface",
+          "cornerRadius": 16,
+          "stroke": {
+            "align": "inside",
+            "thickness": 1,
+            "fill": "$border-subtle"
+          },
+          "layout": "vertical",
+          "gap": 16,
+          "padding": 20,
+          "children": [
+            {
+              "type": "frame",
+              "id": "9nF3N",
+              "name": "infoHeader",
+              "gap": 12,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "xDvod",
+                  "name": "infoIcon",
+                  "width": 20,
+                  "height": 20,
+                  "iconFontName": "info",
+                  "iconFontFamily": "lucide",
+                  "fill": "$accent-primary"
+                },
+                {
+                  "type": "text",
+                  "id": "GX67k",
+                  "name": "infoTitle",
+                  "fill": "$text-primary",
+                  "content": "How it works",
+                  "fontFamily": "Outfit",
+                  "fontSize": 16,
+                  "fontWeight": "600"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "NRuiM",
+              "name": "infoText",
+              "fill": "$text-secondary",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Create a passkey on this device. You'll receive a credential code to share with your administrator, which will grant you access to track your pottery progress.",
+              "fontFamily": "Outfit",
+              "fontSize": 14,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "EXJZr",
+          "name": "spacer2",
+          "width": "fit_content(0)",
+          "height": 24
+        },
+        {
+          "type": "frame",
+          "id": "DvPaI",
+          "name": "btnContainer",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 16,
+          "children": [
+            {
+              "type": "frame",
+              "id": "lPctL",
+              "name": "registerBtn",
+              "width": "fill_container",
+              "height": 56,
+              "fill": "$accent-primary",
+              "cornerRadius": 14,
+              "gap": 12,
+              "padding": [
+                0,
+                20
+              ],
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "Yt0WZ",
+                  "name": "registerIcon",
+                  "width": 24,
+                  "height": 24,
+                  "iconFontName": "key-round",
+                  "iconFontFamily": "lucide",
+                  "fill": "#FFFFFF"
+                },
+                {
+                  "type": "text",
+                  "id": "1HdQc",
+                  "name": "registerText",
+                  "fill": "#FFFFFF",
+                  "content": "Create Passkey",
+                  "fontFamily": "Outfit",
+                  "fontSize": 16,
+                  "fontWeight": "600"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "N7ggf",
+              "name": "helpText",
+              "fill": "$text-tertiary",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Uses your device's biometric authentication",
+              "textAlign": "center",
+              "fontFamily": "Outfit",
+              "fontSize": 14,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "QtdvX",
+          "name": "spacer3",
+          "width": "fit_content(0)",
+          "height": 24
+        },
+        {
+          "type": "frame",
+          "id": "CauSz",
+          "name": "backLink",
+          "gap": 8,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon_font",
+              "id": "ec3Oc",
+              "name": "backIcon",
+              "width": 18,
+              "height": 18,
+              "iconFontName": "arrow-left",
+              "iconFontFamily": "lucide",
+              "fill": "$text-secondary"
+            },
+            {
+              "type": "text",
+              "id": "yBYjk",
+              "name": "backText",
+              "fill": "$text-secondary",
+              "content": "Back to Sign In",
+              "fontFamily": "Outfit",
+              "fontSize": 14,
+              "fontWeight": "500"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "Krl66",
+      "x": 4907,
+      "y": 0,
+      "name": "Kiln Notes - Passkey Created",
+      "clip": true,
+      "width": 390,
+      "height": 844,
+      "fill": "$bg-primary",
+      "layout": "vertical",
+      "padding": [
+        48,
+        24
+      ],
+      "alignItems": "center",
+      "children": [
+        {
+          "type": "frame",
+          "id": "zuMoJ",
+          "name": "successIconContainer",
+          "width": 80,
+          "height": 80,
+          "fill": "$accent-primary",
+          "cornerRadius": 40,
+          "layout": "vertical",
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon_font",
+              "id": "LjsFL",
+              "name": "successIcon",
+              "width": 40,
+              "height": 40,
+              "iconFontName": "check",
+              "iconFontFamily": "lucide",
+              "fill": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "8wOyN",
+          "name": "successTitle",
+          "fill": "$text-primary",
+          "content": "Passkey Created",
+          "fontFamily": "Outfit",
+          "fontSize": 24,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "lcdgF",
+          "name": "successSubtitle",
+          "fill": "$text-secondary",
+          "content": "Share this code with your administrator",
+          "textAlign": "center",
+          "fontFamily": "Outfit",
+          "fontSize": 14,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "frame",
+          "id": "YgFpq",
+          "name": "spacer1",
+          "width": 1,
+          "height": 24
+        },
+        {
+          "type": "frame",
+          "id": "h5YEN",
+          "name": "codeCard",
+          "width": "fill_container",
+          "fill": "$bg-surface",
+          "cornerRadius": 12,
+          "stroke": {
+            "align": "inside",
+            "thickness": 1,
+            "fill": "$border-subtle"
+          },
+          "layout": "vertical",
+          "gap": 12,
+          "padding": 16,
+          "children": [
+            {
+              "type": "frame",
+              "id": "imn3z",
+              "name": "codeHeader",
+              "width": "fill_container",
+              "justifyContent": "space_between",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "6CsG5",
+                  "name": "codeLabel",
+                  "fill": "$text-secondary",
+                  "content": "Credential Code",
+                  "fontFamily": "Outfit",
+                  "fontSize": 12,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "0Vd6L",
+                  "name": "copyBtn",
+                  "fill": "$bg-muted",
+                  "cornerRadius": 6,
+                  "gap": 4,
+                  "padding": [
+                    4,
+                    8
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "C1X8R",
+                      "name": "copyIcon",
+                      "width": 14,
+                      "height": 14,
+                      "iconFontName": "copy",
+                      "iconFontFamily": "lucide",
+                      "fill": "$text-secondary"
+                    },
+                    {
+                      "type": "text",
+                      "id": "joRLh",
+                      "name": "copyText",
+                      "fill": "$text-secondary",
+                      "content": "Copy",
+                      "fontFamily": "Outfit",
+                      "fontSize": 12,
+                      "fontWeight": "500"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "giQg9",
+              "name": "codeBox",
+              "width": "fill_container",
+              "fill": "$bg-muted",
+              "cornerRadius": 8,
+              "layout": "vertical",
+              "padding": 12,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "4TzLe",
+                  "name": "codeText",
+                  "fill": "$text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "eyJpZCI6ImFiYzEyMyIsInB1YmxpY0tleSI6Ik1GWXdFQVlIS29aSXpqMENBUVlGSzRFRUFBb0RRZ0FFLi4uIiwidHlwZSI6InB1YmxpYy1rZXkifQ==",
+                  "fontFamily": "Outfit",
+                  "fontSize": 11,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "626V5",
+          "name": "spacer2",
+          "width": 1,
+          "height": 16
+        },
+        {
+          "type": "frame",
+          "id": "AdvJO",
+          "name": "instructionsCard",
+          "width": "fill_container",
+          "fill": "$bg-surface",
+          "cornerRadius": 12,
+          "stroke": {
+            "align": "inside",
+            "thickness": 1,
+            "fill": "$border-subtle"
+          },
+          "layout": "vertical",
+          "gap": 12,
+          "padding": 16,
+          "children": [
+            {
+              "type": "text",
+              "id": "Q3geX",
+              "name": "instructionsTitle",
+              "fill": "$text-primary",
+              "content": "Next Steps",
+              "fontFamily": "Outfit",
+              "fontSize": 14,
+              "fontWeight": "600"
+            },
+            {
+              "type": "frame",
+              "id": "C3tQ1",
+              "name": "step1",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "JENWV",
+                  "name": "step1Num",
+                  "width": 20,
+                  "height": 20,
+                  "fill": "$bg-muted",
+                  "cornerRadius": 10,
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "7jekg",
+                      "name": "step1NumText",
+                      "fill": "$text-secondary",
+                      "content": "1",
+                      "fontFamily": "Outfit",
+                      "fontSize": 12,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "A9yr8",
+                  "name": "step1Text",
+                  "fill": "$text-secondary",
+                  "content": "Copy the credential code above",
+                  "fontFamily": "Outfit",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "EpzV9",
+              "name": "step4",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "fMKKO",
+                  "name": "step4Num",
+                  "width": 20,
+                  "height": 20,
+                  "fill": "$accent-primary",
+                  "cornerRadius": 10,
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "KNXjD",
+                      "name": "step4NumText",
+                      "fill": "#FFFFFF",
+                      "content": "2",
+                      "fontFamily": "Outfit",
+                      "fontSize": 12,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "EiNc2",
+                  "name": "step4Text",
+                  "fill": "$text-primary",
+                  "content": "Send it to your administrator",
+                  "fontFamily": "Outfit",
+                  "fontSize": 13,
+                  "fontWeight": "500"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "w8Cm0",
+          "name": "spacer3",
+          "width": 1,
+          "height": 24
+        },
+        {
+          "type": "frame",
+          "id": "pyX9E",
+          "name": "doneBtn",
+          "width": "fill_container",
+          "height": 52,
+          "fill": "$bg-surface",
+          "cornerRadius": 14,
+          "stroke": {
+            "align": "inside",
+            "thickness": 1,
+            "fill": "$border-subtle"
+          },
+          "gap": 8,
+          "padding": [
+            0,
+            20
+          ],
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon_font",
+              "id": "HVuDs",
+              "name": "doneIcon",
+              "width": 18,
+              "height": 18,
+              "iconFontName": "arrow-left",
+              "iconFontFamily": "lucide",
+              "fill": "$text-primary"
+            },
+            {
+              "type": "text",
+              "id": "pIrUN",
+              "name": "doneText",
+              "fill": "$text-primary",
+              "content": "Back to Sign In",
+              "fontFamily": "Outfit",
+              "fontSize": 15,
+              "fontWeight": "600"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "8Sydt",
+      "x": 5357,
+      "y": 0,
+      "name": "Kiln Notes - Login Error",
+      "clip": true,
+      "width": 390,
+      "height": 844,
+      "fill": "$bg-primary",
+      "layout": "vertical",
+      "padding": [
+        0,
+        32
+      ],
+      "justifyContent": "center",
+      "alignItems": "center",
+      "children": [
+        {
+          "type": "frame",
+          "id": "H8OEG",
+          "name": "Logo Container",
+          "layout": "vertical",
+          "gap": 16,
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "5ZKbR",
+              "name": "App Logo",
+              "width": 80,
+              "height": 80,
+              "fill": "$accent-primary",
+              "cornerRadius": 20,
+              "layout": "vertical",
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "Dt7X6",
+                  "name": "Logo Icon",
+                  "width": 40,
+                  "height": 40,
+                  "iconFontName": "flame",
+                  "iconFontFamily": "lucide",
+                  "fill": "#FFFFFF"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "ILZkq",
+              "name": "App Name",
+              "fill": "$text-primary",
+              "content": "Kiln Notes",
+              "fontFamily": "Outfit",
+              "fontSize": 28,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "OAwt0",
+              "name": "Tagline",
+              "fill": "$text-secondary",
+              "content": "Track your pottery pieces",
+              "fontFamily": "Outfit",
+              "fontSize": 16
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "xe5aW",
+          "name": "Spacer",
+          "width": "fit_content(0)",
+          "height": 64
+        },
+        {
+          "type": "frame",
+          "id": "smohx",
+          "name": "Login Button Container",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 16,
+          "children": [
+            {
+              "type": "frame",
+              "id": "084uz",
+              "name": "errorAlert",
+              "width": "fill_container",
+              "fill": "#FEF2F2",
+              "cornerRadius": 12,
+              "gap": 12,
+              "padding": 16,
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "Gc4gZ",
+                  "name": "errorIcon",
+                  "width": 20,
+                  "height": 20,
+                  "iconFontName": "circle-alert",
+                  "iconFontFamily": "lucide",
+                  "fill": "$danger"
+                },
+                {
+                  "type": "frame",
+                  "id": "UBDb3",
+                  "name": "errorContent",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "Xs3AL",
+                      "name": "errorTitle",
+                      "fill": "$danger",
+                      "content": "Authentication Failed",
+                      "fontFamily": "Outfit",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "0nrQo",
+                      "name": "errorDesc",
+                      "fill": "#991B1B",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Your passkey is not registered on this server. Contact your administrator.",
+                      "fontFamily": "Outfit",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "FEch4",
+              "type": "ref",
+              "ref": "passkeyLoginBtn"
+            },
+            {
+              "type": "text",
+              "id": "4bGzw",
+              "name": "Login Help Text",
+              "fill": "$text-tertiary",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Use your device's biometric authentication",
+              "textAlign": "center",
+              "fontFamily": "Outfit",
+              "fontSize": 14
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "MFbyl",
+          "name": "Spacer",
+          "width": "fit_content(0)",
+          "height": 40
+        },
+        {
+          "type": "frame",
+          "id": "XATQG",
+          "name": "Session Info",
+          "gap": 6,
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon_font",
+              "id": "tjSRr",
+              "name": "Session Icon",
+              "width": 14,
+              "height": 14,
+              "iconFontName": "shield-check",
+              "iconFontFamily": "lucide",
+              "fill": "$text-tertiary"
+            },
+            {
+              "type": "text",
+              "id": "Q7Ryu",
+              "name": "Session Info Text",
+              "fill": "$text-tertiary",
+              "content": "Secure session • 7 days",
+              "fontFamily": "Outfit",
+              "fontSize": 12
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "CKCbN",
+      "x": 5807,
+      "y": 0,
+      "name": "Kiln Notes - Authenticating",
+      "clip": true,
+      "width": 390,
+      "height": 844,
+      "fill": "$bg-primary",
+      "layout": "vertical",
+      "padding": [
+        0,
+        32
+      ],
+      "justifyContent": "center",
+      "alignItems": "center",
+      "children": [
+        {
+          "type": "frame",
+          "id": "UFjMx",
+          "name": "Logo Container",
+          "layout": "vertical",
+          "gap": 16,
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "4rUut",
+              "name": "App Logo",
+              "width": 80,
+              "height": 80,
+              "fill": "$accent-primary",
+              "cornerRadius": 20,
+              "layout": "vertical",
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "gqsWj",
+                  "name": "Logo Icon",
+                  "width": 40,
+                  "height": 40,
+                  "iconFontName": "flame",
+                  "iconFontFamily": "lucide",
+                  "fill": "#FFFFFF"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "Jr0u8",
+              "name": "App Name",
+              "fill": "$text-primary",
+              "content": "Kiln Notes",
+              "fontFamily": "Outfit",
+              "fontSize": 28,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "DPo9m",
+              "name": "Tagline",
+              "fill": "$text-secondary",
+              "content": "Track your pottery pieces",
+              "fontFamily": "Outfit",
+              "fontSize": 16
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "wsvBa",
+          "name": "Spacer",
+          "width": "fit_content(0)",
+          "height": 64
+        },
+        {
+          "type": "frame",
+          "id": "duLay",
+          "name": "Login Button Container",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 16,
+          "children": [
+            {
+              "type": "frame",
+              "id": "rGjk2",
+              "name": "loadingState",
+              "width": "fill_container",
+              "fill": "$bg-muted",
+              "cornerRadius": 12,
+              "gap": 12,
+              "padding": 16,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "uTJzb",
+                  "name": "loadingIcon",
+                  "width": 20,
+                  "height": 20,
+                  "iconFontName": "loader",
+                  "iconFontFamily": "lucide",
+                  "fill": "$accent-primary"
+                },
+                {
+                  "type": "text",
+                  "id": "xYwcU",
+                  "name": "loadingText",
+                  "fill": "$text-secondary",
+                  "content": "Authenticating...",
+                  "fontFamily": "Outfit",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "Tg1gW",
+              "name": "Login Help Text",
+              "fill": "$text-tertiary",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Please authenticate using your device",
+              "textAlign": "center",
+              "fontFamily": "Outfit",
+              "fontSize": 14
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "Eo153",
+          "name": "Spacer",
+          "width": "fit_content(0)",
+          "height": 40
+        },
+        {
+          "type": "frame",
+          "id": "q1T21",
+          "name": "Session Info",
+          "gap": 6,
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon_font",
+              "id": "HPTBM",
+              "name": "Session Icon",
+              "width": 14,
+              "height": 14,
+              "iconFontName": "shield-check",
+              "iconFontFamily": "lucide",
+              "fill": "$text-tertiary"
+            },
+            {
+              "type": "text",
+              "id": "fR0Tg",
+              "name": "Session Info Text",
+              "fill": "$text-tertiary",
+              "content": "Secure session • 7 days",
+              "fontFamily": "Outfit",
+              "fontSize": 12
+            }
+          ]
+        }
+      ]
     }
   ],
   "variables": {
