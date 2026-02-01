@@ -11,11 +11,14 @@
   },
   "dependencies": {
     "@base-ui/react": "^1.1.0",
+    "@simplewebauthn/browser": "^13.2.2",
+    "@simplewebauthn/server": "^13.2.2",
     "@tailwindcss/vite": "^4.1.18",
     "@types/react": "^19.2.9",
     "@types/react-dom": "^19.2.3",
     "astro": "^5.16.15",
     "astrojs-service-worker": "^2.0.0",
+    "cookie": "^1.1.1",
     "lucide-react": "^0.563.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
@@ -28,6 +31,7 @@
     "@effect-atom/atom-react": "^0.4.6",
     "@effect/platform": "^0.94.2",
     "@effect/platform-browser": "^0.74.0",
+    "@types/cookie": "^1.0.0",
     "@vite-pwa/astro": "^1.2.0",
     "effect": "^3.19.15",
     "localtunnel": "^2.0.2"
