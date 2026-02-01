@@ -7,7 +7,7 @@ This document tracks the technical implementation plan for migrating Kiln Notes 
 ## Key Decisions (Avoid Re-researching)
 
 ### Authentication
-- **Limited-user passkeys**: Support 1-2 users via environment variables (`USER_[N]=[name];[base64_passkey_json]`)
+- **Limited-user passkeys**: Support 1-2 users via environment variables (`USERS=username1,username2` + `PASSKEY_[username]=base64value`)
 - **No server-side credential enrollment**: The site can run a WebAuthn *registration ceremony* and return the resulting credential JSON to the operator, but the server never auto-adds it to any user list.
   - Anyone can create a credential in the browser.
   - Only credentials manually copied into server secrets/env vars become valid login credentials.
@@ -42,9 +42,12 @@ This document tracks the technical implementation plan for migrating Kiln Notes 
 
 ```bash
 # .env
-# Users configured via env vars (format: USER_[N]=[name];[base64_passkey_json])
-USER_1="Alice;eyJpZCI6ImFiYzEyMyIs..."
-USER_2="Bob;eyJpZCI6ImRlZjQ1NiIs..."
+# Comma-separated list of usernames
+USERS="Alice,Bob"
+
+# Passkey credentials (base64-encoded credential JSON from WebAuthn registration)
+PASSKEY_Alice="eyJpZCI6ImFiYzEyMyIs..."
+PASSKEY_Bob="eyJpZCI6ImRlZjQ1NiIs..."
 
 # Used to sign cookies (session + challenge)
 AUTH_COOKIE_SECRET="change-me"
@@ -57,7 +60,10 @@ AUTH_COOKIE_SECRET="change-me"
 #### Chunk 1: Dependencies & Environment Setup
 - [ ] Add SimpleWebAuthn dependencies (`@simplewebauthn/browser`, `@simplewebauthn/server`)
 - [ ] Add cookie utilities for signing/validation
-- [ ] Create env var parsing for `USER_[N]` pattern (name + base64 credential JSON)
+- [ ] Create Effect service to parse `USERS` and `PASSKEY_*` env vars
+  - Parse `USERS` as comma-separated list
+  - Look up `PASSKEY_[username]` for each user
+  - Validate base64 credential JSON
 - [ ] Add `AUTH_COOKIE_SECRET` validation
 
 #### Chunk 2: Effect HTTP Routes (Server)
