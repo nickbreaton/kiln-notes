@@ -22,9 +22,9 @@ export class WebAuthnClientService
           catch: (error) => new WebAuthnClientRegistrationError({ cause: error }),
         });
 
-        const registration = yield* client.auth.registerVerify({ payload: { response, userId: optionsJSON.user.id } });
-
-        console.log(registration);
+        return yield* client.auth.registerVerify({
+          payload: { response, userId: optionsJSON.user.id },
+        });
       }).pipe(Effect.tapErrorCause(Console.error));
 
       return { register };
