@@ -151,30 +151,6 @@ export class WebAuthnCredential extends Schema.Class<WebAuthnCredential>("WebAut
   transports: Schema.optionalWith(MutableArray(AuthenticatorTransportFuture), { exact: true }),
 }) {}
 
-// Registration info from successful verification
-class RegistrationInfo extends Schema.Class<RegistrationInfo>("RegistrationInfo")({
-  fmt: AttestationFormat,
-  aaguid: Schema.String,
-  credential: WebAuthnCredential,
-  credentialType: Schema.Literal("public-key"),
-  attestationObject: Schema.Uint8Array,
-  userVerified: Schema.Boolean,
-  credentialDeviceType: CredentialDeviceType,
-  credentialBackedUp: Schema.Boolean,
-  origin: Schema.String,
-  rpID: Schema.optionalWith(Schema.String, { exact: true }),
-  // Authenticator extension results (opaque/unknown)
-  authenticatorExtensionResults: Schema.optionalWith(Schema.Unknown, { exact: true }),
-}) {}
-
-// Verified registration response (only the success case - this is what gets stored)
-export class VerifiedRegistrationResponse
-  extends Schema.Class<VerifiedRegistrationResponse>("VerifiedRegistrationResponse")({
-    verified: Schema.Literal(true),
-    registrationInfo: RegistrationInfo,
-  })
-{}
-
 export class PublicKeyCredentialCreationOptionsJSON
   extends Schema.Class<PublicKeyCredentialCreationOptionsJSON>("PublicKeyCredentialCreationOptionsJSON")({
     rp: PublicKeyCredentialRpEntity,

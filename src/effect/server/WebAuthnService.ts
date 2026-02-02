@@ -60,7 +60,7 @@ export class WebAuthnService extends Effect.Service<WebAuthnService>()("kiln-not
           return yield* new WebAuthnError({ cause: new Error("verifyRegistrationResponse returned not verified") });
         }
 
-        return result;
+        return result.registrationInfo;
       });
 
     return { generateRegistrationOptions, verifyRegistrationResponse };

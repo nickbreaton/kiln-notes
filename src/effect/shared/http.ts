@@ -1,10 +1,6 @@
 import { HttpApi, HttpApiEndpoint, HttpApiGroup, HttpApiSchema } from "@effect/platform";
 import { Schema } from "effect";
-import {
-  PublicKeyCredentialCreationOptionsJSON,
-  RegistrationResponseJSON,
-  VerifiedRegistrationResponse,
-} from "./authn";
+import { PublicKeyCredentialCreationOptionsJSON, RegistrationResponseJSON } from "./authn";
 
 // Define schemas
 export class HealthResponse extends Schema.Class<HealthResponse>("HealthResponse")({
@@ -19,21 +15,23 @@ export class WebAuthnApiError extends Schema.TaggedError<WebAuthnApiError>()(
   HttpApiSchema.annotations({ status: 400 }),
 ) {}
 
-// Define the API group (topLevel: true means no group prefix)
-export class ApiGroup extends HttpApiGroup.make("api", { topLevel: true })
-  .add(HttpApiEndpoint.get("health", "/api/health").addSuccess(HealthResponse))
+class AuthGroup extends HttpApiGroup.make("auth")
   .add(
-    HttpApiEndpoint.get("register-options", "/api/auth/register-options")
+    HttpApiEndpoint.get("registerOptions", "/api/auth/register-options")
       .addSuccess(PublicKeyCredentialCreationOptionsJSON)
       .addError(WebAuthnApiError),
-  )
-  .add(
-    HttpApiEndpoint.post("register-verify", "/api/auth/register-verify")
+  ).add(
+    HttpApiEndpoint.post("registerVerify", "/api/auth/register-verify")
       .setPayload(Schema.Struct({ response: RegistrationResponseJSON, userId: Schema.String }))
-      .addSuccess(VerifiedRegistrationResponse)
+      .addSuccess(Schema.Struct({ registrationInfo: Schema.String }))
       .addError(WebAuthnApiError),
   )
 {}
 
+// Define the API group
+export class ApiGroup extends HttpApiGroup.make("api", { topLevel: true })
+  .add(HttpApiEndpoint.get("health", "/api/health").addSuccess(HealthResponse))
+{}
+
 // Define the API
-export class KilnApi extends HttpApi.make("kiln").add(ApiGroup) {}
+export class KilnApi extends HttpApi.make("kiln").add(ApiGroup).add(AuthGroup) {}

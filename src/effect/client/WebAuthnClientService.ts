@@ -15,14 +15,14 @@ export class WebAuthnClientService
       const client = yield* HttpApiClient.make(KilnApi);
 
       const register = Effect.gen(function*() {
-        const optionsJSON = yield* client["register-options"]();
+        const optionsJSON = yield* client.auth.registerOptions();
 
         const response = yield* Effect.tryPromise({
           try: () => SimpleWebAuthnBrowser.startRegistration({ optionsJSON }),
           catch: (error) => new WebAuthnClientRegistrationError({ cause: error }),
         });
 
-        const registration = yield* client["register-verify"]({ payload: { response, userId: optionsJSON.user.id } });
+        const registration = yield* client.auth.registerVerify({ payload: { response, userId: optionsJSON.user.id } });
 
         console.log(registration);
       }).pipe(Effect.tapErrorCause(Console.error));

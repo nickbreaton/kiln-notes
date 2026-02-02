@@ -1,6 +1,6 @@
 import { HttpApiBuilder, HttpServer } from "@effect/platform";
 import type { APIRoute } from "astro";
-import { Effect, Layer } from "effect";
+import { Effect, Layer, Schema } from "effect";
 import { WebAuthnService } from "../../effect/server/WebAuthnService";
 import { HealthResponse, KilnApi, WebAuthnApiError } from "../../effect/shared/http";
 
@@ -8,27 +8,40 @@ import { HealthResponse, KilnApi, WebAuthnApiError } from "../../effect/shared/h
 // SERVER IMPLEMENTATION
 // =============================================================================
 
-// Create the group handlers layer (provides the actual endpoint implementations)
-const ApiGroupLive = HttpApiBuilder.group(KilnApi, "api", (handlers) =>
+// Create the "api" group handler (health endpoint)
+const ApiGroupLive = HttpApiBuilder.group(
+  KilnApi,
+  "api",
+  (handlers) =>
+    handlers.handle(
+      "health",
+      () => Effect.succeed(new HealthResponse({ status: "ok", timestamp: new Date().toISOString() })),
+    ),
+);
+
+// Create the "auth" group handler (WebAuthn endpoints)
+const AuthGroupLive = HttpApiBuilder.group(KilnApi, "auth", (handlers) =>
   handlers
-    .handle("health", () =>
-      Effect.succeed(
-        new HealthResponse({ status: "ok", timestamp: new Date().toISOString() }),
-      ))
-    .handle("register-options", () =>
+    .handle("registerOptions", () =>
       Effect.gen(function*() {
         const webAuthnService = yield* WebAuthnService;
         return yield* webAuthnService.generateRegistrationOptions;
       }).pipe(Effect.mapError(() => new WebAuthnApiError())))
-    .handle("register-verify", ({ payload }) =>
+    .handle("registerVerify", ({ payload }) =>
       Effect.gen(function*() {
         const webAuthnService = yield* WebAuthnService;
-        return yield* webAuthnService.verifyRegistrationResponse(payload);
+        const registrationInfo = yield* webAuthnService.verifyRegistrationResponse(payload);
+
+        // @effect-diagnostics-next-line preferSchemaOverJson:off -- no backing schema
+        const encodedRegistrationInfo = yield* Schema.encode(Schema.StringFromBase64)(JSON.stringify(registrationInfo));
+
+        return { registrationInfo: encodedRegistrationInfo };
       }).pipe(Effect.mapError(() => new WebAuthnApiError()))));
 
 // Create the API layer and provide the group implementations
 const ApiLayer = HttpApiBuilder.api(KilnApi).pipe(
   Layer.provide(ApiGroupLive),
+  Layer.provide(AuthGroupLive),
   Layer.provide(WebAuthnService.Default),
 );
 
