@@ -1,10 +1,16 @@
 import { Atom } from "@effect-atom/atom-react";
+import { FetchHttpClient } from "@effect/platform";
 import { Console, Effect, Layer, Schema, Stream } from "effect";
 import { PhotoService } from "./PhotoService";
 import { PieceRepository } from "./PieceRepository";
+import { WebAuthnClientService } from "./WebAuthnClientService";
 
 const runtime = Atom.runtime(
-  Layer.mergeAll(PieceRepository.Default, PhotoService.Default),
+  Layer.mergeAll(
+    PieceRepository.Default,
+    PhotoService.Default,
+    Layer.provide(WebAuthnClientService.Default, FetchHttpClient.layer),
+  ),
 );
 
 export const collectionAtom = runtime.atom(() => {
@@ -42,3 +48,10 @@ export const deletePieceAtom = runtime.fn((id: string) => {
     yield* repo.deletePiece(id);
   });
 });
+
+export const registerPasskeyAtom = runtime.fn(() =>
+  Effect.gen(function*() {
+    const webAuthn = yield* WebAuthnClientService;
+    return yield* webAuthn.register;
+  })
+);
