@@ -1,6 +1,6 @@
 import { HttpApi, HttpApiBuilder, HttpApp, HttpServer, HttpServerRequest, HttpServerResponse } from "@effect/platform";
 import type { APIRoute } from "astro";
-import { Context, Effect, Layer, Schema } from "effect";
+import { Config, ConfigProvider, Context, Effect, Layer, Redacted, Schema } from "effect";
 import { getIronSession, type IronSession as IronSessionData } from "iron-session";
 import { WebAuthnService } from "../../effect/server/WebAuthnService";
 import { CookieStoreMiddleware, HealthResponse, KilnApi, WebAuthnApiError } from "../../effect/shared/http";
@@ -42,6 +42,8 @@ const AuthGroupLive = HttpApiBuilder.group(KilnApi, "auth", (handlers) =>
 const CookieStoreMiddlewareLive = Layer.effect(
   CookieStoreMiddleware,
   Effect.gen(function*() {
+    const sessionSecret = yield* Config.redacted("SESSION_SECRET");
+
     // @effect-diagnostics-next-line returnEffectInGen:off -- outer effect for dependency gathering
     return Effect.gen(function*() {
       const currentRequest = yield* HttpServerRequest.HttpServerRequest.pipe(
@@ -55,7 +57,7 @@ const CookieStoreMiddlewareLive = Layer.effect(
       const session = yield* Effect.promise(() =>
         getIronSession<{ firstName: string }>(currentRequest, placeholderResponse, {
           cookieName: "favorite-cookie",
-          password: "super-secret-change-if-you-see-this-say-something",
+          password: Redacted.value(sessionSecret),
           cookieOptions: { sameSite: "strict" },
         })
       );
@@ -81,6 +83,7 @@ const ApiLayer = HttpApiBuilder.api(KilnApi).pipe(
   Layer.provide(AuthGroupLive),
   Layer.provide(WebAuthnService.Default),
   Layer.provide(CookieStoreMiddlewareLive),
+  Layer.provide(Layer.setConfigProvider(ConfigProvider.fromJson(import.meta.env))),
 );
 
 // Merge with HttpServer.layerContext for toWebHandler
