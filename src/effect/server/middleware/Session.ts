@@ -2,7 +2,10 @@ import { HttpApiMiddleware, HttpApp, HttpServerRequest, HttpServerResponse } fro
 import { Config, Context, Effect, Layer, Redacted } from "effect";
 import { getIronSession } from "iron-session";
 
-export class Session extends Context.Tag("Session")<Session, Partial<{ userId: string }>>() {}
+/**
+ * @effect-leakable-service
+ */
+export class Session extends Context.Tag("Session")<Session, Partial<{ expectedChallenge: string }>>() {}
 
 export class SessionMiddleware extends HttpApiMiddleware.Tag<SessionMiddleware>()("SessionMiddleware", {
   provides: Session,

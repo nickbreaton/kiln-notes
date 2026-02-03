@@ -2,8 +2,7 @@ import { KeyValueStore } from "@effect/platform";
 import * as SimpleWebAuthnServer from "@simplewebauthn/server";
 import { Effect, Option, Schema } from "effect";
 import { RegistrationResponseJSON } from "../shared/authn";
-
-type RegistrationResponseJSONEncoded = Schema.Schema.Encoded<typeof RegistrationResponseJSON>;
+import { Session } from "./middleware/Session";
 
 const rpName = "Kiln Notes";
 const rpID = "localhost";
@@ -16,9 +15,9 @@ export class WebAuthnError extends Schema.TaggedError<WebAuthnError>()("WebAuthn
 export class WebAuthnService extends Effect.Service<WebAuthnService>()("kiln-notes/effect/server/WebAuthnService", {
   dependencies: [KeyValueStore.layerMemory],
   effect: Effect.gen(function*() {
-    const kv = yield* KeyValueStore.KeyValueStore;
-
     const generateRegistrationOptions = Effect.gen(function*() {
+      const session = yield* Session;
+
       const optionsJSON = yield* Effect.tryPromise({
         try: () =>
           SimpleWebAuthnServer.generateRegistrationOptions({
@@ -30,18 +29,19 @@ export class WebAuthnService extends Effect.Service<WebAuthnService>()("kiln-not
         catch: (error) => new WebAuthnError({ cause: error }),
       });
 
-      const { id: challengeId } = optionsJSON.user;
-
-      yield* kv.set(`challenge:${challengeId}`, optionsJSON.challenge);
+      session.expectedChallenge = optionsJSON.challenge;
 
       return optionsJSON;
     });
 
     const verifyRegistrationResponse = ({ response, userId }: { response: RegistrationResponseJSON; userId: string }) =>
       Effect.gen(function*() {
-        const expectedChallenge = yield* kv.get(`challenge:${userId}`);
+        const session = yield* Session;
 
-        if (Option.isNone(expectedChallenge)) {
+        const { expectedChallenge } = session;
+        delete session.expectedChallenge;
+
+        if (!expectedChallenge) {
           return yield* new WebAuthnError({ cause: new Error("Expected challenge could not be recovered") });
         }
 
@@ -49,7 +49,7 @@ export class WebAuthnService extends Effect.Service<WebAuthnService>()("kiln-not
           try: () =>
             SimpleWebAuthnServer.verifyRegistrationResponse({
               response,
-              expectedChallenge: expectedChallenge.value,
+              expectedChallenge: expectedChallenge,
               expectedRPID: rpID,
               expectedOrigin: origin,
             }),
