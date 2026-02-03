@@ -1,22 +1,24 @@
 import { KeyValueStore } from "@effect/platform";
 import * as SimpleWebAuthnServer from "@simplewebauthn/server";
-import { Effect, Option, Schema } from "effect";
+import { Effect, Schema } from "effect";
 import { RegistrationResponseJSON } from "../shared/authn";
 import { Session } from "./middleware/Session";
+import { RelayingPartyService } from "./RelayingPartyService";
 
 const rpName = "Kiln Notes";
-const rpID = "localhost";
-const origin = `http://${rpID}:4321`;
 
 export class WebAuthnError extends Schema.TaggedError<WebAuthnError>()("WebAuthnError", {
   cause: Schema.Unknown,
 }) {}
 
 export class WebAuthnService extends Effect.Service<WebAuthnService>()("kiln-notes/effect/server/WebAuthnService", {
-  dependencies: [KeyValueStore.layerMemory],
+  dependencies: [KeyValueStore.layerMemory, RelayingPartyService.Default],
   effect: Effect.gen(function*() {
+    const relayingParty = yield* RelayingPartyService;
+
     const generateRegistrationOptions = Effect.gen(function*() {
       const session = yield* Session;
+      const { rpID } = yield* relayingParty.get;
 
       const optionsJSON = yield* Effect.tryPromise({
         try: () =>
@@ -34,9 +36,10 @@ export class WebAuthnService extends Effect.Service<WebAuthnService>()("kiln-not
       return optionsJSON;
     });
 
-    const verifyRegistrationResponse = ({ response, userId }: { response: RegistrationResponseJSON; userId: string }) =>
+    const verifyRegistrationResponse = (response: RegistrationResponseJSON) =>
       Effect.gen(function*() {
         const session = yield* Session;
+        const { rpID: expectedRPID, origin: expectedOrigin } = yield* relayingParty.get;
 
         const { expectedChallenge } = session;
         delete session.expectedChallenge;
@@ -49,9 +52,9 @@ export class WebAuthnService extends Effect.Service<WebAuthnService>()("kiln-not
           try: () =>
             SimpleWebAuthnServer.verifyRegistrationResponse({
               response,
-              expectedChallenge: expectedChallenge,
-              expectedRPID: rpID,
-              expectedOrigin: origin,
+              expectedChallenge,
+              expectedRPID,
+              expectedOrigin,
             }),
           catch: (error) => new WebAuthnError({ cause: error }),
         });

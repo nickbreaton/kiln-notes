@@ -26,7 +26,7 @@ const AuthGroupLive = HttpApiBuilder.group(KilnApi, "auth", (handlers) =>
     .handle("registerVerify", ({ payload }) =>
       Effect.gen(function*() {
         const webAuthnService = yield* WebAuthnService;
-        const registrationInfo = yield* webAuthnService.verifyRegistrationResponse(payload);
+        const registrationInfo = yield* webAuthnService.verifyRegistrationResponse(payload.response);
 
         // @effect-diagnostics-next-line preferSchemaOverJson:off -- no backing schema
         const encodedRegistrationInfo = yield* Schema.encode(Schema.StringFromBase64)(JSON.stringify(registrationInfo));

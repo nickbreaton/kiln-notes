@@ -16,7 +16,7 @@ class AuthGroup extends HttpApiGroup.make("auth")
       .addError(WebAuthnApiError),
   ).add(
     HttpApiEndpoint.post("registerVerify", "/api/auth/register-verify")
-      .setPayload(Schema.Struct({ response: RegistrationResponseJSON, userId: Schema.String }))
+      .setPayload(Schema.Struct({ response: RegistrationResponseJSON }))
       .addSuccess(Schema.Struct({ registrationInfo: Schema.String }))
       .addError(WebAuthnApiError),
   )

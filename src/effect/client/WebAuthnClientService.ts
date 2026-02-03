@@ -23,7 +23,7 @@ export class WebAuthnClientService
         });
 
         return yield* client.auth.registerVerify({
-          payload: { response, userId: optionsJSON.user.id },
+          payload: { response },
         });
       }).pipe(Effect.tapErrorCause(Console.error));
 
