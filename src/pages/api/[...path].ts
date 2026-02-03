@@ -5,17 +5,11 @@ import { SessionMiddlewareLive } from "../../effect/server/middleware/Session";
 import { WebAuthnService } from "../../effect/server/WebAuthnService";
 import { HealthResponse, KilnApi, WebAuthnApiError } from "../../effect/shared/http";
 
-// =============================================================================
-// SERVER IMPLEMENTATION
-// =============================================================================
-
-// Create the "api" group handler (health endpoint)
 const ApiGroupLive = HttpApiBuilder.group(KilnApi, "api", (handlers) =>
   handlers.handle("health", () => {
     return Effect.succeed(new HealthResponse({ status: "ok", timestamp: new Date().toISOString() }));
   }));
 
-// Create the "auth" group handler (WebAuthn endpoints)
 const AuthGroupLive = HttpApiBuilder.group(KilnApi, "auth", (handlers) =>
   handlers
     .handle("registerOptions", () =>
@@ -34,7 +28,6 @@ const AuthGroupLive = HttpApiBuilder.group(KilnApi, "auth", (handlers) =>
         return { registrationInfo: encodedRegistrationInfo };
       }).pipe(Effect.mapError(() => new WebAuthnApiError()))));
 
-// Create the API layer and provide the group implementations
 const ApiLayer = HttpApiBuilder.api(KilnApi).pipe(
   Layer.provide(ApiGroupLive),
   Layer.provide(AuthGroupLive),
@@ -43,17 +36,10 @@ const ApiLayer = HttpApiBuilder.api(KilnApi).pipe(
   Layer.provide(Layer.setConfigProvider(ConfigProvider.fromJson(import.meta.env))),
 );
 
-// Merge with HttpServer.layerContext for toWebHandler
 const { handler } = HttpApiBuilder.toWebHandler(
   Layer.mergeAll(ApiLayer, HttpServer.layerContext),
 );
 
-// =============================================================================
-// ASTRO API ROUTE
-// =============================================================================
-
-// Server-rendered API route - no static paths needed
-export const prerender = false;
-
-// Handle all HTTP methods with the Effect router
 export const ALL: APIRoute = async ({ request }) => handler(request);
+
+export const prerender = false;
