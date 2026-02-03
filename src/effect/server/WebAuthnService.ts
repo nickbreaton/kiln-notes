@@ -105,7 +105,7 @@ export class WebAuthnService extends Effect.Service<WebAuthnService>()("kiln-not
               expectedChallenge,
               expectedOrigin,
               expectedRPID,
-              credential: matchedPasskey.credential, // TODO: fix type mismatch (type level only)
+              credential: matchedPasskey.credential as SimpleWebAuthnServer.WebAuthnCredential,
             }),
           catch: (error) => new WebAuthnError({ cause: error }),
         });
