@@ -1,9 +1,10 @@
 import { KeyValueStore } from "@effect/platform";
 import * as SimpleWebAuthnServer from "@simplewebauthn/server";
-import { Effect, Schema } from "effect";
-import { AuthenticationResponseJSON, RegistrationResponseJSON } from "../shared/authn";
+import { Effect, Record, Schema } from "effect";
+import { AuthenticationResponseJSON, RegistrationInfoFromBase64, RegistrationResponseJSON } from "../shared/authn";
 import { Session } from "./middleware/Session";
 import { RelayingPartyService } from "./RelayingPartyService";
+import { UserService } from "./UserService";
 
 const rpName = "Kiln Notes";
 
@@ -12,9 +13,10 @@ export class WebAuthnError extends Schema.TaggedError<WebAuthnError>()("WebAuthn
 }) {}
 
 export class WebAuthnService extends Effect.Service<WebAuthnService>()("kiln-notes/effect/server/WebAuthnService", {
-  dependencies: [KeyValueStore.layerMemory, RelayingPartyService.Default],
+  dependencies: [KeyValueStore.layerMemory, RelayingPartyService.Default, UserService.Default],
   effect: Effect.gen(function*() {
     const relayingParty = yield* RelayingPartyService;
+    const users = yield* UserService;
 
     const generateRegistrationOptions = Effect.gen(function*() {
       const session = yield* Session;
@@ -63,7 +65,7 @@ export class WebAuthnService extends Effect.Service<WebAuthnService>()("kiln-not
           return yield* new WebAuthnError({ cause: new Error("verifyRegistrationResponse returned not verified") });
         }
 
-        return result.registrationInfo;
+        return yield* Schema.encode(RegistrationInfoFromBase64)(result.registrationInfo);
       });
 
     const generateAuthenticationOptions = Effect.gen(function*() {
@@ -82,9 +84,35 @@ export class WebAuthnService extends Effect.Service<WebAuthnService>()("kiln-not
 
     const verifyAuthenticationResponse = (response: AuthenticationResponseJSON) =>
       Effect.gen(function*() {
-        console.log(response.id);
-        // TODO: Implement authentication verification
-        throw new Error("Not implemented");
+        const session = yield* Session;
+        const { rpID: expectedRPID, origin: expectedOrigin } = yield* relayingParty.get;
+
+        const { expectedChallenge } = session;
+        delete session.expectedChallenge;
+
+        if (!expectedChallenge) {
+          return yield* new WebAuthnError({ cause: new Error("Expected challenge could not be recovered") });
+        }
+
+        const [user, matchedPasskey] = yield* Record.findFirst(users.passkeys, (passkey) => {
+          return passkey.credential.id === response.id;
+        });
+
+        const { verified } = yield* Effect.tryPromise({
+          try: () =>
+            SimpleWebAuthnServer.verifyAuthenticationResponse({
+              response,
+              expectedChallenge,
+              expectedOrigin,
+              expectedRPID,
+              credential: matchedPasskey.credential, // TODO: fix type mismatch (type level only)
+            }),
+          catch: (error) => new WebAuthnError({ cause: error }),
+        });
+
+        console.log("authed: ", user);
+
+        return { verified };
       });
 
     return {

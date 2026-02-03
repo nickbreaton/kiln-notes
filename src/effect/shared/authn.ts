@@ -220,3 +220,8 @@ export class RegistrationInfo extends Schema.Class<RegistrationInfo>("Registrati
   rpID: Schema.optional(Schema.String),
   userVerified: Schema.Boolean,
 }) {}
+
+export const RegistrationInfoFromBase64 = Schema.compose(
+  Schema.StringFromBase64,
+  Schema.parseJson(RegistrationInfo),
+)

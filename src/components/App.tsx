@@ -17,7 +17,7 @@ export const App = () => {
         <div>
           <button onClick={() => register()}>Register Passkey</button>
           {Result.isSuccess(registerResult) && (
-            <pre className="break-all text-wrap text-xs mt-2">{JSON.stringify(registerResult.value, null, 2)}</pre>
+            <pre className="break-all text-wrap text-xs mt-2">{registerResult.value}</pre>
           )}
         </div>
         <div>
