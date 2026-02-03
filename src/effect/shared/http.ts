@@ -1,5 +1,5 @@
 import { HttpApi, HttpApiEndpoint, HttpApiGroup, HttpApiMiddleware, HttpApiSchema } from "@effect/platform";
-import { Schema } from "effect";
+import { Context, Ref, Schema } from "effect";
 import { PublicKeyCredentialCreationOptionsJSON, RegistrationResponseJSON } from "./authn";
 
 // Define schemas
@@ -33,10 +33,12 @@ export class ApiGroup extends HttpApiGroup.make("api", { topLevel: true })
   .add(HttpApiEndpoint.get("health", "/api/health").addSuccess(HealthResponse))
 {}
 
+export class Session extends Context.Tag("Session")<Session, Partial<{ userId: string }>>() {}
+
 // Extend the HttpApiMiddleware.Tag class to define the logger middleware tag
-export class CookieStoreMiddleware
-  extends HttpApiMiddleware.Tag<CookieStoreMiddleware>()("CookieStoreMiddleware", {})
-{}
+export class SessionMiddleware extends HttpApiMiddleware.Tag<SessionMiddleware>()("SessionMiddleware", {
+  provides: Session,
+}) {}
 
 // Define the API
-export class KilnApi extends HttpApi.make("kiln").add(ApiGroup).add(AuthGroup).middleware(CookieStoreMiddleware) {}
+export class KilnApi extends HttpApi.make("kiln").add(ApiGroup).add(AuthGroup).middleware(SessionMiddleware) {}

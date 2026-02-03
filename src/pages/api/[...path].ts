@@ -1,9 +1,9 @@
-import { HttpApi, HttpApiBuilder, HttpApp, HttpServer, HttpServerRequest, HttpServerResponse } from "@effect/platform";
+import { HttpApiBuilder, HttpApp, HttpServer, HttpServerRequest, HttpServerResponse } from "@effect/platform";
 import type { APIRoute } from "astro";
-import { Config, ConfigProvider, Context, Effect, Layer, Redacted, Schema } from "effect";
+import { Config, ConfigProvider, Effect, Layer, Redacted, Ref, Schema } from "effect";
 import { getIronSession, type IronSession as IronSessionData } from "iron-session";
 import { WebAuthnService } from "../../effect/server/WebAuthnService";
-import { CookieStoreMiddleware, HealthResponse, KilnApi, WebAuthnApiError } from "../../effect/shared/http";
+import { HealthResponse, KilnApi, Session, SessionMiddleware, WebAuthnApiError } from "../../effect/shared/http";
 
 // =============================================================================
 // SERVER IMPLEMENTATION
@@ -39,8 +39,8 @@ const AuthGroupLive = HttpApiBuilder.group(KilnApi, "auth", (handlers) =>
         return { registrationInfo: encodedRegistrationInfo };
       }).pipe(Effect.mapError(() => new WebAuthnApiError()))));
 
-const CookieStoreMiddlewareLive = Layer.effect(
-  CookieStoreMiddleware,
+const SessionMiddlewareLive = Layer.effect(
+  SessionMiddleware,
   Effect.gen(function*() {
     const sessionSecret = yield* Config.redacted("SESSION_SECRET");
 
@@ -51,19 +51,15 @@ const CookieStoreMiddlewareLive = Layer.effect(
         Effect.orDie,
       );
 
-      // Retrieve headers off this before sending real response
       const placeholderResponse = new Response();
 
       const session = yield* Effect.promise(() =>
-        getIronSession<{ firstName: string }>(currentRequest, placeholderResponse, {
+        getIronSession<typeof Session.Service>(currentRequest, placeholderResponse, {
           cookieName: "favorite-cookie",
           password: Redacted.value(sessionSecret),
           cookieOptions: { sameSite: "strict" },
         })
       );
-
-      session.firstName ??= crypto.randomUUID();
-      console.log(session.firstName);
 
       yield* HttpApp.appendPreResponseHandler((_, response) => {
         return Effect.gen(function*() {
@@ -72,7 +68,7 @@ const CookieStoreMiddlewareLive = Layer.effect(
         });
       });
 
-      // TODO: return an object here to "provide" it (likely the session in some way, probably take advantage of schema?)
+      return Session.of(session);
     });
   }),
 );
@@ -82,7 +78,7 @@ const ApiLayer = HttpApiBuilder.api(KilnApi).pipe(
   Layer.provide(ApiGroupLive),
   Layer.provide(AuthGroupLive),
   Layer.provide(WebAuthnService.Default),
-  Layer.provide(CookieStoreMiddlewareLive),
+  Layer.provide(SessionMiddlewareLive),
   Layer.provide(Layer.setConfigProvider(ConfigProvider.fromJson(import.meta.env))),
 );
 
