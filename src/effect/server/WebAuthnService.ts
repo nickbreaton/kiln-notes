@@ -1,7 +1,7 @@
 import { KeyValueStore } from "@effect/platform";
 import * as SimpleWebAuthnServer from "@simplewebauthn/server";
 import { Effect, Record, Schema } from "effect";
-import { AuthenticationResponseJSON, RegistrationInfoFromBase64, RegistrationResponseJSON } from "../shared/authn";
+import { AuthenticationResponseJSON, RegistrationInfoFromBase64, RegistrationResponseJSON } from "../shared/webauthn";
 import { Session } from "./middleware/Session";
 import { RelayingPartyService } from "./RelayingPartyService";
 import { UserService } from "./UserService";

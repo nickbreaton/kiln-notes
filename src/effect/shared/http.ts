@@ -7,7 +7,7 @@ import {
   PublicKeyCredentialRequestOptionsJSON,
   RegistrationInfo,
   RegistrationResponseJSON,
-} from "./authn";
+} from "./webauthn";
 
 export class WebAuthnApiError extends Schema.TaggedError<WebAuthnApiError>()(
   "WebAuthnApiError",

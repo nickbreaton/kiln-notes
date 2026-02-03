@@ -1,5 +1,5 @@
 import { Config, Effect, Schema } from "effect";
-import { RegistrationInfo, RegistrationInfoFromBase64 } from "../shared/authn";
+import { RegistrationInfo, RegistrationInfoFromBase64 } from "../shared/webauthn";
 
 export class UserService extends Effect.Service<UserService>()("kiln-notes/effect/server/UserService", {
   effect: Effect.gen(function*() {

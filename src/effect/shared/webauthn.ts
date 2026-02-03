@@ -136,17 +136,13 @@ class AuthenticationExtensionsClientInputs
   })
 {}
 
-// WebAuthn Credential (stored credential for authentication)
 export class WebAuthnCredential extends Schema.Class<WebAuthnCredential>("WebAuthnCredential")({
   id: Base64URLString,
   publicKey: Schema.Uint8Array,
-  // Number of times this authenticator is expected to have been used
   counter: Schema.Number,
-  // From browser's transports (API L2 and up)
   transports: Schema.optionalWith(MutableArray(AuthenticatorTransportFuture), { exact: true }),
 }) {}
 
-// Authentication assertion response (for sign-in)
 class AuthenticatorAssertionResponseJSON
   extends Schema.Class<AuthenticatorAssertionResponseJSON>("AuthenticatorAssertionResponseJSON")({
     clientDataJSON: Base64URLString,
@@ -169,7 +165,6 @@ export class AuthenticationResponseJSON extends Schema.Class<AuthenticationRespo
   type: Schema.Literal("public-key"),
 }) {}
 
-// Options for authentication (sign-in)
 export class PublicKeyCredentialRequestOptionsJSON
   extends Schema.Class<PublicKeyCredentialRequestOptionsJSON>("PublicKeyCredentialRequestOptionsJSON")({
     challenge: Base64URLString,
@@ -198,20 +193,10 @@ export class PublicKeyCredentialCreationOptionsJSON
   })
 {}
 
-// Registration info returned from verifyRegistrationResponse
-class VerifiedRegistrationCredential
-  extends Schema.Class<VerifiedRegistrationCredential>("VerifiedRegistrationCredential")({
-    id: Base64URLString,
-    publicKey: Schema.Uint8Array,
-    counter: Schema.Number,
-    transports: Schema.optional(MutableArray(AuthenticatorTransportFuture)),
-  })
-{}
-
 export class RegistrationInfo extends Schema.Class<RegistrationInfo>("RegistrationInfo")({
   aaguid: Base64URLString,
   attestationObject: Schema.Uint8Array,
-  credential: VerifiedRegistrationCredential,
+  credential: WebAuthnCredential,
   credentialBackedUp: Schema.Boolean,
   credentialDeviceType: Schema.Union(Schema.Literal("singleDevice"), Schema.Literal("multiDevice")),
   credentialType: Schema.Literal("public-key"),
@@ -224,4 +209,4 @@ export class RegistrationInfo extends Schema.Class<RegistrationInfo>("Registrati
 export const RegistrationInfoFromBase64 = Schema.compose(
   Schema.StringFromBase64,
   Schema.parseJson(RegistrationInfo),
-)
+);
