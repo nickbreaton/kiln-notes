@@ -1,7 +1,7 @@
 import { HttpApi, HttpApiEndpoint, HttpApiGroup, HttpApiMiddleware, HttpApiSchema } from "@effect/platform";
 import { Context, Ref, Schema } from "effect";
 import { SessionMiddleware } from "../server/middleware/Session";
-import { PublicKeyCredentialCreationOptionsJSON, RegistrationResponseJSON } from "./authn";
+import { AuthenticationResponseJSON, PublicKeyCredentialCreationOptionsJSON, PublicKeyCredentialRequestOptionsJSON, RegistrationInfo, RegistrationResponseJSON } from "./authn";
 
 export class WebAuthnApiError extends Schema.TaggedError<WebAuthnApiError>()(
   "WebAuthnApiError",
@@ -17,7 +17,16 @@ class AuthGroup extends HttpApiGroup.make("auth")
   ).add(
     HttpApiEndpoint.post("registerVerify", "/api/auth/register-verify")
       .setPayload(Schema.Struct({ response: RegistrationResponseJSON }))
-      .addSuccess(Schema.Struct({ registrationInfo: Schema.String }))
+      .addSuccess(RegistrationInfo)
+      .addError(WebAuthnApiError),
+  ).add(
+    HttpApiEndpoint.get("authenticateOptions", "/api/auth/authenticate-options")
+      .addSuccess(PublicKeyCredentialRequestOptionsJSON)
+      .addError(WebAuthnApiError),
+  ).add(
+    HttpApiEndpoint.post("authenticateVerify", "/api/auth/authenticate-verify")
+      .setPayload(Schema.Struct({ response: AuthenticationResponseJSON }))
+      .addSuccess(Schema.Struct({ verified: Schema.Boolean }))
       .addError(WebAuthnApiError),
   )
 {}

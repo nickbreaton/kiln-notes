@@ -127,11 +127,6 @@ const AttestationFormat = Schema.Union(
   Schema.Literal("none"),
 );
 
-const CredentialDeviceType = Schema.Union(
-  Schema.Literal("singleDevice"),
-  Schema.Literal("multiDevice"),
-);
-
 class AuthenticationExtensionsClientInputs
   extends Schema.Class<AuthenticationExtensionsClientInputs>("AuthenticationExtensionsClientInputs")({
     appid: Schema.optionalWith(Schema.String, { exact: true }),
@@ -151,6 +146,42 @@ export class WebAuthnCredential extends Schema.Class<WebAuthnCredential>("WebAut
   transports: Schema.optionalWith(MutableArray(AuthenticatorTransportFuture), { exact: true }),
 }) {}
 
+// Authentication assertion response (for sign-in)
+class AuthenticatorAssertionResponseJSON
+  extends Schema.Class<AuthenticatorAssertionResponseJSON>("AuthenticatorAssertionResponseJSON")({
+    clientDataJSON: Base64URLString,
+    authenticatorData: Base64URLString,
+    signature: Base64URLString,
+    userHandle: Schema.optionalWith(Base64URLString, { exact: true }),
+    attestationObject: Schema.optionalWith(Base64URLString, { exact: true }),
+  })
+{}
+
+export class AuthenticationResponseJSON extends Schema.Class<AuthenticationResponseJSON>("AuthenticationResponseJSON")({
+  id: Base64URLString,
+  rawId: Base64URLString,
+  response: AuthenticatorAssertionResponseJSON,
+  authenticatorAttachment: Schema.optionalWith(
+    Schema.Union(Schema.Literal("cross-platform"), Schema.Literal("platform")),
+    { exact: true },
+  ),
+  clientExtensionResults: AuthenticationExtensionsClientOutputs,
+  type: Schema.Literal("public-key"),
+}) {}
+
+// Options for authentication (sign-in)
+export class PublicKeyCredentialRequestOptionsJSON
+  extends Schema.Class<PublicKeyCredentialRequestOptionsJSON>("PublicKeyCredentialRequestOptionsJSON")({
+    challenge: Base64URLString,
+    timeout: Schema.optional(Schema.Number),
+    rpId: Schema.optional(Schema.String),
+    allowCredentials: Schema.optional(MutableArray(PublicKeyCredentialDescriptorJSON)),
+    userVerification: Schema.optional(UserVerificationRequirement),
+    hints: Schema.optional(MutableArray(PublicKeyCredentialHint)),
+    extensions: Schema.optional(AuthenticationExtensionsClientInputs),
+  })
+{}
+
 export class PublicKeyCredentialCreationOptionsJSON
   extends Schema.Class<PublicKeyCredentialCreationOptionsJSON>("PublicKeyCredentialCreationOptionsJSON")({
     rp: PublicKeyCredentialRpEntity,
@@ -166,3 +197,26 @@ export class PublicKeyCredentialCreationOptionsJSON
     extensions: Schema.optionalWith(AuthenticationExtensionsClientInputs, { exact: true }),
   })
 {}
+
+// Registration info returned from verifyRegistrationResponse
+class VerifiedRegistrationCredential
+  extends Schema.Class<VerifiedRegistrationCredential>("VerifiedRegistrationCredential")({
+    id: Base64URLString,
+    publicKey: Schema.Uint8Array,
+    counter: Schema.Number,
+    transports: Schema.optional(MutableArray(AuthenticatorTransportFuture)),
+  })
+{}
+
+export class RegistrationInfo extends Schema.Class<RegistrationInfo>("RegistrationInfo")({
+  aaguid: Base64URLString,
+  attestationObject: Schema.Uint8Array,
+  credential: VerifiedRegistrationCredential,
+  credentialBackedUp: Schema.Boolean,
+  credentialDeviceType: Schema.Union(Schema.Literal("singleDevice"), Schema.Literal("multiDevice")),
+  credentialType: Schema.Literal("public-key"),
+  fmt: AttestationFormat,
+  origin: Schema.String,
+  rpID: Schema.optional(Schema.String),
+  userVerified: Schema.Boolean,
+}) {}

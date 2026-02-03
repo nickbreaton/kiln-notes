@@ -55,3 +55,10 @@ export const registerPasskeyAtom = runtime.fn(() =>
     return yield* webAuthn.register;
   })
 );
+
+export const authenticatePasskeyAtom = runtime.fn(() =>
+  Effect.gen(function*() {
+    const webAuthn = yield* WebAuthnClientService;
+    return yield* webAuthn.authenticate;
+  })
+);

@@ -1,7 +1,7 @@
 import { KeyValueStore } from "@effect/platform";
 import * as SimpleWebAuthnServer from "@simplewebauthn/server";
 import { Effect, Schema } from "effect";
-import { RegistrationResponseJSON } from "../shared/authn";
+import { AuthenticationResponseJSON, RegistrationResponseJSON } from "../shared/authn";
 import { Session } from "./middleware/Session";
 import { RelayingPartyService } from "./RelayingPartyService";
 
@@ -66,6 +66,32 @@ export class WebAuthnService extends Effect.Service<WebAuthnService>()("kiln-not
         return result.registrationInfo;
       });
 
-    return { generateRegistrationOptions, verifyRegistrationResponse };
+    const generateAuthenticationOptions = Effect.gen(function*() {
+      const session = yield* Session;
+      const { rpID } = yield* relayingParty.get;
+
+      const optionsJSON = yield* Effect.tryPromise({
+        try: () => SimpleWebAuthnServer.generateAuthenticationOptions({ rpID }),
+        catch: (error) => new WebAuthnError({ cause: error }),
+      });
+
+      session.expectedChallenge = optionsJSON.challenge;
+
+      return optionsJSON;
+    });
+
+    const verifyAuthenticationResponse = (response: AuthenticationResponseJSON) =>
+      Effect.gen(function*() {
+        console.log(response.id);
+        // TODO: Implement authentication verification
+        throw new Error("Not implemented");
+      });
+
+    return {
+      generateRegistrationOptions,
+      verifyRegistrationResponse,
+      generateAuthenticationOptions,
+      verifyAuthenticationResponse,
+    };
   }),
 }) {}

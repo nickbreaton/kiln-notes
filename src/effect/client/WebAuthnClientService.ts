@@ -9,6 +9,12 @@ export class WebAuthnClientRegistrationError
   })
 {}
 
+export class WebAuthnClientAuthenticationError
+  extends Schema.TaggedError<WebAuthnClientAuthenticationError>()("WebAuthnClientAuthenticationError", {
+    cause: Schema.Unknown,
+  })
+{}
+
 export class WebAuthnClientService
   extends Effect.Service<WebAuthnClientService>()("kiln-notes/effect/client/WebAuthnClientService", {
     effect: Effect.gen(function*() {
@@ -27,7 +33,20 @@ export class WebAuthnClientService
         });
       }).pipe(Effect.tapErrorCause(Console.error));
 
-      return { register };
+      const authenticate = Effect.gen(function*() {
+        const optionsJSON = yield* client.auth.authenticateOptions();
+
+        const response = yield* Effect.tryPromise({
+          try: () => SimpleWebAuthnBrowser.startAuthentication({ optionsJSON }),
+          catch: (error) => new WebAuthnClientAuthenticationError({ cause: error }),
+        });
+
+        return yield* client.auth.authenticateVerify({
+          payload: { response },
+        });
+      }).pipe(Effect.tapErrorCause(Console.error));
+
+      return { register, authenticate };
     }),
   })
 {}
