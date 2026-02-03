@@ -10,15 +10,10 @@ import { HealthResponse, KilnApi, WebAuthnApiError } from "../../effect/shared/h
 // =============================================================================
 
 // Create the "api" group handler (health endpoint)
-const ApiGroupLive = HttpApiBuilder.group(
-  KilnApi,
-  "api",
-  (handlers) =>
-    handlers.handle(
-      "health",
-      () => Effect.succeed(new HealthResponse({ status: "ok", timestamp: new Date().toISOString() })),
-    ),
-);
+const ApiGroupLive = HttpApiBuilder.group(KilnApi, "api", (handlers) =>
+  handlers.handle("health", () => {
+    return Effect.succeed(new HealthResponse({ status: "ok", timestamp: new Date().toISOString() }));
+  }));
 
 // Create the "auth" group handler (WebAuthn endpoints)
 const AuthGroupLive = HttpApiBuilder.group(KilnApi, "auth", (handlers) =>
