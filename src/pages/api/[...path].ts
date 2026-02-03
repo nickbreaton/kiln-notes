@@ -1,9 +1,9 @@
-import { HttpApiBuilder, HttpApp, HttpServer, HttpServerRequest, HttpServerResponse } from "@effect/platform";
+import { HttpApiBuilder, HttpServer } from "@effect/platform";
 import type { APIRoute } from "astro";
-import { Config, ConfigProvider, Effect, Layer, Redacted, Ref, Schema } from "effect";
-import { getIronSession, type IronSession as IronSessionData } from "iron-session";
+import { ConfigProvider, Effect, Layer, Schema } from "effect";
+import { SessionMiddlewareLive } from "../../effect/server/middleware/Session";
 import { WebAuthnService } from "../../effect/server/WebAuthnService";
-import { HealthResponse, KilnApi, Session, SessionMiddleware, WebAuthnApiError } from "../../effect/shared/http";
+import { HealthResponse, KilnApi, WebAuthnApiError } from "../../effect/shared/http";
 
 // =============================================================================
 // SERVER IMPLEMENTATION
@@ -38,40 +38,6 @@ const AuthGroupLive = HttpApiBuilder.group(KilnApi, "auth", (handlers) =>
 
         return { registrationInfo: encodedRegistrationInfo };
       }).pipe(Effect.mapError(() => new WebAuthnApiError()))));
-
-const SessionMiddlewareLive = Layer.effect(
-  SessionMiddleware,
-  Effect.gen(function*() {
-    const sessionSecret = yield* Config.redacted("SESSION_SECRET");
-
-    // @effect-diagnostics-next-line returnEffectInGen:off -- outer effect for dependency gathering
-    return Effect.gen(function*() {
-      const currentRequest = yield* HttpServerRequest.HttpServerRequest.pipe(
-        Effect.flatMap(HttpServerRequest.toWeb),
-        Effect.orDie,
-      );
-
-      const placeholderResponse = new Response();
-
-      const session = yield* Effect.promise(() =>
-        getIronSession<typeof Session.Service>(currentRequest, placeholderResponse, {
-          cookieName: "favorite-cookie",
-          password: Redacted.value(sessionSecret),
-          cookieOptions: { sameSite: "strict" },
-        })
-      );
-
-      yield* HttpApp.appendPreResponseHandler((_, response) => {
-        return Effect.gen(function*() {
-          yield* Effect.promise(() => session.save());
-          return yield* HttpServerResponse.setHeaders(response, placeholderResponse.headers);
-        });
-      });
-
-      return Session.of(session);
-    });
-  }),
-);
 
 // Create the API layer and provide the group implementations
 const ApiLayer = HttpApiBuilder.api(KilnApi).pipe(
