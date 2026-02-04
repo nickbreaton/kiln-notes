@@ -3,9 +3,21 @@ import { Config, Context, Effect, Layer, Redacted } from "effect";
 import { getIronSession } from "iron-session";
 
 /**
+ * This data can be trusted as its cryptographically secured,
+ * take care when writing to it.
+ */
+export interface SessionData {
+  expectedChallenge: string;
+  user: string;
+}
+
+/**
  * @effect-leakable-service
  */
-export class Session extends Context.Tag("Session")<Session, Partial<{ expectedChallenge: string }>>() {}
+export class Session extends Context.Tag("Session")<
+  Session,
+  Partial<SessionData>
+>() {}
 
 export class SessionMiddleware extends HttpApiMiddleware.Tag<SessionMiddleware>()("SessionMiddleware", {
   provides: Session,

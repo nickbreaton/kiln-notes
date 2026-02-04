@@ -110,7 +110,7 @@ export class WebAuthnService extends Effect.Service<WebAuthnService>()("kiln-not
           catch: (error) => new WebAuthnError({ cause: error }),
         });
 
-        console.log("authed: ", user);
+        session.user = user;
 
         return { verified };
       });
