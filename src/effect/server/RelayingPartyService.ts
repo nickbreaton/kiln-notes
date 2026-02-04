@@ -1,5 +1,5 @@
 import { HttpServerRequest } from "@effect/platform";
-import { Config, Effect, Option, Schema } from "effect";
+import { Array, Config, Effect, Option, Schema } from "effect";
 
 export class RelayingPartyError extends Schema.TaggedError<RelayingPartyError>()("RelayingPartyError", {
   message: Schema.String,
@@ -7,12 +7,10 @@ export class RelayingPartyError extends Schema.TaggedError<RelayingPartyError>()
 
 export class RelayingPartyService extends Effect.Service<RelayingPartyService>()("RelayingPartyService", {
   effect: Effect.gen(function*() {
-    const allowedOriginsFromConfig = yield* Config.option(Config.array(Config.string(), "RP_ORIGIN"));
-
-    const allowedOrigins = [
-      "http://localhost:4321",
-      ...Option.getOrElse(allowedOriginsFromConfig, () => []),
-    ];
+    const allowedOrigins = yield* Config.array(Config.string(), "RP_ORIGIN").pipe(
+      Config.withDefault([]),
+      Config.map(Array.union(["http://localhost:4321"])),
+    );
 
     const get = Effect.gen(function*() {
       const request = yield* HttpServerRequest.HttpServerRequest;
