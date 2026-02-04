@@ -6,11 +6,22 @@ import { CacheFirst, StaleWhileRevalidate } from "workbox-strategies";
 
 cleanupOutdatedCaches();
 
+// Cloudflare Pages uses `/_worker.js/...` as a runtime entrypoint and it is not
+// fetchable as a static asset; exclude it from precaching to avoid install
+// failures.
 // @ts-ignore
-precacheAndRoute(self.__WB_MANIFEST, {
+const precacheManifest = self.__WB_MANIFEST.filter((entry: any) => {
+  const url = typeof entry === "string" ? entry : entry?.url;
+  return (
+    typeof url === "string" &&
+    // Some builds emit `_worker.js/...` (no leading slash) in the manifest.
+    !/(^|\/)\_worker\.js(\/|$)/.test(url)
+  );
+});
+
+precacheAndRoute(precacheManifest, {
   directoryIndex: "index.html",
   cleanURLs: true,
-  ignoreURLParametersMatching: [/_worker\.js/i],
 });
 
 // dprint-ignore
