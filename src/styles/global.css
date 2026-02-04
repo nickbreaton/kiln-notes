@@ -52,6 +52,8 @@
 
   /* Opacity values for drag states */
   --opacity-muted: 0.5;
+
+  --font-sans: "Outfit", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif
 }
 
 body {

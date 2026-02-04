@@ -11,7 +11,7 @@ export const prerender = false;
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=block"
       rel="stylesheet"
     />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -23,7 +23,7 @@ export const prerender = false;
     <meta name="generator" content={Astro.generator} />
     <title>Kiln Notes</title>
   </head>
-  <body class="relative select-none pointer-fine:select-auto">
+  <body class="relative select-none pointer-fine:select-auto font-sans">
     <App client:only="react" />
   </body>
 </html>
