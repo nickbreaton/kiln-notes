@@ -11,7 +11,7 @@ import {
 
 export class WebAuthnApiError extends Schema.TaggedError<WebAuthnApiError>()(
   "WebAuthnApiError",
-  {},
+  { cause: Schema.Unknown },
   HttpApiSchema.annotations({ status: 400 }),
 ) {}
 

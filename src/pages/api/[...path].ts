@@ -18,23 +18,23 @@ const AuthGroupLive = HttpApiBuilder.group(KilnApi, "auth", (handlers) =>
       Effect.gen(function*() {
         const webAuthnService = yield* WebAuthnService;
         return yield* webAuthnService.generateRegistrationOptions;
-      }).pipe(Effect.mapError(() => new WebAuthnApiError())))
+      }).pipe(Effect.mapError((error) => new WebAuthnApiError({ cause: error }))))
     .handle("registerVerify", ({ payload }) =>
       Effect.gen(function*() {
         const webAuthnService = yield* WebAuthnService;
         return yield* webAuthnService.verifyRegistrationResponse(payload.response);
-      }).pipe(Effect.mapError(() => new WebAuthnApiError())))
+      }).pipe(Effect.mapError((error) => new WebAuthnApiError({ cause: error }))))
     .handle("authenticateOptions", () =>
       Effect.gen(function*() {
         const webAuthnService = yield* WebAuthnService;
         return yield* webAuthnService.generateAuthenticationOptions;
-      }).pipe(Effect.mapError(() => new WebAuthnApiError())))
+      }).pipe(Effect.mapError((error) => new WebAuthnApiError({ cause: error }))))
     .handle("authenticateVerify", ({ payload }) =>
       Effect.gen(function*() {
         const webAuthnService = yield* WebAuthnService;
         const result = yield* webAuthnService.verifyAuthenticationResponse(payload.response);
         return result;
-      }).pipe(Effect.mapError(() => new WebAuthnApiError()))));
+      }).pipe(Effect.mapError((error) => new WebAuthnApiError({ cause: error }))))));
 
 const AstroConfigProvider = fromAstroSecret(getSecret);
 
