@@ -1,5 +1,6 @@
 import { HttpApiBuilder, HttpServer } from "@effect/platform";
 import type { APIRoute } from "astro";
+import * as env from "astro:env/server";
 import { ConfigProvider, Effect, Layer, Schema } from "effect";
 import { SessionMiddlewareLive } from "../../effect/server/middleware/Session";
 import { WebAuthnService } from "../../effect/server/WebAuthnService";
@@ -39,7 +40,7 @@ const ApiLayer = HttpApiBuilder.api(KilnApi).pipe(
   Layer.provide(AuthGroupLive),
   Layer.provide(WebAuthnService.Default),
   Layer.provide(SessionMiddlewareLive),
-  Layer.provide(Layer.setConfigProvider(ConfigProvider.fromJson(import.meta.env))),
+  Layer.provide(Layer.setConfigProvider(ConfigProvider.fromJson({ ...import.meta.env, ...env }))),
 );
 
 const { handler } = HttpApiBuilder.toWebHandler(
