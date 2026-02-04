@@ -23,7 +23,7 @@ export const DeleteModal = ({
             <div className="flex h-12 w-12 items-center justify-center rounded-full bg-danger-500/10">
               <Trash2 className="h-6 w-6 text-danger-500" aria-hidden="true" />
             </div>
-            <AlertDialog.Title className="text-lg font-semibold text-ink-900">
+            <AlertDialog.Title className="text-lg font-medium text-ink-900">
               {" "}
               Delete this piece?
             </AlertDialog.Title>
@@ -38,7 +38,7 @@ export const DeleteModal = ({
             </AlertDialog.Close>
             <AlertDialog.Close
               onClick={onConfirm}
-              className="flex h-full items-center justify-center text-base font-semibold text-danger-500 active:bg-danger-500/10"
+              className="flex h-full items-center justify-center text-base font-medium text-danger-500 active:bg-danger-500/10"
             >
               Delete
             </AlertDialog.Close>

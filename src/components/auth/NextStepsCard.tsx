@@ -1,7 +1,7 @@
 export function NextStepsCard() {
   return (
     <div className="w-full bg-white rounded-xl border border-cream-200 p-4 flex flex-col gap-3">
-      <h3 className="text-sm font-semibold text-ink-900">Next Steps</h3>
+      <h3 className="text-sm font-medium text-ink-900">Next Steps</h3>
       <div className="flex items-start gap-2.5">
         <div className="w-5 h-5 bg-cream-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
           <span className="text-xs text-ink-500">1</span>

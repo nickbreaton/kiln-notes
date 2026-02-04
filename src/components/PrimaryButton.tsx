@@ -24,8 +24,8 @@ export const PrimaryButton = ({
   return (
     <Button
       className={`
-        w-full h-14 rounded-xl flex items-center justify-center gap-3 
-        text-base font-semibold cursor-pointer relative
+        w-full h-14 rounded-xl flex items-center justify-center gap-3
+        text-base font-medium cursor-pointer relative
         ${variantClasses[variant]}
         ${mobileTouchArea}
       `}

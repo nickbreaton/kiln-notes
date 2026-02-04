@@ -18,7 +18,7 @@ export const Piece = ({ imageUrl, dayLabel, muted }: PieceProps) => {
     >
       {dayLabel
         ? (
-          <div className="absolute left-1.5 top-1.5 rounded-md bg-black/60 px-1.5 py-0.5 text-[11px] font-semibold text-white">
+          <div className="absolute left-1.5 top-1.5 rounded-md bg-black/60 px-1.5 py-0.5 text-[11px] font-medium text-white">
             {dayLabel}
           </div>
         )

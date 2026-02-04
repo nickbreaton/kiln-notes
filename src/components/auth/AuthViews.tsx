@@ -33,7 +33,7 @@ export function LoginView({
 
       <button onClick={onGoToRegister} className="mt-10 flex items-center gap-1.5 cursor-pointer">
         <span className="text-sm text-ink-400">Need access?</span>
-        <span className="text-sm font-semibold text-kiln-600">Create passkey</span>
+        <span className="text-sm font-medium text-kiln-600">Create passkey</span>
       </button>
     </AuthScreen>
   );
