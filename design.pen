@@ -4336,7 +4336,7 @@
                   "id": "passkeyBtnText",
                   "name": "Button Text",
                   "fill": "$text-primary",
-                  "content": "Sign in with Passkey",
+                  "content": "Sign in with passkey",
                   "fontFamily": "Outfit",
                   "fontSize": 16,
                   "fontWeight": "600"
@@ -4388,7 +4388,7 @@
               "id": "W2cHf",
               "name": "registerAction",
               "fill": "$accent-primary",
-              "content": "Create Passkey",
+              "content": "Create passkey",
               "fontFamily": "Outfit",
               "fontSize": 14,
               "fontWeight": "600"
@@ -4462,7 +4462,7 @@
               "id": "N6J1e",
               "name": "subtitle",
               "fill": "$text-secondary",
-              "content": "Create New Passkey",
+              "content": "Create new passkey",
               "fontFamily": "Outfit",
               "fontSize": 16,
               "fontWeight": "normal"
@@ -4581,7 +4581,7 @@
                   "id": "1HdQc",
                   "name": "registerText",
                   "fill": "#FFFFFF",
-                  "content": "Create Passkey",
+                  "content": "Create passkey",
                   "fontFamily": "Outfit",
                   "fontSize": 16,
                   "fontWeight": "600"
@@ -4633,7 +4633,7 @@
               "id": "yBYjk",
               "name": "backText",
               "fill": "$text-secondary",
-              "content": "Back to Sign In",
+              "content": "Back to sign in",
               "fontFamily": "Outfit",
               "fontSize": 14,
               "fontWeight": "500"
@@ -4702,7 +4702,7 @@
               "y": 0,
               "name": "successTitle",
               "fill": "$text-primary",
-              "content": "Passkey Created",
+              "content": "Passkey created",
               "fontFamily": "Outfit",
               "fontSize": 24,
               "fontWeight": "700"
@@ -4988,7 +4988,7 @@
               "id": "pIrUN",
               "name": "doneText",
               "fill": "$text-primary",
-              "content": "Back to Sign In",
+              "content": "Back to sign in",
               "fontFamily": "Outfit",
               "fontSize": 15,
               "fontWeight": "600"
