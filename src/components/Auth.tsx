@@ -1,5 +1,5 @@
 import { ArrowLeft, Check, CircleAlert, Copy, Flame, Info, KeyRound, X } from "lucide-react";
-import { useState } from "react";
+import { type ReactNode, useState } from "react";
 import { PrimaryButton } from "./PrimaryButton";
 
 type AuthState = "login" | "register" | "created";
@@ -38,7 +38,7 @@ export const Auth = ({ onLogin }: AuthProps) => {
     if (Math.random() > 0.5) {
       onLogin?.();
     } else {
-      setErrorMessage("Authentication failed. Please try again.");
+      setErrorMessage("Could not authenitcate passkey. Please try again.");
     }
   };
 
@@ -68,22 +68,26 @@ export const Auth = ({ onLogin }: AuthProps) => {
     </div>
   );
 
+  const Screen = ({ children }: { children: ReactNode }) => (
+    <div className="flex flex-1 flex-col items-center pt-32 pb-48 mx-5">
+      {children}
+    </div>
+  );
+
   // Login Screen
   if (currentState === "login") {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen px-8 py-12">
+      <Screen>
         <div className="flex flex-col items-center gap-4">
           <Logo />
           <p className="text-base text-ink-500">Track your pottery pieces</p>
         </div>
 
-        <div className="h-16" />
-
-        <div className="w-full flex flex-col gap-4">
+        <div className="mt-10 w-full flex flex-col gap-4">
           {/* Error Banner */}
           {errorMessage && (
             <div className="w-full bg-danger-light rounded-xl p-4 flex items-start gap-3">
-              <CircleAlert className="w-5 h-5 text-danger-500 flex-shrink-0 mt-0.5" />
+              <CircleAlert className="w-5 h-5 text-danger-500 shrink-0 mt-0.5" />
               <div className="flex-1 flex flex-col gap-1">
                 <span className="text-sm font-medium text-danger-500">Authentication Failed</span>
                 <span className="text-sm text-danger-500/80">{errorMessage}</span>
@@ -98,78 +102,70 @@ export const Auth = ({ onLogin }: AuthProps) => {
           )}
 
           <PrimaryButton variant="secondary" onClick={handleAuthenticate}>
-            Sign in with Passkey
+            Sign in with passkey
           </PrimaryButton>
           <p className="text-sm text-ink-400 text-center">
-            Use your device&apos;s biometric authentication
+            Use your device’s biometric authentication
           </p>
         </div>
 
-        <div className="h-10" />
-
         <button
           onClick={() => setCurrentState("register")}
-          className="flex items-center gap-1.5 cursor-pointer"
+          className="mt-10 flex items-center gap-1.5 cursor-pointer"
         >
           <span className="text-sm text-ink-400">Need access?</span>
-          <span className="text-sm font-semibold text-kiln-600">Create Passkey</span>
+          <span className="text-sm font-semibold text-kiln-600">Create passkey</span>
         </button>
-      </div>
+      </Screen>
     );
   }
 
   // Register Passkey Screen
   if (currentState === "register") {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen px-8 py-12">
+      <Screen>
         <div className="flex flex-col items-center gap-4">
           <Logo />
-          <p className="text-base text-ink-500">Create New Passkey</p>
+          <p className="text-base text-ink-500">Track your pottery pieces</p>
         </div>
 
-        <div className="h-8" />
-
         {/* Info Card */}
-        <div className="w-full bg-white rounded-2xl border border-cream-200 p-5 flex flex-col gap-4">
+        <div className="mt-8 w-full bg-white rounded-2xl border border-cream-200 p-5 flex flex-col gap-4">
           <div className="flex items-center gap-3">
             <Info className="w-5 h-5 text-kiln-600" />
             <span className="text-base font-semibold text-ink-900">How it works</span>
           </div>
           <p className="text-sm text-ink-500">
-            Create a passkey on this device. You&apos;ll receive a credential code to share with your administrator,
-            which will grant you access to track your pottery progress.
+            Create a passkey on this device. You’ll receive a credential code to share with your administrator, which
+            will grant you access to track your pottery progress.
           </p>
         </div>
 
-        <div className="h-6" />
-
-        <div className="w-full flex flex-col gap-4">
+        <div className="mt-6 w-full flex flex-col gap-4">
           <PrimaryButton variant="primary" onClick={handleRegister}>
             <KeyRound className="w-6 h-6 text-white" />
-            Create Passkey
+            Create passkey
           </PrimaryButton>
           <p className="text-sm text-ink-400 text-center">
-            Uses your device&apos;s biometric authentication
+            Uses your device’s biometric authentication
           </p>
         </div>
-
-        <div className="h-6" />
 
         <button
           onClick={() => setCurrentState("login")}
-          className="flex items-center gap-2 cursor-pointer"
+          className="mt-8 flex items-center gap-2 cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4 text-ink-500" />
           <span className="text-sm font-medium text-ink-500">Back to Sign In</span>
         </button>
-      </div>
+      </Screen>
     );
   }
 
   // Passkey Created (Success) Screen
   if (currentState === "created") {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen px-6 py-12">
+      <Screen>
         <div className="w-20 h-20 bg-kiln-600 rounded-full flex items-center justify-center">
           <Check className="w-10 h-10 text-white" />
         </div>
@@ -195,7 +191,7 @@ export const Auth = ({ onLogin }: AuthProps) => {
             >
               <Copy className="w-3 h-3 text-ink-500" />
               <span className="text-xs text-ink-500">
-                {copied ? "Copied!" : "Copy"}
+                {copied ? "Copied" : "Copy"}
               </span>
             </button>
           </div>
@@ -232,7 +228,7 @@ export const Auth = ({ onLogin }: AuthProps) => {
           <ArrowLeft className="w-4 h-4 text-ink-900" />
           Back to Sign In
         </PrimaryButton>
-      </div>
+      </Screen>
     );
   }
 
