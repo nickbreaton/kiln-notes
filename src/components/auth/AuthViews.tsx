@@ -28,7 +28,7 @@ export function LoginView({
         <PrimaryButton variant="secondary" onClick={onAuthenticate}>
           Sign in with passkey
         </PrimaryButton>
-        <p className="text-sm text-ink-400 text-center">Use your device’s biometric authentication</p>
+        <p className="text-sm text-ink-400 text-center">Uses your device’s biometric authentication</p>
       </div>
 
       <button onClick={onGoToRegister} className="mt-10 flex items-center gap-1.5 cursor-pointer">
