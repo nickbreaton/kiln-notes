@@ -2,7 +2,7 @@ import { HttpApiBuilder, HttpServer } from "@effect/platform";
 import type { APIRoute } from "astro";
 import { getSecret } from "astro:env/server";
 import { Effect, Layer } from "effect";
-import { fromAstroSecret } from "../../effect/server/AstroConfigProvider";
+import { AstroConfigProvider } from "../../effect/server/AstroConfigProvider";
 import { SessionMiddlewareLive } from "../../effect/server/middleware/Session";
 import { WebAuthnService } from "../../effect/server/WebAuthnService";
 import { HealthResponse, KilnApi, WebAuthnApiError } from "../../effect/shared/http";
@@ -34,9 +34,7 @@ const AuthGroupLive = HttpApiBuilder.group(KilnApi, "auth", (handlers) =>
         const webAuthnService = yield* WebAuthnService;
         const result = yield* webAuthnService.verifyAuthenticationResponse(payload.response);
         return result;
-      }).pipe(Effect.mapError((error) => new WebAuthnApiError({ cause: error }))))));
-
-const AstroConfigProvider = fromAstroSecret(getSecret);
+      }).pipe(Effect.mapError((error) => new WebAuthnApiError({ cause: error })))));
 
 const ApiLayer = HttpApiBuilder.api(KilnApi).pipe(
   Layer.provide(ApiGroupLive),
