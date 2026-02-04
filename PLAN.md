@@ -2,19 +2,9 @@
 
 ## Overview
 
-This document tracks the technical implementation plan for migrating Kiln Notes to a Y.js-based architecture with passkey authentication. All APIs go through Effect for type-safe, composable error handling.
+This document tracks the technical implementation plan for Kiln Notes Y.js-based architecture. All APIs go through Effect for type-safe, composable error handling.
 
 ## Key Decisions (Avoid Re-researching)
-
-### Authentication
-
-- **Limited-user passkeys**: Support 1-2 users via environment variables (`USERS=username1,username2` + `PASSKEY_[username]=base64value`)
-- **No server-side credential enrollment**: The site can run a WebAuthn _registration ceremony_ and return the resulting credential JSON to the operator, but the server never auto-adds it to any user list.
-  - Anyone can create a credential in the browser.
-  - Only credentials manually copied into server secrets/env vars become valid login credentials.
-- No database storage for credentials, no user management UI
-- Users configured manually via env vars, server restart required to add users
-- **Session**: HttpOnly cookie, `SameSite=Strict`, `Secure`, max age 7 days (offline usable up to 1 week).
 
 ### Data Architecture
 
@@ -43,77 +33,15 @@ This document tracks the technical implementation plan for migrating Kiln Notes 
 - **Local dev**: File-based storage (`./data/{userId}.yjs`)
 - **Cloudflare**: Durable Object per user using Durable Object storage (no SQL required)
 
-## Environment Configuration
-
-```bash
-# .env
-# Comma-separated list of usernames
-USERS="Alice,Bob"
-
-# Passkey credentials (base64-encoded credential JSON from WebAuthn registration)
-PASSKEY_Alice="eyJpZCI6ImFiYzEyMyIs..."
-PASSKEY_Bob="eyJpZCI6ImRlZjQ1NiIs..."
-
-# Used to sign cookies (session + challenge)
-AUTH_COOKIE_SECRET="change-me"
-```
-
 ## Implementation Tasklist
 
-### Phase 1: Passkey Authentication
-
-#### Chunk 1: Dependencies & Environment Setup
-
-- [ ] Add SimpleWebAuthn dependencies (`@simplewebauthn/browser`, `@simplewebauthn/server`)
-- [ ] Add cookie utilities for signing/validation
-- [ ] Create Effect service to parse `USERS` and `PASSKEY_*` env vars
-  - Parse `USERS` as comma-separated list
-  - Look up `PASSKEY_[username]` for each user
-  - Validate base64 credential JSON
-- [ ] Add `AUTH_COOKIE_SECRET` validation
-
-#### Chunk 2: Effect HTTP Routes (Server)
-
-- [ ] Create Effect-based HTTP router using `@effect/platform`
-- [ ] Implement cookie signing/validation Effect service
-- [ ] Create session management Effect service
-- [ ] Registration ceremony routes:
-  - [ ] `POST /api/auth/register/options` - Generate registration options
-  - [ ] `POST /api/auth/register/verify` - Verify and return credential JSON
-- [ ] Login ceremony routes:
-  - [ ] `POST /api/auth/options` - Generate auth options with `allowCredentials`
-  - [ ] `POST /api/auth/verify` - Verify response, set session cookie
-- [ ] Session cookie handling:
-  - [ ] Set signed HttpOnly cookie with `{ userId, exp }`
-  - [ ] Store challenge in signed HttpOnly cookie during login flow
-- [ ] Protected route middleware using Effect
-
-#### Chunk 3: Client Auth UI & Services
-
-- [ ] Create Effect service for WebAuthn browser operations
-- [ ] Login flow component:
-  - [ ] Get options from server → authenticate → verify → accept session cookie
-  - [ ] Handle errors gracefully
-- [ ] Registration flow component:
-  - [ ] Generate credential → display JSON for manual env var setup
-  - [ ] Copy-to-clipboard functionality
-- [ ] Logout button (clear cookie + reset state)
-- [ ] Session state management in Effect Atom
-
-#### Chunk 4: Integration & Testing
-
-- [ ] Protected route guards (redirect unauthenticated to login)
-- [ ] Test registration flow locally
-- [ ] Test login flow locally
-- [ ] Test protected route access with/without session
-
-### Phase 2: Remove LiveStore
+### Phase 1: Remove LiveStore
 
 - [x] Remove LiveStore dependencies (`@livestore/*`)
 - [x] Remove LiveStore references from AGENTS.md
 - [x] Drop LiveStore WIP git stash
 
-### Phase 3: Y.js Core Setup
+### Phase 2: Y.js Core Setup
 
 - [ ] Add Y.js dependencies (`yjs`, `y-indexeddb`, `y-websocket`)
 - [ ] Create `YjsDocument` Effect service
@@ -124,7 +52,7 @@ AUTH_COOKIE_SECRET="change-me"
   - [ ] Maintain same public API
 - [ ] Test local-only Y.js flow
 
-### Phase 4: Image Upload API
+### Phase 3: Image Upload API
 
 - [ ] Create image upload endpoints:
   - [ ] `POST /api/images/:imageId` - Upload image bytes (requires prior registration)
@@ -135,7 +63,7 @@ AUTH_COOKIE_SECRET="change-me"
   - [ ] Upload image bytes after registration
 - [ ] Implement orphaned image cleanup (periodic scan)
 
-### Phase 5: Server Storage Backends
+### Phase 4: Server Storage Backends
 
 - [ ] Create `StorageBackend` abstraction (Effect interface)
 - [ ] Implement Node.js backend (local dev):
@@ -147,7 +75,7 @@ AUTH_COOKIE_SECRET="change-me"
   - [ ] Auto-save on Y.js updates
 - [ ] Test both backends
 
-### Phase 6: WebSocket Sync
+### Phase 5: WebSocket Sync
 
 - [ ] Create WebSocket transport abstraction
 - [ ] Implement local WebSocket server:
@@ -161,7 +89,7 @@ AUTH_COOKIE_SECRET="change-me"
   - [ ] Reconnection handling
 - [ ] Test sync between client and server
 
-### Phase 7: Data Migration
+### Phase 6: Data Migration
 
 - [ ] Create migration from localStorage to Y.js:
   - [ ] Check for existing localStorage data on first Y.js load
@@ -169,7 +97,7 @@ AUTH_COOKIE_SECRET="change-me"
   - [ ] Clear old localStorage keys after migration
 - [ ] Test migration path
 
-### Phase 8: Testing & Deployment
+### Phase 7: Testing & Deployment
 
 - [ ] Test complete local development flow
 - [ ] Deploy to Cloudflare Pages
@@ -178,21 +106,6 @@ AUTH_COOKIE_SECRET="change-me"
 - [ ] Verify offline → online sync works
 
 ## Architecture Diagrams
-
-### Auth Flow
-
-```
-Client                              Server
-  |                                   |
-  |-- POST /api/auth/options -------->|
-  |<-- Challenge + allowCreds ---------|
-  |                                   |
-  |-- User authenticates (biometric)  |
-  |                                   |
-  |-- POST /api/auth/verify --------->|
-  |     (signed response)             |
-  |<-- Set-Cookie: session=... --------|
-```
 
 ### Image Upload Flow
 
@@ -232,7 +145,6 @@ Client                              Server
 
 ## References
 
-- **SimpleWebAuthn**: https://simplewebauthn.dev/docs/
 - **Y.js**: https://docs.yjs.dev/
 - **Effect**: https://effect.website/
 - **Cloudflare Durable Objects**: https://developers.cloudflare.com/durable-objects/
