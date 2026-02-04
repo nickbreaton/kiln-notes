@@ -3,6 +3,8 @@
   "main": "dist/_worker.js/index.js",
   "compatibility_date": "2026-01-25",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "keep_vars": true,
+  "preview_urls": false,
   "assets": {
     "binding": "ASSETS",
     "directory": "./dist",
