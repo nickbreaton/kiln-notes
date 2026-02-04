@@ -4079,7 +4079,8 @@
                       "fill": "$text-secondary",
                       "content": "Passkey enabled",
                       "fontFamily": "Outfit",
-                      "fontSize": 14
+                      "fontSize": 14,
+                      "fontWeight": "normal"
                     }
                   ]
                 }
@@ -4152,7 +4153,8 @@
                           "fill": "$text-tertiary",
                           "content": "Expires in 5 days",
                           "fontFamily": "Outfit",
-                          "fontSize": 13
+                          "fontSize": 13,
+                          "fontWeight": "normal"
                         }
                       ]
                     }
@@ -4287,7 +4289,8 @@
               "fill": "$text-secondary",
               "content": "Track your pottery pieces",
               "fontFamily": "Outfit",
-              "fontSize": 16
+              "fontSize": 16,
+              "fontWeight": "normal"
             }
           ]
         },
@@ -4329,16 +4332,6 @@
               "alignItems": "center",
               "children": [
                 {
-                  "type": "icon_font",
-                  "id": "passkeyIcon",
-                  "name": "Passkey Icon",
-                  "width": 24,
-                  "height": 24,
-                  "iconFontName": "fingerprint",
-                  "iconFontFamily": "lucide",
-                  "fill": "$text-primary"
-                },
-                {
                   "type": "text",
                   "id": "passkeyBtnText",
                   "name": "Button Text",
@@ -4360,7 +4353,8 @@
               "content": "Use your device's biometric authentication",
               "textAlign": "center",
               "fontFamily": "Outfit",
-              "fontSize": 14
+              "fontSize": 14,
+              "fontWeight": "normal"
             }
           ]
         },
@@ -4398,34 +4392,6 @@
               "fontFamily": "Outfit",
               "fontSize": 14,
               "fontWeight": "600"
-            }
-          ]
-        },
-        {
-          "type": "frame",
-          "id": "loginSessionInfo",
-          "name": "Session Info",
-          "gap": 6,
-          "alignItems": "center",
-          "children": [
-            {
-              "type": "icon_font",
-              "id": "sessionIcon",
-              "name": "Session Icon",
-              "width": 14,
-              "height": 14,
-              "iconFontName": "shield-check",
-              "iconFontFamily": "lucide",
-              "fill": "$text-tertiary"
-            },
-            {
-              "type": "text",
-              "id": "sessionInfoText",
-              "name": "Session Info Text",
-              "fill": "$text-tertiary",
-              "content": "Secure session • 7 days",
-              "fontFamily": "Outfit",
-              "fontSize": 12
             }
           ]
         }
@@ -4691,6 +4657,7 @@
         48,
         24
       ],
+      "justifyContent": "center",
       "alignItems": "center",
       "children": [
         {
@@ -4718,25 +4685,42 @@
           ]
         },
         {
-          "type": "text",
-          "id": "8wOyN",
-          "name": "successTitle",
-          "fill": "$text-primary",
-          "content": "Passkey Created",
-          "fontFamily": "Outfit",
-          "fontSize": 24,
-          "fontWeight": "700"
+          "type": "frame",
+          "id": "VU9AK",
+          "name": "spacer1",
+          "width": 1,
+          "height": 8
         },
         {
-          "type": "text",
-          "id": "lcdgF",
-          "name": "successSubtitle",
-          "fill": "$text-secondary",
-          "content": "Share this code with your administrator",
-          "textAlign": "center",
-          "fontFamily": "Outfit",
-          "fontSize": 14,
-          "fontWeight": "normal"
+          "type": "group",
+          "id": "vHtjt",
+          "children": [
+            {
+              "type": "text",
+              "id": "8wOyN",
+              "x": 29.5,
+              "y": 0,
+              "name": "successTitle",
+              "fill": "$text-primary",
+              "content": "Passkey Created",
+              "fontFamily": "Outfit",
+              "fontSize": 24,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "lcdgF",
+              "x": 0,
+              "y": 30,
+              "name": "successSubtitle",
+              "fill": "$text-secondary",
+              "content": "Share this code with your administrator",
+              "textAlign": "center",
+              "fontFamily": "Outfit",
+              "fontSize": 14,
+              "fontWeight": "normal"
+            }
+          ]
         },
         {
           "type": "frame",
@@ -5080,7 +5064,8 @@
               "fill": "$text-secondary",
               "content": "Track your pottery pieces",
               "fontFamily": "Outfit",
-              "fontSize": 16
+              "fontSize": 16,
+              "fontWeight": "normal"
             }
           ]
         },
@@ -5168,213 +5153,8 @@
               "content": "Use your device's biometric authentication",
               "textAlign": "center",
               "fontFamily": "Outfit",
-              "fontSize": 14
-            }
-          ]
-        },
-        {
-          "type": "frame",
-          "id": "MFbyl",
-          "name": "Spacer",
-          "width": "fit_content(0)",
-          "height": 40
-        },
-        {
-          "type": "frame",
-          "id": "XATQG",
-          "name": "Session Info",
-          "gap": 6,
-          "alignItems": "center",
-          "children": [
-            {
-              "type": "icon_font",
-              "id": "tjSRr",
-              "name": "Session Icon",
-              "width": 14,
-              "height": 14,
-              "iconFontName": "shield-check",
-              "iconFontFamily": "lucide",
-              "fill": "$text-tertiary"
-            },
-            {
-              "type": "text",
-              "id": "Q7Ryu",
-              "name": "Session Info Text",
-              "fill": "$text-tertiary",
-              "content": "Secure session • 7 days",
-              "fontFamily": "Outfit",
-              "fontSize": 12
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "type": "frame",
-      "id": "CKCbN",
-      "x": 5807,
-      "y": 0,
-      "name": "Kiln Notes - Authenticating",
-      "clip": true,
-      "width": 390,
-      "height": 844,
-      "fill": "$bg-primary",
-      "layout": "vertical",
-      "padding": [
-        0,
-        32
-      ],
-      "justifyContent": "center",
-      "alignItems": "center",
-      "children": [
-        {
-          "type": "frame",
-          "id": "UFjMx",
-          "name": "Logo Container",
-          "layout": "vertical",
-          "gap": 16,
-          "alignItems": "center",
-          "children": [
-            {
-              "type": "frame",
-              "id": "4rUut",
-              "name": "App Logo",
-              "width": 80,
-              "height": 80,
-              "fill": "$accent-primary",
-              "cornerRadius": 20,
-              "layout": "vertical",
-              "justifyContent": "center",
-              "alignItems": "center",
-              "children": [
-                {
-                  "type": "icon_font",
-                  "id": "gqsWj",
-                  "name": "Logo Icon",
-                  "width": 40,
-                  "height": 40,
-                  "iconFontName": "flame",
-                  "iconFontFamily": "lucide",
-                  "fill": "#FFFFFF"
-                }
-              ]
-            },
-            {
-              "type": "text",
-              "id": "Jr0u8",
-              "name": "App Name",
-              "fill": "$text-primary",
-              "content": "Kiln Notes",
-              "fontFamily": "Outfit",
-              "fontSize": 28,
-              "fontWeight": "700"
-            },
-            {
-              "type": "text",
-              "id": "DPo9m",
-              "name": "Tagline",
-              "fill": "$text-secondary",
-              "content": "Track your pottery pieces",
-              "fontFamily": "Outfit",
-              "fontSize": 16
-            }
-          ]
-        },
-        {
-          "type": "frame",
-          "id": "wsvBa",
-          "name": "Spacer",
-          "width": "fit_content(0)",
-          "height": 64
-        },
-        {
-          "type": "frame",
-          "id": "duLay",
-          "name": "Login Button Container",
-          "width": "fill_container",
-          "layout": "vertical",
-          "gap": 16,
-          "children": [
-            {
-              "type": "frame",
-              "id": "rGjk2",
-              "name": "loadingState",
-              "width": "fill_container",
-              "fill": "$bg-muted",
-              "cornerRadius": 12,
-              "gap": 12,
-              "padding": 16,
-              "justifyContent": "center",
-              "alignItems": "center",
-              "children": [
-                {
-                  "type": "icon_font",
-                  "id": "uTJzb",
-                  "name": "loadingIcon",
-                  "width": 20,
-                  "height": 20,
-                  "iconFontName": "loader",
-                  "iconFontFamily": "lucide",
-                  "fill": "$accent-primary"
-                },
-                {
-                  "type": "text",
-                  "id": "xYwcU",
-                  "name": "loadingText",
-                  "fill": "$text-secondary",
-                  "content": "Authenticating...",
-                  "fontFamily": "Outfit",
-                  "fontSize": 14,
-                  "fontWeight": "500"
-                }
-              ]
-            },
-            {
-              "type": "text",
-              "id": "Tg1gW",
-              "name": "Login Help Text",
-              "fill": "$text-tertiary",
-              "textGrowth": "fixed-width",
-              "width": "fill_container",
-              "content": "Please authenticate using your device",
-              "textAlign": "center",
-              "fontFamily": "Outfit",
-              "fontSize": 14
-            }
-          ]
-        },
-        {
-          "type": "frame",
-          "id": "Eo153",
-          "name": "Spacer",
-          "width": "fit_content(0)",
-          "height": 40
-        },
-        {
-          "type": "frame",
-          "id": "q1T21",
-          "name": "Session Info",
-          "gap": 6,
-          "alignItems": "center",
-          "children": [
-            {
-              "type": "icon_font",
-              "id": "HPTBM",
-              "name": "Session Icon",
-              "width": 14,
-              "height": 14,
-              "iconFontName": "shield-check",
-              "iconFontFamily": "lucide",
-              "fill": "$text-tertiary"
-            },
-            {
-              "type": "text",
-              "id": "fR0Tg",
-              "name": "Session Info Text",
-              "fill": "$text-tertiary",
-              "content": "Secure session • 7 days",
-              "fontFamily": "Outfit",
-              "fontSize": 12
+              "fontSize": 14,
+              "fontWeight": "normal"
             }
           ]
         }
