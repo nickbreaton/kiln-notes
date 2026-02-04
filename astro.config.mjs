@@ -11,6 +11,11 @@ export default defineConfig({
       strategies: "injectManifest",
       srcDir: "src",
       filename: "service-worker.ts",
+      injectManifest: {
+        // Cloudflare Pages reserves /_worker.js/* for the runtime entrypoint;
+        // it is not fetchable as a static asset, so it must not be precached.
+        globIgnores: ["**/_worker.js/**"],
+      },
       devOptions: {
         enabled: true,
         type: "module",
