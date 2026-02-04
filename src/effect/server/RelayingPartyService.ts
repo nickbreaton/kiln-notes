@@ -17,7 +17,7 @@ export class RelayingPartyService extends Effect.Service<RelayingPartyService>()
       const url = yield* Schema.decode(Schema.URL)(request.originalUrl);
 
       if (!allowedOrigins.includes(url.origin)) {
-        return yield* new RelayingPartyError({ message: "Origin not allowed as relaying party" });
+        return yield* new RelayingPartyError({ message: `Origin "${url.origin}" not allowed as relaying party` });
       }
 
       return { rpID: url.hostname, origin: url.origin };

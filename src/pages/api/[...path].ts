@@ -1,6 +1,5 @@
 import { HttpApiBuilder, HttpServer } from "@effect/platform";
 import type { APIRoute } from "astro";
-import { getSecret } from "astro:env/server";
 import { Effect, Layer } from "effect";
 import { AstroConfigProvider } from "../../effect/server/AstroConfigProvider";
 import { SessionMiddlewareLive } from "../../effect/server/middleware/Session";
