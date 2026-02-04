@@ -1,6 +1,6 @@
 import { CacheableResponsePlugin } from "workbox-cacheable-response";
 import { ExpirationPlugin } from "workbox-expiration";
-import { cleanupOutdatedCaches, createHandlerBoundToURL, precacheAndRoute } from "workbox-precaching";
+import { cleanupOutdatedCaches, matchPrecache, precacheAndRoute } from "workbox-precaching";
 import { NavigationRoute, registerRoute } from "workbox-routing";
 import { CacheFirst, StaleWhileRevalidate } from "workbox-strategies";
 
@@ -11,8 +11,11 @@ precacheAndRoute(self.__WB_MANIFEST);
 
 // Handle navigation requests by serving the precached index.html
 // This enables the app to work offline when navigating to any route
-const handler = createHandlerBoundToURL("/index.html");
-const navigationRoute = new NavigationRoute(handler);
+const navigationRoute = new NavigationRoute(async ({ event }) => {
+  const cached = await matchPrecache("/index.html");
+  if (cached) return cached;
+  return fetch(event.request);
+});
 registerRoute(navigationRoute);
 
 // dprint-ignore
