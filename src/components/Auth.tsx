@@ -1,4 +1,4 @@
-import { Flame, KeyRound, Info, ArrowLeft, Check, CircleAlert, Copy, X } from "lucide-react";
+import { ArrowLeft, Check, CircleAlert, Copy, Flame, Info, KeyRound, X } from "lucide-react";
 import { useState } from "react";
 import { PrimaryButton } from "./PrimaryButton";
 
@@ -16,7 +16,8 @@ const mockedState: MockedAuthState = {
   isLoggedIn: false,
   authState: "login",
   errorMessage: "",
-  credentialCode: "eyJpZCI6ImFiYzEyMyIsInB1YmxpY0tleSI6Ik1GWXdFQVlIS29aSXpqMENBUVlGSzRFRUFBb0RRZ0FFLi4uIiwidHlwZSI6InB1YmxpYy1rZXkifQ==",
+  credentialCode:
+    "eyJpZCI6ImFiYzEyMyIsInB1YmxpY0tleSI6Ik1GWXdFQVlIS29aSXpqMENBUVlGSzRFRUFBb0RRZ0FFLi4uIiwidHlwZSI6InB1YmxpYy1rZXkifQ==",
 };
 
 interface AuthProps {
@@ -31,7 +32,7 @@ export const Auth = ({ onLogin }: AuthProps) => {
   const handleAuthenticate = () => {
     // Clear any previous error
     setErrorMessage("");
-    
+
     // Browser will provide passkey UI - no loading state needed
     // Simulate: randomly succeed or fail for demo purposes
     if (Math.random() > 0.5) {
@@ -135,7 +136,8 @@ export const Auth = ({ onLogin }: AuthProps) => {
             <span className="text-base font-semibold text-ink-900">How it works</span>
           </div>
           <p className="text-sm text-ink-500">
-            Create a passkey on this device. You&apos;ll receive a credential code to share with your administrator, which will grant you access to track your pottery progress.
+            Create a passkey on this device. You&apos;ll receive a credential code to share with your administrator,
+            which will grant you access to track your pottery progress.
           </p>
         </div>
 
