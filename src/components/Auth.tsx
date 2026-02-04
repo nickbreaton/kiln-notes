@@ -1,6 +1,5 @@
-import { ArrowLeft, Check, CircleAlert, Copy, Flame, Info, KeyRound, X } from "lucide-react";
-import { type ReactNode, useState } from "react";
-import { PrimaryButton } from "./PrimaryButton";
+import { useState } from "react";
+import { LoginView, PasskeyCreatedView, RegisterView } from "./auth/AuthViews";
 
 type AuthState = "login" | "register" | "created";
 
@@ -38,7 +37,7 @@ export const Auth = ({ onLogin }: AuthProps) => {
     if (Math.random() > 0.5) {
       onLogin?.();
     } else {
-      setErrorMessage("Could not authenitcate passkey. Please try again.");
+      setErrorMessage("Could not authenticate passkey. Please try again.");
     }
   };
 
@@ -54,181 +53,36 @@ export const Auth = ({ onLogin }: AuthProps) => {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const clearError = () => {
-    setErrorMessage("");
-  };
-
-  // Logo Component (reused across screens)
-  const Logo = () => (
-    <div className="flex flex-col items-center gap-4">
-      <div className="w-20 h-20 bg-kiln-600 rounded-2xl flex items-center justify-center">
-        <Flame className="w-10 h-10 text-white" />
-      </div>
-      <h1 className="text-3xl font-bold text-ink-900">Kiln Notes</h1>
-    </div>
-  );
-
-  const Screen = ({ children }: { children: ReactNode }) => (
-    <div className="flex flex-1 flex-col items-center pt-32 pb-48 mx-5">
-      {children}
-    </div>
-  );
+  const clearError = () => setErrorMessage("");
 
   // Login Screen
   if (currentState === "login") {
     return (
-      <Screen>
-        <div className="flex flex-col items-center gap-4">
-          <Logo />
-          <p className="text-base text-ink-500">Track your pottery pieces</p>
-        </div>
-
-        <div className="mt-10 w-full flex flex-col gap-4">
-          {/* Error Banner */}
-          {errorMessage && (
-            <div className="w-full bg-danger-light rounded-xl p-4 flex items-start gap-3">
-              <CircleAlert className="w-5 h-5 text-danger-500 shrink-0 mt-0.5" />
-              <div className="flex-1 flex flex-col gap-1">
-                <span className="text-sm font-medium text-danger-500">Authentication Failed</span>
-                <span className="text-sm text-danger-500/80">{errorMessage}</span>
-              </div>
-              <button
-                onClick={clearError}
-                className="p-1 hover:bg-danger-500/10 rounded cursor-pointer"
-              >
-                <X className="w-4 h-4 text-danger-500" />
-              </button>
-            </div>
-          )}
-
-          <PrimaryButton variant="secondary" onClick={handleAuthenticate}>
-            Sign in with passkey
-          </PrimaryButton>
-          <p className="text-sm text-ink-400 text-center">
-            Use your device’s biometric authentication
-          </p>
-        </div>
-
-        <button
-          onClick={() => setCurrentState("register")}
-          className="mt-10 flex items-center gap-1.5 cursor-pointer"
-        >
-          <span className="text-sm text-ink-400">Need access?</span>
-          <span className="text-sm font-semibold text-kiln-600">Create passkey</span>
-        </button>
-      </Screen>
+      <LoginView
+        errorMessage={errorMessage}
+        onAuthenticate={handleAuthenticate}
+        onDismissError={clearError}
+        onGoToRegister={() => setCurrentState("register")}
+      />
     );
   }
 
   // Register Passkey Screen
   if (currentState === "register") {
     return (
-      <Screen>
-        <div className="flex flex-col items-center gap-4">
-          <Logo />
-          <p className="text-base text-ink-500">Track your pottery pieces</p>
-        </div>
-
-        {/* Info Card */}
-        <div className="mt-8 w-full bg-white rounded-2xl border border-cream-200 p-5 flex flex-col gap-4">
-          <div className="flex items-center gap-3">
-            <Info className="w-5 h-5 text-kiln-600" />
-            <span className="text-base font-semibold text-ink-900">How it works</span>
-          </div>
-          <p className="text-sm text-ink-500">
-            Create a passkey on this device. You’ll receive a credential code to share with your administrator, which
-            will grant you access to track your pottery progress.
-          </p>
-        </div>
-
-        <div className="mt-6 w-full flex flex-col gap-4">
-          <PrimaryButton variant="primary" onClick={handleRegister}>
-            <KeyRound className="w-6 h-6 text-white" />
-            Create passkey
-          </PrimaryButton>
-          <p className="text-sm text-ink-400 text-center">
-            Uses your device’s biometric authentication
-          </p>
-        </div>
-
-        <button
-          onClick={() => setCurrentState("login")}
-          className="mt-8 flex items-center gap-2 cursor-pointer"
-        >
-          <ArrowLeft className="w-4 h-4 text-ink-500" />
-          <span className="text-sm font-medium text-ink-500">Back to Sign In</span>
-        </button>
-      </Screen>
+      <RegisterView onRegister={handleRegister} onBackToLogin={() => setCurrentState("login")} />
     );
   }
 
   // Passkey Created (Success) Screen
   if (currentState === "created") {
     return (
-      <Screen>
-        <div className="w-20 h-20 bg-kiln-600 rounded-full flex items-center justify-center">
-          <Check className="w-10 h-10 text-white" />
-        </div>
-
-        <div className="h-2" />
-
-        <div className="flex flex-col items-center gap-1">
-          <h2 className="text-2xl font-bold text-ink-900">Passkey Created</h2>
-          <p className="text-sm text-ink-500">Share this code with your administrator</p>
-        </div>
-
-        <div className="h-6" />
-
-        {/* Credential Code Card */}
-        <div className="w-full bg-white rounded-xl border border-cream-200 p-4 flex flex-col gap-3">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-ink-500 tracking-wide">
-              Credential code
-            </span>
-            <button
-              onClick={handleCopyCode}
-              className="flex items-center gap-1 bg-cream-100 rounded-md px-2 py-1 active:bg-cream-200 cursor-pointer"
-            >
-              <Copy className="w-3 h-3 text-ink-500" />
-              <span className="text-xs text-ink-500">
-                {copied ? "Copied" : "Copy"}
-              </span>
-            </button>
-          </div>
-          <textarea
-            readOnly
-            value={mockedState.credentialCode}
-            rows={5}
-            className="bg-cream-100 rounded-lg p-3 text-xs text-ink-500 resize-none w-full focus:outline-none"
-          />
-        </div>
-
-        <div className="h-4" />
-
-        {/* Instructions Card */}
-        <div className="w-full bg-white rounded-xl border border-cream-200 p-4 flex flex-col gap-3">
-          <h3 className="text-sm font-semibold text-ink-900">Next Steps</h3>
-          <div className="flex items-start gap-2.5">
-            <div className="w-5 h-5 bg-cream-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-              <span className="text-xs text-ink-500">1</span>
-            </div>
-            <span className="text-sm text-ink-500">Copy the credential code above</span>
-          </div>
-          <div className="flex items-start gap-2.5">
-            <div className="w-5 h-5 bg-kiln-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-              <span className="text-xs text-white">2</span>
-            </div>
-            <span className="text-sm text-ink-900 font-medium">Send it to your administrator</span>
-          </div>
-        </div>
-
-        <div className="h-6" />
-
-        <PrimaryButton variant="secondary" onClick={() => setCurrentState("login")}>
-          <ArrowLeft className="w-4 h-4 text-ink-900" />
-          Back to Sign In
-        </PrimaryButton>
-      </Screen>
+      <PasskeyCreatedView
+        credentialCode={mockedState.credentialCode}
+        copied={copied}
+        onCopyCode={handleCopyCode}
+        onBackToLogin={() => setCurrentState("login")}
+      />
     );
   }
 

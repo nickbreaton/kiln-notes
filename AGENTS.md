@@ -34,3 +34,5 @@
 
 - Design is being complete in Pencil.dev via Pencil MCP and rule.
 - When modifying the pencil, we should be sure to keep the Tailwind color palette in sync in @src/styles/global.css.
+- Buttons should be sentence cased: "Back to sign in" instead of "Back to Sign In"
+- Do not escape Tailwind classes with custom values unless absolutely necessary: "mt-5" instead of "mt-[21px]".
