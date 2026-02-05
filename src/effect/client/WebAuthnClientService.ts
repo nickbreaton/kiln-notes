@@ -1,6 +1,6 @@
 import { HttpApiClient } from "@effect/platform";
 import * as SimpleWebAuthnBrowser from "@simplewebauthn/browser";
-import { Console, Effect, Schema } from "effect";
+import { Console, Effect, Option, Schema, SubscriptionRef } from "effect";
 import { KilnApi } from "../shared/http";
 
 export class WebAuthnClientRegistrationError
@@ -19,6 +19,12 @@ export class WebAuthnClientService
   extends Effect.Service<WebAuthnClientService>()("kiln-notes/effect/client/WebAuthnClientService", {
     effect: Effect.gen(function*() {
       const client = yield* HttpApiClient.make(KilnApi);
+      const currentUser = yield* SubscriptionRef.make(Option.none<string>());
+
+      // TODO:
+      // 1. listen for CookieStore change events, read user cookie
+      // 2. get value of user into atom
+      // 3. Use atom to determine if user is authenticated App.tsx (replacees const mockedAuthState.isLoggedIn)
 
       const register = Effect.gen(function*() {
         const optionsJSON = yield* client.auth.registerOptions();
