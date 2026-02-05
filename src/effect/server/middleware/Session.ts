@@ -45,12 +45,12 @@ export const SessionMiddlewareLive = Layer.effect(
         })
       );
 
-      const applyUserCookie = session.user
-        ? HttpServerResponse.setCookie("user", session.user, { secure: true, maxAge: Duration.days(365), path: "/" })
-        : HttpServerResponse.removeCookie("user");
-
       yield* HttpApp.appendPreResponseHandler((_, response) => {
         return Effect.gen(function*() {
+          const applyUserCookie = session.user
+            ? HttpServerResponse.setCookie("user", session.user, { secure: true, maxAge: "365 days", path: "/" })
+            : HttpServerResponse.removeCookie("user");
+
           // Save session just before response
           yield* Effect.promise(() => session.save());
 
