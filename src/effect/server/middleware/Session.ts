@@ -1,5 +1,5 @@
 import { HttpApiMiddleware, HttpApp, HttpServerRequest, HttpServerResponse } from "@effect/platform";
-import { Config, Context, Effect, Layer, Redacted } from "effect";
+import { Config, Context, Duration, Effect, Layer, Redacted } from "effect";
 import { getIronSession } from "iron-session";
 
 /**
@@ -45,10 +45,20 @@ export const SessionMiddlewareLive = Layer.effect(
         })
       );
 
+      const applyUserCookie = session.user
+        ? HttpServerResponse.setCookie("user", session.user, { secure: true, maxAge: Duration.days(365), path: "/" })
+        : HttpServerResponse.removeCookie("user");
+
       yield* HttpApp.appendPreResponseHandler((_, response) => {
         return Effect.gen(function*() {
+          // Save session just before response
           yield* Effect.promise(() => session.save());
-          return yield* HttpServerResponse.setHeaders(response, placeholderResponse.headers);
+
+          return yield* response.pipe(
+            HttpServerResponse.setHeaders(placeholderResponse.headers),
+            Effect.flatMap(applyUserCookie),
+            Effect.orDie,
+          );
         });
       });
 
