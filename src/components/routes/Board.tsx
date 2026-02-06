@@ -36,7 +36,7 @@ export const Board = () => {
               status === "drying" && (
                 <button onClick={() => navigate(`/piece/${id}`)} key={id}>
                   <Photo id={id}>
-                    {(src) => (src ? <Piece imageUrl={src} /> : null)}
+                    {(src) => (src ? <Piece imageUrl={src} /> : <div className="aspect-square" />)}
                   </Photo>
                 </button>
               ),

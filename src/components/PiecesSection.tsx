@@ -1,5 +1,7 @@
 import type { ReactNode } from "react";
 
+import { PiecesPlaceholder } from "./PiecesPlaceholder";
+
 type SectionStatus = "drying" | "bisquing" | "glazed" | "complete";
 
 const statusDotClasses: Record<SectionStatus, string> = {
@@ -32,8 +34,8 @@ export const PiecesSection = ({
         <span className="text-sm font-semibold text-ink-500">{title}</span>
         <span className="text-sm font-medium text-ink-400">{count}</span>
       </h2>
-      <div className="grid grid-cols-3 md:grid-cols-4 gap-1.5 md:gap-2 px-5">
-        {children}
+      <div className="grid grid-cols-3 md:grid-cols-4 gap-1.5 md:gap-2 mx-5 relative">
+        {count > 0 ? children : <PiecesPlaceholder text={title.toLowerCase()} />}
       </div>
     </section>
   );
