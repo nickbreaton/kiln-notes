@@ -1,49 +1,46 @@
+import { useAtomSet } from "@effect-atom/atom-react";
 import { useState } from "react";
+import { authenticatePasskeyAtom, registerPasskeyAtom } from "../effect/client/atom";
 import { LoginView, PasskeyCreatedView, RegisterView } from "./auth/AuthViews";
 
 type AuthState = "login" | "register" | "created";
 
-interface MockedAuthState {
-  isLoggedIn: boolean;
-  authState: AuthState;
-  errorMessage: string;
-  credentialCode: string;
-}
-
-// Mocked state object - replace with real authentication logic
-const mockedState: MockedAuthState = {
-  isLoggedIn: false,
-  authState: "login",
-  errorMessage: "",
-  credentialCode:
-    "eyJpZCI6ImFiYzEyMyIsInB1YmxpY0tleSI6Ik1GWXdFQVlIS29aSXpqMENBUVlGSzRFRUFBb0RRZ0FFLi4uIiwidHlwZSI6InB1YmxpYy1rZXkifQ==",
-};
-
 export const Auth = () => {
-  const [currentState, setCurrentState] = useState<AuthState>(mockedState.authState);
-  const [errorMessage, setErrorMessage] = useState<string>(mockedState.errorMessage);
+  const [currentState, setCurrentState] = useState<AuthState>("login");
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [credentialCode, setCredentialCode] = useState<string>("");
   const [copied, setCopied] = useState(false);
 
+  const registerPasskey = useAtomSet(registerPasskeyAtom, { mode: "promise" });
+  const authenticatePasskey = useAtomSet(authenticatePasskeyAtom, { mode: "promise" });
+
   const handleAuthenticate = () => {
-    // Clear any previous error
     setErrorMessage("");
+    authenticatePasskey().catch((error) => {
+      setErrorMessage(error.message || "Authentication failed");
+    });
   };
 
   const handleRegister = () => {
-    // Browser will provide passkey UI - no loading state needed
-    // Simulate passkey creation
-    setCurrentState("created");
+    setErrorMessage("");
+    registerPasskey()
+      .then((code) => {
+        setCredentialCode(code);
+        setCurrentState("created");
+      })
+      .catch((error) => {
+        setErrorMessage(error.message || "Registration failed");
+      });
   };
 
   const handleCopyCode = () => {
-    navigator.clipboard.writeText(mockedState.credentialCode);
+    navigator.clipboard.writeText(credentialCode);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
   const clearError = () => setErrorMessage("");
 
-  // Login Screen
   if (currentState === "login") {
     return (
       <LoginView
@@ -55,16 +52,14 @@ export const Auth = () => {
     );
   }
 
-  // Register Passkey Screen
   if (currentState === "register") {
     return <RegisterView onRegister={handleRegister} onBackToLogin={() => setCurrentState("login")} />;
   }
 
-  // Passkey Created (Success) Screen
   if (currentState === "created") {
     return (
       <PasskeyCreatedView
-        credentialCode={mockedState.credentialCode}
+        credentialCode={credentialCode}
         copied={copied}
         onCopyCode={handleCopyCode}
         onBackToLogin={() => setCurrentState("login")}
