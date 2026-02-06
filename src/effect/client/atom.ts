@@ -1,6 +1,7 @@
 import { Atom } from "@effect-atom/atom-react";
 import { FetchHttpClient } from "@effect/platform";
 import { Console, Effect, Layer, Schema, Stream } from "effect";
+import { ClipboardService } from "./ClipboardService";
 import { PhotoService } from "./PhotoService";
 import { PieceRepository } from "./PieceRepository";
 import { UserService } from "./UserService";
@@ -8,6 +9,7 @@ import { WebAuthnClientService } from "./WebAuthnClientService";
 
 const runtime = Atom.runtime(
   Layer.mergeAll(
+    ClipboardService.Default,
     PieceRepository.Default,
     PhotoService.Default,
     UserService.Default,
@@ -66,5 +68,19 @@ export const authenticatePasskeyAtom = runtime.fn(() =>
   Effect.gen(function*() {
     const webAuthn = yield* WebAuthnClientService;
     return yield* webAuthn.authenticate;
+  })
+);
+
+export const copiedAtom = runtime.atom(() =>
+  Effect.gen(function*() {
+    const clipboard = yield* ClipboardService;
+    return clipboard.copied;
+  }).pipe(Stream.unwrap)
+);
+
+export const copyToClipboardAtom = runtime.fn((text: string) =>
+  Effect.gen(function*() {
+    const clipboard = yield* ClipboardService;
+    yield* clipboard.copy(text);
   })
 );

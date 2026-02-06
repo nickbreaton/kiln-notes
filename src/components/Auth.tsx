@@ -1,25 +1,26 @@
-import { Atom, Result, useAtom } from "@effect-atom/atom-react";
+import { Atom, Result, useAtom, useAtomSet, useAtomValue } from "@effect-atom/atom-react";
 import { Cause } from "effect";
 import { useState } from "react";
-import { authenticatePasskeyAtom, registerPasskeyAtom } from "../effect/client/atom";
+import { authenticatePasskeyAtom, copiedAtom, copyToClipboardAtom, registerPasskeyAtom } from "../effect/client/atom";
 import { LoginView, PasskeyCreatedView, RegisterView } from "./auth/AuthViews";
 
 type AuthPage = "login" | "register";
 
 export const Auth = () => {
   const [page, setPage] = useState<AuthPage>("login");
-  const [copied, setCopied] = useState(false);
 
   const [registration, register] = useAtom(registerPasskeyAtom);
   const [authentication, authenticate] = useAtom(authenticatePasskeyAtom);
+  const copiedResult = useAtomValue(copiedAtom);
+  const copyToClipboard = useAtomSet(copyToClipboardAtom);
 
   const handleCopyCode = () => {
     if (Result.isSuccess(registration)) {
-      navigator.clipboard.writeText(registration.value);
+      copyToClipboard(registration.value);
     }
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
   };
+
+  const copied = Result.isSuccess(copiedResult) ? copiedResult.value : false;
 
   if (Result.isSuccess(registration)) {
     return (
