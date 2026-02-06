@@ -3,15 +3,21 @@ import { FetchHttpClient } from "@effect/platform";
 import { Console, Effect, Layer, Schema, Stream } from "effect";
 import { PhotoService } from "./PhotoService";
 import { PieceRepository } from "./PieceRepository";
+import { UserService } from "./UserService";
 import { WebAuthnClientService } from "./WebAuthnClientService";
 
 const runtime = Atom.runtime(
   Layer.mergeAll(
     PieceRepository.Default,
     PhotoService.Default,
+    UserService.Default,
     Layer.provide(WebAuthnClientService.Default, FetchHttpClient.layer),
   ),
 );
+
+export const userAtom = runtime.atom(() => {
+  return UserService.pipe(Effect.andThen(service => service.user), Stream.unwrap);
+});
 
 export const collectionAtom = runtime.atom(() => {
   return Effect.gen(function*() {

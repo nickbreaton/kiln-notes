@@ -5,7 +5,6 @@ import {
   AuthenticationResponseJSON,
   PublicKeyCredentialCreationOptionsJSON,
   PublicKeyCredentialRequestOptionsJSON,
-  RegistrationInfo,
   RegistrationResponseJSON,
 } from "./webauthn";
 

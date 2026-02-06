@@ -19,11 +19,7 @@ const mockedState: MockedAuthState = {
     "eyJpZCI6ImFiYzEyMyIsInB1YmxpY0tleSI6Ik1GWXdFQVlIS29aSXpqMENBUVlGSzRFRUFBb0RRZ0FFLi4uIiwidHlwZSI6InB1YmxpYy1rZXkifQ==",
 };
 
-interface AuthProps {
-  onLogin?: () => void;
-}
-
-export const Auth = ({ onLogin }: AuthProps) => {
+export const Auth = () => {
   const [currentState, setCurrentState] = useState<AuthState>(mockedState.authState);
   const [errorMessage, setErrorMessage] = useState<string>(mockedState.errorMessage);
   const [copied, setCopied] = useState(false);
@@ -31,14 +27,6 @@ export const Auth = ({ onLogin }: AuthProps) => {
   const handleAuthenticate = () => {
     // Clear any previous error
     setErrorMessage("");
-
-    // Browser will provide passkey UI - no loading state needed
-    // Simulate: randomly succeed or fail for demo purposes
-    if (Math.random() > 0.5) {
-      onLogin?.();
-    } else {
-      setErrorMessage("Could not authenticate passkey. Please try again.");
-    }
   };
 
   const handleRegister = () => {
@@ -69,9 +57,7 @@ export const Auth = ({ onLogin }: AuthProps) => {
 
   // Register Passkey Screen
   if (currentState === "register") {
-    return (
-      <RegisterView onRegister={handleRegister} onBackToLogin={() => setCurrentState("login")} />
-    );
+    return <RegisterView onRegister={handleRegister} onBackToLogin={() => setCurrentState("login")} />;
   }
 
   // Passkey Created (Success) Screen

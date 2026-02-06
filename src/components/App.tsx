@@ -1,24 +1,31 @@
-import { useState } from "react";
+import { Result, useAtomValue } from "@effect-atom/atom-react";
+import { Option } from "effect";
 import { registerSW } from "virtual:pwa-register";
 import { Route, Switch } from "wouter";
+import { userAtom } from "../effect/client/atom";
 import { Auth } from "./Auth";
 import { Board } from "./routes/Board";
 import { Detail } from "./routes/Detail";
 
 registerSW({ immediate: true });
 
-// Mocked auth state - replace with real authentication logic
-const mockedAuthState = {
-  isLoggedIn: false,
-};
-
 export const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(mockedAuthState.isLoggedIn);
+  const user = useAtomValue(userAtom);
+
+  if (Result.isInitial(user)) {
+    return null;
+  }
+
+  if (Result.isFailure(user)) {
+    throw user.cause;
+  }
+
+  const isLoggedIn = Option.isSome(user.value);
 
   return (
     <div className="mx-auto min-h-svh max-w-lg w-full flex flex-col">
       <main className={isLoggedIn ? "flex flex-1 flex-col gap-5 pb-8" : "flex flex-1 flex-col"}>
-        {!isLoggedIn ? <Auth onLogin={() => setIsLoggedIn(true)} /> : (
+        {!isLoggedIn ? <Auth /> : (
           <Switch>
             <Route path="/" component={Board} />
             <Route path="/piece/:id" component={Detail} />
