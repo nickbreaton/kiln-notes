@@ -2,135 +2,94 @@
 
 This document describes how passkey authentication works in the Kiln Notes application.
 
-## System Diagram
+## System Overview
 
 ```mermaid
-flowchart TB
-    subgraph Client["Client (Browser)"]
-        UI["Auth Component<br/>(Auth.tsx)"]
-        State["Effect Atoms<br/>(atom.ts)"]
-        ClientService["WebAuthnClientService<br/>(WebAuthnClientService.ts)"]
-        BrowserAPI["@simplewebauthn/browser"]
-        UserClient["UserService<br/>(UserService.ts)"]
-        CookieStore["CookieStore API"]
-    end
+flowchart LR
+    Browser["Browser<br/>React + Effect"] -->|"HTTP / WebAuthn"| Server["Server<br/>Astro + Cloudflare"]
+    Server -->|"iron-session"| Session[("Session Store")]
+    Server -->|"Env vars"| Storage[("Passkey Storage")]
+    Browser <-->|"WebAuthn API"| Device["Device<br/>Biometric/Security Key"]
 
-    subgraph Server["Server (Cloudflare/Astro)"]
-        API["API Endpoints<br/>(http.ts)"]
-        Handlers["Route Handlers<br/>([...path].ts)"]
-        WebAuthnService["WebAuthnService<br/>(WebAuthnService.ts)"]
-        ServerAPI["@simplewebauthn/server"]
-        Session["Session Middleware<br/>(Session.ts)"]
-        UserServer["UserService<br/>(UserService.ts)"]
-        IronSession["iron-session"]
-        RelayingParty["RelayingPartyService"]
-    end
-
-    subgraph Storage["Storage"]
-        EnvVars["Environment Variables<br/>USERS, PASSKEY_*"]
-        SessionCookie[("Session Cookie<br/>iron-session")]
-        UserCookie[("User Cookie<br/>1 year expiry")]
-    end
-
-    subgraph External["External"]
-        UserDevice["User Device<br/>(Biometric/Security Key)"]
-    end
-
-    %% Registration Flow
-    UI -->|"Click 'Create passkey'"| State
-    State -->|"registerPasskeyAtom"| ClientService
-    ClientService -->|"GET /api/auth/register-options"| API
-    API -->|"Generate options"| WebAuthnService
-    WebAuthnService -->|"Generate challenge"| ServerAPI
-    ServerAPI -->|"Return options"| WebAuthnService
-    WebAuthnService -->|"Store challenge"| Session
-    Session -->|"Save challenge"| IronSession
-    IronSession -->|"Set cookie"| SessionCookie
-    API -->|"Return options"| ClientService
-    ClientService -->|"Start registration"| BrowserAPI
-    BrowserAPI -->|"Prompt biometric/device auth"| UserDevice
-    UserDevice -->|"Return credential"| BrowserAPI
-    BrowserAPI -->|"Return response"| ClientService
-    ClientService -->|"POST /api/auth/register-verify"| API
-    API -->|"Verify registration"| WebAuthnService
-    WebAuthnService -->|"Verify response"| ServerAPI
-    ServerAPI -->|"Return registration info"| WebAuthnService
-    WebAuthnService -->|"Return base64 credential"| API
-    API -->|"Return credential string"| ClientService
-    ClientService -->|"Registration success"| State
-    State -->|"Show credential code"| UI
-
-    %% Authentication Flow
-    UI -->|"Click 'Sign in'"| State
-    State -->|"authenticatePasskeyAtom"| ClientService
-    ClientService -->|"GET /api/auth/authenticate-options"| API
-    API -->|"Generate options"| WebAuthnService
-    WebAuthnService -->|"Generate challenge"| ServerAPI
-    ServerAPI -->|"Return options"| WebAuthnService
-    WebAuthnService -->|"Store challenge"| Session
-    Session -->|"Save challenge"| IronSession
-    API -->|"Return options"| ClientService
-    ClientService -->|"Start authentication"| BrowserAPI
-    BrowserAPI -->|"Prompt for passkey"| UserDevice
-    UserDevice -->|"Sign challenge"| BrowserAPI
-    BrowserAPI -->|"Return assertion"| ClientService
-    ClientService -->|"POST /api/auth/authenticate-verify"| API
-    API -->|"Verify authentication"| Handlers
-    Handlers -->|"Find matching passkey"| UserServer
-    UserServer -->|"Load stored passkeys"| EnvVars
-    Handlers -->|"Verify assertion"| WebAuthnService
-    WebAuthnService -->|"Verify response"| ServerAPI
-    ServerAPI -->|"Return verified"| WebAuthnService
-    WebAuthnService -->|"Set user in session"| Session
-    Session -->|"Save session"| IronSession
-    Session -->|"Set user cookie"| UserCookie
-    API -->|"Return {verified: true}"| ClientService
-    ClientService -->|"Auth success"| State
-    State -->|"Update UI"| UI
-
-    %% User Detection Flow
-    UserCookie -->|"Cookie change event"| CookieStore
-    CookieStore -->|"Stream updates"| UserClient
-    UserClient -->|"Map to Option"| State
-    State -->|"userAtom value"| UI
-
-    %% Styling
-    classDef client fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
-    classDef server fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
-    classDef storage fill:#fff3e0,stroke:#e65100,stroke-width:2px
-    classDef external fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
-    class UI,State,ClientService,BrowserAPI,UserClient,CookieStore client
-    class API,Handlers,WebAuthnService,ServerAPI,Session,UserServer,IronSession,RelayingParty server
-    class EnvVars,SessionCookie,UserCookie storage
-    class UserDevice external
+    style Browser fill:#e3f2fd,stroke:#1976d2
+    style Server fill:#f3e5f5,stroke:#7b1fa2
+    style Session fill:#fff3e0,stroke:#e65100
+    style Storage fill:#fff3e0,stroke:#e65100
+    style Device fill:#e8f5e9,stroke:#388e3c
 ```
 
-## Component Overview
+## Registration Flow
 
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant UI as Auth UI
+    participant CS as WebAuthnClient
+    participant API as Server API
+    participant WS as WebAuthnService
+    participant Sess as Session
 
-### Registration Flow
+    U->>UI: Click "Create passkey"
+    UI->>CS: registerPasskeyAtom
+    CS->>API: GET /api/auth/register-options
+    API->>WS: Generate options
+    WS->>Sess: Store challenge
+    API-->>CS: Return options
+    CS->>U: Prompt biometric
+    U-->>CS: Return credential
+    CS->>API: POST /api/auth/register-verify
+    API->>WS: Verify registration
+    WS-->>API: Return base64 credential
+    API-->>CS: Return credential string
+    CS-->>UI: Show credential code
+```
 
-1. User clicks "Create passkey" in the Auth component
-2. Client requests registration options from server (`GET /api/auth/register-options`)
-3. Server generates a challenge and stores it in the session
-4. Browser prompts user for biometric/device authentication
-5. Device generates a credential and returns it to the browser
-6. Client sends the registration response to server (`POST /api/auth/register-verify`)
-7. Server verifies the response and returns a base64-encoded credential string
-8. User copies this credential code to share with an administrator
-9. Administrator adds the credential to the `PASSKEY_<user>` environment variable
+## Authentication Flow
 
-### Authentication Flow
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant UI as Auth UI
+    participant CS as WebAuthnClient
+    participant API as Server API
+    participant WS as WebAuthnService
+    participant US as UserService
+    participant Sess as Session
+    participant Store as Passkey Store
 
-1. User clicks "Sign in with passkey"
-2. Client requests authentication options from server (`GET /api/auth/authenticate-options`)
-3. Server generates a challenge and stores it in the session
-4. Browser prompts user to select and authenticate with their passkey
-5. Device signs the challenge and returns the assertion
-6. Client sends the authentication response to server (`POST /api/auth/authenticate-verify`)
-7. Server finds the matching passkey and verifies the signature
-8. On successful verification, server sets the `user` in session and a persistent user cookie
-9. Client detects the cookie change via CookieStore API and updates the UI to show logged-in state
+    U->>UI: Click "Sign in"
+    UI->>CS: authenticatePasskeyAtom
+    CS->>API: GET /api/auth/authenticate-options
+    API->>WS: Generate options
+    WS->>Sess: Store challenge
+    API-->>CS: Return options
+    CS->>U: Prompt for passkey
+    U-->>CS: Return assertion
+    CS->>API: POST /api/auth/authenticate-verify
+    API->>US: Find matching passkey
+    US->>Store: Load stored passkeys
+    API->>WS: Verify assertion
+    WS-->>API: Return verified
+    API->>Sess: Set user in session
+    API-->>CS: Return {verified: true}
+    CS-->>UI: Auth success
+```
+
+## Session Detection Flow
+
+```mermaid
+flowchart LR
+    Cookie[("User Cookie")] -->|"change event"| Store["CookieStore API"]
+    Store -->|"stream"| UserSvc["UserService"]
+    UserSvc -->|"userAtom"| State["Effect Atoms"]
+    State -->|"reactive"| UI["Auth UI"]
+
+    style Cookie fill:#fff3e0,stroke:#e65100
+    style Store fill:#e3f2fd,stroke:#1976d2
+    style UserSvc fill:#e3f2fd,stroke:#1976d2
+    style State fill:#e3f2fd,stroke:#1976d2
+    style UI fill:#e3f2fd,stroke:#1976d2
+```
 
 ## Storage & Sessions
 
