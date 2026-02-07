@@ -7,29 +7,33 @@ This document describes how passkey authentication works in the Kiln Notes appli
 ```mermaid
 flowchart TB
     subgraph Client["Client (Browser)"]
-        UI[Auth Component\n(Auth.tsx)]
-        State[Effect Atoms\n(atom.ts)]
-        ClientService[WebAuthnClientService\n(WebAuthnClientService.ts)]
-        BrowserAPI[@simplewebauthn/browser]
-        UserService[UserService\n(UserService.ts)]
-        CookieStore[CookieStore API]
+        UI["Auth Component<br/>(Auth.tsx)"]
+        State["Effect Atoms<br/>(atom.ts)"]
+        ClientService["WebAuthnClientService<br/>(WebAuthnClientService.ts)"]
+        BrowserAPI["@simplewebauthn/browser"]
+        UserClient["UserService<br/>(UserService.ts)"]
+        CookieStore["CookieStore API"]
     end
 
     subgraph Server["Server (Cloudflare/Astro)"]
-        API[API Endpoints\n(http.ts)]
-        Handlers[Route Handlers\n([...path].ts)]
-        WebAuthnService[WebAuthnService\n(WebAuthnService.ts)]
-        ServerAPI[@simplewebauthn/server]
-        Session[Session Middleware\n(Session.ts)]
-        UserStore[UserService\n(UserService.ts)]
-        IronSession[iron-session]
-        RelayingParty[RelayingPartyService]
+        API["API Endpoints<br/>(http.ts)"]
+        Handlers["Route Handlers<br/>([...path].ts)"]
+        WebAuthnService["WebAuthnService<br/>(WebAuthnService.ts)"]
+        ServerAPI["@simplewebauthn/server"]
+        Session["Session Middleware<br/>(Session.ts)"]
+        UserServer["UserService<br/>(UserService.ts)"]
+        IronSession["iron-session"]
+        RelayingParty["RelayingPartyService"]
     end
 
     subgraph Storage["Storage"]
-        EnvVars[Environment Variables\nUSERS, PASSKEY_*]
-        SessionCookie[(Session Cookie\niron-session)]
-        UserCookie[(User Cookie\n1 year expiry)]
+        EnvVars["Environment Variables<br/>USERS, PASSKEY_*"]
+        SessionCookie[("Session Cookie<br/>iron-session")]
+        UserCookie[("User Cookie<br/>1 year expiry")]
+    end
+
+    subgraph External["External"]
+        UserDevice["User Device<br/>(Biometric/Security Key)"]
     end
 
     %% Registration Flow
@@ -44,7 +48,7 @@ flowchart TB
     IronSession -->|"Set cookie"| SessionCookie
     API -->|"Return options"| ClientService
     ClientService -->|"Start registration"| BrowserAPI
-    BrowserAPI -->|"Prompt biometric/device auth"| UserDevice["User Device\n(Biometric/Security Key)"]
+    BrowserAPI -->|"Prompt biometric/device auth"| UserDevice
     UserDevice -->|"Return credential"| BrowserAPI
     BrowserAPI -->|"Return response"| ClientService
     ClientService -->|"POST /api/auth/register-verify"| API
@@ -72,8 +76,8 @@ flowchart TB
     BrowserAPI -->|"Return assertion"| ClientService
     ClientService -->|"POST /api/auth/authenticate-verify"| API
     API -->|"Verify authentication"| Handlers
-    Handlers -->|"Find matching passkey"| UserStore
-    UserStore -->|"Load stored passkeys"| EnvVars
+    Handlers -->|"Find matching passkey"| UserServer
+    UserServer -->|"Load stored passkeys"| EnvVars
     Handlers -->|"Verify assertion"| WebAuthnService
     WebAuthnService -->|"Verify response"| ServerAPI
     ServerAPI -->|"Return verified"| WebAuthnService
@@ -86,8 +90,8 @@ flowchart TB
 
     %% User Detection Flow
     UserCookie -->|"Cookie change event"| CookieStore
-    CookieStore -->|"Stream updates"| UserService
-    UserService -->|"Map to Option"| State
+    CookieStore -->|"Stream updates"| UserClient
+    UserClient -->|"Map to Option"| State
     State -->|"userAtom value"| UI
 
     %% Styling
@@ -95,8 +99,8 @@ flowchart TB
     classDef server fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
     classDef storage fill:#fff3e0,stroke:#e65100,stroke-width:2px
     classDef external fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
-    class UI,State,ClientService,BrowserAPI,UserService,CookieStore client
-    class API,Handlers,WebAuthnService,ServerAPI,Session,UserStore,IronSession,RelayingParty server
+    class UI,State,ClientService,BrowserAPI,UserClient,CookieStore client
+    class API,Handlers,WebAuthnService,ServerAPI,Session,UserServer,IronSession,RelayingParty server
     class EnvVars,SessionCookie,UserCookie storage
     class UserDevice external
 ```
