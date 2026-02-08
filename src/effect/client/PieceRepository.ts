@@ -1,6 +1,7 @@
 import { KeyValueStore } from "@effect/platform";
 import { BrowserKeyValueStore } from "@effect/platform-browser";
 import { DateTime, Effect, Option, Schema, Stream, SubscriptionRef } from "effect";
+import { IndexeddbPersistence } from "y-indexeddb";
 import * as Y from "yjs";
 import { Piece } from "../schema";
 import { PhotoService } from "./PhotoService";
@@ -16,6 +17,13 @@ export class PieceRepository extends Effect.Service<PieceRepository>()(
       const map = doc.getMap<typeof Piece.Type>("piecesCollection");
 
       const photoService = yield* PhotoService;
+      const provider = new IndexeddbPersistence("kiln", doc);
+
+      yield* Effect.async((emit) => {
+        provider.once("synced", () => {
+          emit(Effect.void);
+        });
+      });
 
       return {
         pieces: Stream.async<typeof Piece.Type[]>((emit) => {
