@@ -1,33 +1,36 @@
 import { KeyValueStore } from "@effect/platform";
 import { BrowserKeyValueStore } from "@effect/platform-browser";
 import { DateTime, Effect, Option, Schema, Stream, SubscriptionRef } from "effect";
-import { Collection, Piece } from "../schema";
+import * as Y from "yjs";
+import { Piece } from "../schema";
 import { PhotoService } from "./PhotoService";
 
 export class PieceRepository extends Effect.Service<PieceRepository>()(
   "PieceRepository",
   {
     dependencies: [
-      BrowserKeyValueStore.layerLocalStorage,
       PhotoService.Default,
     ],
     effect: Effect.gen(function*() {
-      const kv = yield* KeyValueStore.KeyValueStore;
-      const store = kv.forSchema(Collection);
-      const storeKey = "piecesCollection";
-      const photoService = yield* PhotoService;
-      const notifyRef = yield* SubscriptionRef.make(Symbol());
-      const invalidate = SubscriptionRef.set(notifyRef, Symbol());
+      const doc = new Y.Doc();
+      const map = doc.getMap<typeof Piece.Type>("piecesCollection");
 
-      if (!(yield* store.has(storeKey))) {
-        yield* store.set(storeKey, {});
-      }
+      const photoService = yield* PhotoService;
 
       return {
-        pieces: notifyRef.changes.pipe(
-          Stream.flatMap(() => store.get(storeKey), { switch: true }),
-          Stream.map((option) => (Option.isSome(option) ? option.value : {})),
-        ),
+        pieces: Stream.async<typeof Piece.Type[]>((emit) => {
+          const callback = () => {
+            emit.single(Array.from(map.values()));
+          };
+
+          callback();
+
+          map.observe(callback);
+
+          return Effect.sync(() => {
+            map.unobserve(callback);
+          });
+        }),
 
         createPieces: (files: File[]) =>
           Effect.gen(function*() {
@@ -52,14 +55,10 @@ export class PieceRepository extends Effect.Service<PieceRepository>()(
                 updatedAt: now,
               });
 
-              yield* store.modify(storeKey, (existing) => {
-                return { [piece.id]: piece, ...existing };
-              });
-
               yield* photoService.setCache(piece.id, file);
-            }
 
-            yield* invalidate;
+              map.set(piece.id, piece);
+            }
           }),
 
         movePiece: (uuid: Schema.UUID) =>
@@ -77,12 +76,7 @@ export class PieceRepository extends Effect.Service<PieceRepository>()(
 
             yield* photoService.delete(id);
 
-            yield* store.modify(storeKey, (existing) => {
-              const { [id]: _, ...rest } = existing;
-              return rest;
-            });
-
-            yield* invalidate;
+            map.delete(id);
           }),
       };
     }),

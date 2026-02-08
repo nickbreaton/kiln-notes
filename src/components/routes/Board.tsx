@@ -26,12 +26,12 @@ export const Board = () => {
       {Result.isSuccess(atomValue) && (
         <PiecesSection
           title="Drying"
-          count={Object.values(atomValue.value).filter(
+          count={atomValue.value.filter(
             (piece) => piece.status === "drying",
           ).length}
           status="drying"
         >
-          {Object.values(atomValue.value).map(
+          {atomValue.value.map(
             ({ id, status }) =>
               status === "drying" && (
                 <button onClick={() => navigate(`/piece/${id}`)} key={id}>
