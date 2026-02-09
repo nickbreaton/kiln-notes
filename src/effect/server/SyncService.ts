@@ -8,11 +8,34 @@ export class SyncService extends Effect.Service<SyncService>()("kiln-notes/effec
   effect: Effect.gen(function*() {
     const kv = yield* KeyValueStore.KeyValueStore;
 
-    const getSyncUpdate = (userId: string) =>
+    const getSyncUpdate = (userId: string, clientStateVector: string) =>
       Effect.gen(function*() {
         const key = `sync:${userId}`;
         const maybeValue = yield* kv.get(key);
-        return Option.getOrElse(maybeValue, () => "");
+        const serverState = Option.getOrElse(maybeValue, () => "");
+
+        if (serverState.length === 0) {
+          return "";
+        }
+
+        // If client provided a real state vector (not "_" placeholder), compute diff
+        if (clientStateVector && clientStateVector !== "_" && clientStateVector.length > 0) {
+          const doc = new Y.Doc();
+          const serverBytes = Uint8Array.from(atob(serverState), c => c.charCodeAt(0));
+          Y.applyUpdate(doc, serverBytes);
+
+          const clientBytes = Uint8Array.from(atob(clientStateVector), c => c.charCodeAt(0));
+          const diffBytes = Y.encodeStateAsUpdate(doc, clientBytes);
+
+          if (diffBytes.length === 0) {
+            return ""; // Client is up to date
+          }
+
+          return btoa(String.fromCharCode(...diffBytes));
+        }
+
+        // No state vector provided, return full state
+        return serverState;
       });
 
     const mergeAndSave = (userId: string, clientUpdate: string) =>

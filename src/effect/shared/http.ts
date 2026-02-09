@@ -53,7 +53,8 @@ export class ApiGroup extends HttpApiGroup.make("api", { topLevel: true })
       .addSuccess(HealthResponse),
   )
   .add(
-    HttpApiEndpoint.get("getSync", "/api/sync")
+    HttpApiEndpoint.get("getSync", "/api/sync/:stateVector")
+      .setPath(Schema.Struct({ stateVector: Schema.String }))
       .addSuccess(Schema.Struct({ update: Schema.String }))
       .addError(WebAuthnApiError)
       .addError(SyncServiceError),

@@ -15,7 +15,7 @@ const ApiGroupLive = HttpApiBuilder.group(KilnApi, "api", (handlers) =>
     .handle("health", () => {
       return Effect.succeed(new HealthResponse({ status: "ok", timestamp: new Date().toISOString() }));
     })
-    .handle("getSync", () =>
+    .handle("getSync", ({ path }) =>
       Effect.gen(function*() {
         const session = yield* Session;
         const userId = session.user;
@@ -25,7 +25,7 @@ const ApiGroupLive = HttpApiBuilder.group(KilnApi, "api", (handlers) =>
           return yield* new WebAuthnApiError({ cause: "Unauthorized" });
         }
 
-        const update = yield* syncService.getSyncUpdate(userId).pipe(
+        const update = yield* syncService.getSyncUpdate(userId, path.stateVector).pipe(
           Effect.mapError((error) => new SyncServiceError({ cause: error })),
         );
         return { update };

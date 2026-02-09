@@ -1,5 +1,5 @@
 import { FetchHttpClient, HttpApiClient } from "@effect/platform";
-import { Effect, Ref, Schedule } from "effect";
+import { Effect, Option, Ref, Runtime, Schedule, Stream } from "effect";
 import { IndexeddbPersistence } from "y-indexeddb";
 import * as Y from "yjs";
 import { KilnApi } from "../shared/http";
@@ -12,11 +12,18 @@ export class DocumentStore extends Effect.Service<DocumentStore>()("DocumentStor
     const syncedStateVector = yield* Ref.make<Uint8Array>(new Uint8Array(0));
     const client = yield* HttpApiClient.make(KilnApi);
 
+    const runtime = yield* Effect.runtime<never>();
+
     yield* Effect.async((emit) => {
       provider.once("synced", () => {
         emit(Effect.void);
       });
     });
+
+    // After IndexedDB loads, initialize syncedStateVector from current doc state
+    // so we don't re-download data we already have
+    const initialStateVector = Y.encodeStateVector(doc);
+    yield* Ref.set(syncedStateVector, initialStateVector);
 
     const getUpdateToSend = Effect.gen(function*() {
       const stateVector = yield* Ref.get(syncedStateVector);
@@ -43,8 +50,17 @@ export class DocumentStore extends Effect.Service<DocumentStore>()("DocumentStor
 
       yield* Effect.log("Sync: fetching remote state");
 
+      // Get current state vector and encode for server diff
+      const currentStateVector = yield* Ref.get(syncedStateVector);
+      const stateVectorBase64 = currentStateVector.length > 0
+        ? btoa(String.fromCharCode(...Y.encodeStateVector(doc)))
+        : "";
+
       // Step 1: GET server data first (before sending local changes)
-      const remoteUpdate = yield* client.getSync().pipe(
+      // Pass state vector so server only returns missing updates (empty string = no state vector)
+      const remoteUpdate = yield* client.getSync({
+        path: { stateVector: stateVectorBase64 || "_" },
+      }).pipe(
         Effect.orElseSucceed(() => ({ update: "" })),
       );
 
@@ -53,6 +69,9 @@ export class DocumentStore extends Effect.Service<DocumentStore>()("DocumentStor
         yield* applyUpdate(decoded);
         yield* Effect.log(`Sync: applied ${remoteUpdate.update.length} chars from server`);
       }
+
+      // Mark synced AFTER applying server state, so we only send local changes made after this
+      yield* markSynced;
 
       // Step 2: Now compute and POST local changes (after merging server data)
       const updateToSend = yield* getUpdateToSend;
@@ -64,13 +83,41 @@ export class DocumentStore extends Effect.Service<DocumentStore>()("DocumentStor
           Effect.orElseSucceed(() => void 0),
         );
       }
-
-      yield* markSynced;
     });
 
-    const syncSchedule = Schedule.spaced("30 seconds");
+    // Stream-based debounced push: send local changes 500ms after last edit
+    const pushStream = Stream.async<Uint8Array>((emit) => {
+      doc.on("update", (update: Uint8Array, origin: any) => {
+        if (origin !== "remote") {
+          emit.single(update);
+        }
+      });
+    }).pipe(
+      Stream.debounce("500 millis"),
+      Stream.runForEach(() =>
+        Effect.gen(function*() {
+          if (typeof navigator !== "undefined" && !navigator.onLine) {
+            return;
+          }
 
-    // TODO: can we have the schedule run immediately too?
+          const updateToSend = yield* getUpdateToSend;
+          if (updateToSend.length > 0) {
+            const base64Update = btoa(String.fromCharCode(...updateToSend));
+            yield* client.postSync({ payload: { update: base64Update } }).pipe(
+              Effect.tap(() => Effect.log(`Sync: pushed ${base64Update.length} chars to server`)),
+              Effect.orElseSucceed(() => void 0),
+            );
+            yield* markSynced;
+          }
+        })
+      ),
+    );
+
+    // Start the push stream in background
+    yield* pushStream.pipe(Effect.forkDaemon);
+
+    // Polling pull: check for remote changes every 30s
+    const syncSchedule = Schedule.spaced("30 seconds");
     yield* performSync.pipe(Effect.forkDaemon);
     yield* performSync.pipe(
       Effect.schedule(syncSchedule),
