@@ -1,6 +1,5 @@
 import { KeyValueStore } from "@effect/platform";
-import { NodeFileSystem } from "@effect/platform-node";
-import { Effect, Option } from "effect";
+import { Either, Effect, Encoding, Option } from "effect";
 import * as Y from "yjs";
 
 export class SyncService extends Effect.Service<SyncService>()("kiln-notes/effect/server/SyncService", {
@@ -12,33 +11,46 @@ export class SyncService extends Effect.Service<SyncService>()("kiln-notes/effec
       Effect.gen(function*() {
         const key = `sync:${userId}`;
         const maybeValue = yield* kv.get(key);
-        const serverState = Option.getOrElse(maybeValue, () => "");
+        const serverStateBase64 = Option.getOrElse(maybeValue, () => "");
 
-        if (serverState.length === 0) {
-          return "";
+        if (serverStateBase64.length === 0) {
+          return new Uint8Array(0);
         }
+
+        // Decode server state from base64 storage
+        const serverBytes = yield* Encoding.decodeBase64(serverStateBase64).pipe(
+          Either.match({
+            onLeft: (error) => Effect.fail(new Error(`Failed to decode server state: ${error.message}`)),
+            onRight: Effect.succeed,
+          }),
+        );
 
         // If client provided a real state vector (not "_" placeholder), compute diff
         if (clientStateVector && clientStateVector !== "_" && clientStateVector.length > 0) {
           const doc = new Y.Doc();
-          const serverBytes = Uint8Array.from(atob(serverState), c => c.charCodeAt(0));
           Y.applyUpdate(doc, serverBytes);
 
-          const clientBytes = Uint8Array.from(atob(clientStateVector), c => c.charCodeAt(0));
+          const clientBytes = yield* Encoding.decodeBase64(clientStateVector).pipe(
+            Either.match({
+              onLeft: (error) => Effect.fail(new Error(`Failed to decode client state vector: ${error.message}`)),
+              onRight: Effect.succeed,
+            }),
+          );
+
           const diffBytes = Y.encodeStateAsUpdate(doc, clientBytes);
 
           if (diffBytes.length === 0) {
-            return ""; // Client is up to date
+            return new Uint8Array(0); // Client is up to date
           }
 
-          return btoa(String.fromCharCode(...diffBytes));
+          return diffBytes;
         }
 
         // No state vector provided, return full state
-        return serverState;
+        return serverBytes;
       });
 
-    const mergeAndSave = (userId: string, clientUpdate: string) =>
+    const mergeAndSave = (userId: string, clientUpdate: Uint8Array) =>
       Effect.gen(function*() {
         const key = `sync:${userId}`;
         const maybeExisting = yield* kv.get(key);
@@ -48,19 +60,22 @@ export class SyncService extends Effect.Service<SyncService>()("kiln-notes/effec
         const existingBase64 = Option.getOrElse(maybeExisting, () => "");
 
         if (existingBase64.length > 0) {
-          const existingBytes = Uint8Array.from(atob(existingBase64), c => c.charCodeAt(0));
-          Y.applyUpdate(doc, existingBytes);
+          yield* Encoding.decodeBase64(existingBase64).pipe(
+            Either.match({
+              onLeft: () => Effect.void, // Ignore decode errors for existing state
+              onRight: (bytes) => Effect.sync(() => Y.applyUpdate(doc, bytes)),
+            }),
+          );
         }
 
         // Apply client update
         if (clientUpdate.length > 0) {
-          const clientBytes = Uint8Array.from(atob(clientUpdate), c => c.charCodeAt(0));
-          Y.applyUpdate(doc, clientBytes);
+          Y.applyUpdate(doc, clientUpdate);
         }
 
-        // Save merged state back to KV
+        // Save merged state back to KV as base64
         const mergedBytes = Y.encodeStateAsUpdate(doc);
-        const mergedBase64 = btoa(String.fromCharCode(...mergedBytes));
+        const mergedBase64 = Encoding.encodeBase64(mergedBytes);
         yield* kv.set(key, mergedBase64);
 
         return mergedBase64;

@@ -1,5 +1,5 @@
 import { FetchHttpClient, HttpApiClient } from "@effect/platform";
-import { Effect, Option, Ref, Runtime, Schedule, Stream } from "effect";
+import { Effect, Encoding, Ref, Schedule, Stream } from "effect";
 import { IndexeddbPersistence } from "y-indexeddb";
 import * as Y from "yjs";
 import { KilnApi } from "../shared/http";
@@ -12,18 +12,15 @@ export class DocumentStore extends Effect.Service<DocumentStore>()("DocumentStor
     const syncedStateVector = yield* Ref.make<Uint8Array>(new Uint8Array(0));
     const client = yield* HttpApiClient.make(KilnApi);
 
-    const runtime = yield* Effect.runtime<never>();
-
+    // Wait for IndexedDB to sync, then initialize syncedStateVector
     yield* Effect.async((emit) => {
       provider.once("synced", () => {
-        emit(Effect.void);
+        // After IndexedDB loads, initialize syncedStateVector from current doc state
+        // so we don't re-download data we already have
+        const initialStateVector = Y.encodeStateVector(doc);
+        emit(Ref.set(syncedStateVector, initialStateVector));
       });
     });
-
-    // After IndexedDB loads, initialize syncedStateVector from current doc state
-    // so we don't re-download data we already have
-    const initialStateVector = Y.encodeStateVector(doc);
-    yield* Ref.set(syncedStateVector, initialStateVector);
 
     const getUpdateToSend = Effect.gen(function*() {
       const stateVector = yield* Ref.get(syncedStateVector);
@@ -35,7 +32,7 @@ export class DocumentStore extends Effect.Service<DocumentStore>()("DocumentStor
 
     const applyUpdate = (update: Uint8Array) =>
       Effect.sync(() => {
-        Y.applyUpdate(doc, update);
+        Y.applyUpdate(doc, update, "remote");
       });
 
     const markSynced = Effect.gen(function*() {
@@ -53,7 +50,7 @@ export class DocumentStore extends Effect.Service<DocumentStore>()("DocumentStor
       // Get current state vector and encode for server diff
       const currentStateVector = yield* Ref.get(syncedStateVector);
       const stateVectorBase64 = currentStateVector.length > 0
-        ? btoa(String.fromCharCode(...Y.encodeStateVector(doc)))
+        ? Encoding.encodeBase64(currentStateVector)
         : "";
 
       // Step 1: GET server data first (before sending local changes)
@@ -61,13 +58,12 @@ export class DocumentStore extends Effect.Service<DocumentStore>()("DocumentStor
       const remoteUpdate = yield* client.getSync({
         path: { stateVector: stateVectorBase64 || "_" },
       }).pipe(
-        Effect.orElseSucceed(() => ({ update: "" })),
+        Effect.orElseSucceed(() => ({ update: new Uint8Array(0) })),
       );
 
       if (remoteUpdate.update.length > 0) {
-        const decoded = Uint8Array.from(atob(remoteUpdate.update), c => c.charCodeAt(0));
-        yield* applyUpdate(decoded);
-        yield* Effect.log(`Sync: applied ${remoteUpdate.update.length} chars from server`);
+        yield* applyUpdate(remoteUpdate.update);
+        yield* Effect.log(`Sync: applied ${remoteUpdate.update.length} bytes from server`);
       }
 
       // Mark synced AFTER applying server state, so we only send local changes made after this
@@ -77,9 +73,8 @@ export class DocumentStore extends Effect.Service<DocumentStore>()("DocumentStor
       const updateToSend = yield* getUpdateToSend;
 
       if (updateToSend.length > 0) {
-        const base64Update = btoa(String.fromCharCode(...updateToSend));
-        yield* client.postSync({ payload: { update: base64Update } }).pipe(
-          Effect.tap(() => Effect.log(`Sync: sent ${base64Update.length} chars to server`)),
+        yield* client.postSync({ payload: { update: updateToSend } }).pipe(
+          Effect.tap(() => Effect.log(`Sync: sent ${updateToSend.length} bytes to server`)),
           Effect.orElseSucceed(() => void 0),
         );
       }
@@ -100,14 +95,19 @@ export class DocumentStore extends Effect.Service<DocumentStore>()("DocumentStor
             return;
           }
 
-          const updateToSend = yield* getUpdateToSend;
+          // Capture state vector BEFORE getting updates to send
+          // This prevents race condition where new edits arrive between get and mark
+          const capturedStateVector = yield* Ref.get(syncedStateVector);
+          const updateToSend = Y.encodeStateAsUpdate(doc, capturedStateVector);
+
           if (updateToSend.length > 0) {
-            const base64Update = btoa(String.fromCharCode(...updateToSend));
-            yield* client.postSync({ payload: { update: base64Update } }).pipe(
-              Effect.tap(() => Effect.log(`Sync: pushed ${base64Update.length} chars to server`)),
+            yield* client.postSync({ payload: { update: updateToSend } }).pipe(
+              Effect.tap(() => Effect.log(`Sync: pushed ${updateToSend.length} bytes to server`)),
               Effect.orElseSucceed(() => void 0),
             );
-            yield* markSynced;
+            // Mark the captured state vector as synced, not the current doc state
+            // This ensures we don't lose edits that arrived during the push
+            yield* Ref.set(syncedStateVector, Y.encodeStateVector(doc));
           }
         })
       ),
@@ -116,9 +116,10 @@ export class DocumentStore extends Effect.Service<DocumentStore>()("DocumentStor
     // Start the push stream in background
     yield* pushStream.pipe(Effect.forkDaemon);
 
-    // Polling pull: check for remote changes every 30s
-    const syncSchedule = Schedule.spaced("30 seconds");
-    yield* performSync.pipe(Effect.forkDaemon);
+    // Polling pull: run immediately, then check for remote changes every 30s
+    const syncSchedule = Schedule.once.pipe(
+      Schedule.andThen(Schedule.spaced("30 seconds"))
+    );
     yield* performSync.pipe(
       Effect.schedule(syncSchedule),
       Effect.forkDaemon,
@@ -126,9 +127,6 @@ export class DocumentStore extends Effect.Service<DocumentStore>()("DocumentStor
 
     return {
       doc,
-      getUpdateToSend,
-      applyUpdate,
-      markSynced,
     };
   }),
 }) {}

@@ -8,7 +8,7 @@ import { AstroConfigProvider } from "../../effect/server/AstroConfigProvider";
 import { Session, SessionMiddlewareLive } from "../../effect/server/middleware/Session";
 import { SyncService } from "../../effect/server/SyncService";
 import { WebAuthnService } from "../../effect/server/WebAuthnService";
-import { HealthResponse, KilnApi, SyncServiceError, WebAuthnApiError } from "../../effect/shared/http";
+import { HealthResponse, KilnApi, SyncServiceError, UnauthorizedError, WebAuthnApiError } from "../../effect/shared/http";
 
 const ApiGroupLive = HttpApiBuilder.group(KilnApi, "api", (handlers) =>
   handlers
@@ -22,7 +22,7 @@ const ApiGroupLive = HttpApiBuilder.group(KilnApi, "api", (handlers) =>
         const syncService = yield* SyncService;
 
         if (!userId) {
-          return yield* new WebAuthnApiError({ cause: "Unauthorized" });
+          return yield* new UnauthorizedError({ message: "Unauthorized" });
         }
 
         const update = yield* syncService.getSyncUpdate(userId, path.stateVector).pipe(
@@ -37,7 +37,7 @@ const ApiGroupLive = HttpApiBuilder.group(KilnApi, "api", (handlers) =>
         const syncService = yield* SyncService;
 
         if (!userId) {
-          return yield* new WebAuthnApiError({ cause: "Unauthorized" });
+          return yield* new UnauthorizedError({ message: "Unauthorized" });
         }
 
         // Merge client update with existing state using Yjs CRDTs

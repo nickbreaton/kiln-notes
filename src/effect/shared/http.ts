@@ -7,11 +7,18 @@ import {
   PublicKeyCredentialRequestOptionsJSON,
   RegistrationResponseJSON,
 } from "./webauthn";
+import { YjsUpdate } from "./YjsSchema";
 
 export class WebAuthnApiError extends Schema.TaggedError<WebAuthnApiError>()(
   "WebAuthnApiError",
   { cause: Schema.Unknown },
   HttpApiSchema.annotations({ status: 400 }),
+) {}
+
+export class UnauthorizedError extends Schema.TaggedError<UnauthorizedError>()(
+  "UnauthorizedError",
+  { message: Schema.String },
+  HttpApiSchema.annotations({ status: 401 }),
 ) {}
 
 export class SyncServiceError extends Schema.TaggedError<SyncServiceError>()(
@@ -54,16 +61,19 @@ export class ApiGroup extends HttpApiGroup.make("api", { topLevel: true })
   )
   .add(
     HttpApiEndpoint.get("getSync", "/api/sync/:stateVector")
+      // State vector is base64-encoded in URL path (remains string for URL compatibility)
       .setPath(Schema.Struct({ stateVector: Schema.String }))
-      .addSuccess(Schema.Struct({ update: Schema.String }))
-      .addError(WebAuthnApiError)
+      // Response contains Yjs update as Uint8Array (encoded as base64 on wire)
+      .addSuccess(Schema.Struct({ update: YjsUpdate }))
+      .addError(UnauthorizedError)
       .addError(SyncServiceError),
   )
   .add(
     HttpApiEndpoint.post("postSync", "/api/sync")
-      .setPayload(Schema.Struct({ update: Schema.String }))
+      // Request body contains Yjs update as Uint8Array (encoded as base64 on wire)
+      .setPayload(Schema.Struct({ update: YjsUpdate }))
       .addSuccess(Schema.Struct({ success: Schema.Boolean }))
-      .addError(WebAuthnApiError)
+      .addError(UnauthorizedError)
       .addError(SyncServiceError),
   )
 {}
