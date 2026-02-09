@@ -1,5 +1,5 @@
 import { FetchHttpClient, HttpApiClient } from "@effect/platform";
-import { Effect, Encoding, Ref, Schedule, Stream } from "effect";
+import { Effect, Encoding, Option, Ref, Schedule, Stream } from "effect";
 import { IndexeddbPersistence } from "y-indexeddb";
 import * as Y from "yjs";
 import { KilnApi } from "../shared/http";
@@ -53,10 +53,14 @@ export class DocumentStore extends Effect.Service<DocumentStore>()("DocumentStor
         ? Encoding.encodeBase64(currentStateVector)
         : "";
 
-      // Step 1: GET server data first (before sending local changes)
-      // Pass state vector so server only returns missing updates (empty string = no state vector)
-      const remoteUpdate = yield* client.getSync({
-        path: { stateVector: stateVectorBase64 || "_" },
+      // Step 1: POST to get server data first (before sending local changes)
+      // Pass state vector so server only returns missing updates
+      const remoteUpdate = yield* client.sync.pull({
+        payload: {
+          stateVector: stateVectorBase64.length > 0
+            ? Option.some(stateVectorBase64)
+            : Option.none(),
+        },
       }).pipe(
         Effect.orElseSucceed(() => ({ update: new Uint8Array(0) })),
       );
@@ -73,7 +77,7 @@ export class DocumentStore extends Effect.Service<DocumentStore>()("DocumentStor
       const updateToSend = yield* getUpdateToSend;
 
       if (updateToSend.length > 0) {
-        yield* client.postSync({ payload: { update: updateToSend } }).pipe(
+        yield* client.sync.push({ payload: { update: updateToSend } }).pipe(
           Effect.tap(() => Effect.log(`Sync: sent ${updateToSend.length} bytes to server`)),
           Effect.orElseSucceed(() => void 0),
         );
@@ -101,7 +105,7 @@ export class DocumentStore extends Effect.Service<DocumentStore>()("DocumentStor
           const updateToSend = Y.encodeStateAsUpdate(doc, capturedStateVector);
 
           if (updateToSend.length > 0) {
-            yield* client.postSync({ payload: { update: updateToSend } }).pipe(
+            yield* client.sync.push({ payload: { update: updateToSend } }).pipe(
               Effect.tap(() => Effect.log(`Sync: pushed ${updateToSend.length} bytes to server`)),
               Effect.orElseSucceed(() => void 0),
             );

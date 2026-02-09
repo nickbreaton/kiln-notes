@@ -59,17 +59,20 @@ export class ApiGroup extends HttpApiGroup.make("api", { topLevel: true })
     HttpApiEndpoint.get("health", "/api/health")
       .addSuccess(HealthResponse),
   )
+{}
+
+export class SyncGroup extends HttpApiGroup.make("sync")
   .add(
-    HttpApiEndpoint.get("getSync", "/api/sync/:stateVector")
-      // State vector is base64-encoded in URL path (remains string for URL compatibility)
-      .setPath(Schema.Struct({ stateVector: Schema.String }))
+    HttpApiEndpoint.post("pull", "/api/sync/pull")
+      // State vector is optional base64-encoded; omitted for initial sync
+      .setPayload(Schema.Struct({ stateVector: Schema.Option(Schema.String) }))
       // Response contains Yjs update as Uint8Array (encoded as base64 on wire)
       .addSuccess(Schema.Struct({ update: YjsUpdate }))
       .addError(UnauthorizedError)
       .addError(SyncServiceError),
   )
   .add(
-    HttpApiEndpoint.post("postSync", "/api/sync")
+    HttpApiEndpoint.post("push", "/api/sync/push")
       // Request body contains Yjs update as Uint8Array (encoded as base64 on wire)
       .setPayload(Schema.Struct({ update: YjsUpdate }))
       .addSuccess(Schema.Struct({ success: Schema.Boolean }))
@@ -80,5 +83,7 @@ export class ApiGroup extends HttpApiGroup.make("api", { topLevel: true })
 
 export class KilnApi extends HttpApi.make("kiln")
   .add(ApiGroup)
-  .add(AuthGroup).middleware(SessionMiddleware)
+  .add(AuthGroup)
+  .add(SyncGroup)
+  .middleware(SessionMiddleware)
 {}

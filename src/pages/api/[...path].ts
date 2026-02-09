@@ -14,8 +14,11 @@ const ApiGroupLive = HttpApiBuilder.group(KilnApi, "api", (handlers) =>
   handlers
     .handle("health", () => {
       return Effect.succeed(new HealthResponse({ status: "ok", timestamp: new Date().toISOString() }));
-    })
-    .handle("getSync", ({ path }) =>
+    }));
+
+const SyncGroupLive = HttpApiBuilder.group(KilnApi, "sync", (handlers) =>
+  handlers
+    .handle("pull", ({ payload }) =>
       Effect.gen(function*() {
         const session = yield* Session;
         const userId = session.user;
@@ -25,12 +28,12 @@ const ApiGroupLive = HttpApiBuilder.group(KilnApi, "api", (handlers) =>
           return yield* new UnauthorizedError({ message: "Unauthorized" });
         }
 
-        const update = yield* syncService.getSyncUpdate(userId, path.stateVector).pipe(
+        const update = yield* syncService.getSyncUpdate(userId, payload.stateVector).pipe(
           Effect.mapError((error) => new SyncServiceError({ cause: error })),
         );
         return { update };
       }))
-    .handle("postSync", ({ payload }) =>
+    .handle("push", ({ payload }) =>
       Effect.gen(function*() {
         const session = yield* Session;
         const userId = session.user;
@@ -74,6 +77,7 @@ const AuthGroupLive = HttpApiBuilder.group(KilnApi, "auth", (handlers) =>
 const ApiLayer = HttpApiBuilder.api(KilnApi).pipe(
   Layer.provide(ApiGroupLive),
   Layer.provide(AuthGroupLive),
+  Layer.provide(SyncGroupLive),
   Layer.provide(WebAuthnService.Default),
   Layer.provide(SyncService.Default),
   Layer.provide(SessionMiddlewareLive),

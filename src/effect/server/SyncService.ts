@@ -7,7 +7,7 @@ export class SyncService extends Effect.Service<SyncService>()("kiln-notes/effec
   effect: Effect.gen(function*() {
     const kv = yield* KeyValueStore.KeyValueStore;
 
-    const getSyncUpdate = (userId: string, clientStateVector: string) =>
+    const getSyncUpdate = (userId: string, clientStateVector: Option.Option<string>) =>
       Effect.gen(function*() {
         const key = `sync:${userId}`;
         const maybeValue = yield* kv.get(key);
@@ -25,12 +25,13 @@ export class SyncService extends Effect.Service<SyncService>()("kiln-notes/effec
           }),
         );
 
-        // If client provided a real state vector (not "_" placeholder), compute diff
-        if (clientStateVector && clientStateVector !== "_" && clientStateVector.length > 0) {
+        // If client provided a real state vector, compute diff
+        const maybeClientVector = Option.getOrElse(clientStateVector, () => "");
+        if (maybeClientVector.length > 0) {
           const doc = new Y.Doc();
           Y.applyUpdate(doc, serverBytes);
 
-          const clientBytes = yield* Encoding.decodeBase64(clientStateVector).pipe(
+          const clientBytes = yield* Encoding.decodeBase64(maybeClientVector).pipe(
             Either.match({
               onLeft: (error) => Effect.fail(new Error(`Failed to decode client state vector: ${error.message}`)),
               onRight: Effect.succeed,
