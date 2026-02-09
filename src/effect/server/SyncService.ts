@@ -13,8 +13,12 @@ export class SyncService extends Effect.Service<SyncService>()("kiln-notes/effec
         const maybeValue = yield* kv.get(key);
         const serverStateBase64 = Option.getOrElse(maybeValue, () => "");
 
+        // Server is empty - return empty update and no state vector
         if (serverStateBase64.length === 0) {
-          return new Uint8Array(0);
+          return {
+            update: new Uint8Array(0),
+            serverStateVector: Option.none<string>(),
+          };
         }
 
         // Decode server state from base64 storage
@@ -25,12 +29,15 @@ export class SyncService extends Effect.Service<SyncService>()("kiln-notes/effec
           }),
         );
 
+        // Create doc and get server's current state vector
+        const doc = new Y.Doc();
+        Y.applyUpdate(doc, serverBytes);
+        const serverStateVector = Y.encodeStateVector(doc);
+        const serverStateVectorBase64 = Encoding.encodeBase64(serverStateVector);
+
         // If client provided a real state vector, compute diff
         const maybeClientVector = Option.getOrElse(clientStateVector, () => "");
         if (maybeClientVector.length > 0) {
-          const doc = new Y.Doc();
-          Y.applyUpdate(doc, serverBytes);
-
           const clientBytes = yield* Encoding.decodeBase64(maybeClientVector).pipe(
             Either.match({
               onLeft: (error) => Effect.fail(new Error(`Failed to decode client state vector: ${error.message}`)),
@@ -40,15 +47,17 @@ export class SyncService extends Effect.Service<SyncService>()("kiln-notes/effec
 
           const diffBytes = Y.encodeStateAsUpdate(doc, clientBytes);
 
-          if (diffBytes.length === 0) {
-            return new Uint8Array(0); // Client is up to date
-          }
-
-          return diffBytes;
+          return {
+            update: diffBytes,
+            serverStateVector: Option.some(serverStateVectorBase64),
+          };
         }
 
         // No state vector provided, return full state
-        return serverBytes;
+        return {
+          update: serverBytes,
+          serverStateVector: Option.some(serverStateVectorBase64),
+        };
       });
 
     const mergeAndSave = (userId: string, clientUpdate: Uint8Array) =>

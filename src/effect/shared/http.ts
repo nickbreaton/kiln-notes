@@ -66,8 +66,11 @@ export class SyncGroup extends HttpApiGroup.make("sync")
     HttpApiEndpoint.post("pull", "/api/sync/pull")
       // State vector is optional base64-encoded; omitted for initial sync
       .setPayload(Schema.Struct({ stateVector: Schema.Option(Schema.String) }))
-      // Response contains Yjs update as Uint8Array (encoded as base64 on wire)
-      .addSuccess(Schema.Struct({ update: YjsUpdate }))
+      // Response contains Yjs update and server's current state vector
+      .addSuccess(Schema.Struct({
+        update: YjsUpdate,
+        serverStateVector: Schema.Option(Schema.String),
+      }))
       .addError(UnauthorizedError)
       .addError(SyncServiceError),
   )

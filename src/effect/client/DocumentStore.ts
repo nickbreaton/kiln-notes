@@ -47,41 +47,66 @@ export class DocumentStore extends Effect.Service<DocumentStore>()("DocumentStor
 
       yield* Effect.log("Sync: fetching remote state");
 
-      // Get current state vector and encode for server diff
+      // Get current state vector (what we last synced with server)
       const currentStateVector = yield* Ref.get(syncedStateVector);
       const stateVectorBase64 = currentStateVector.length > 0
         ? Encoding.encodeBase64(currentStateVector)
         : "";
 
-      // Step 1: POST to get server data first (before sending local changes)
-      // Pass state vector so server only returns missing updates
-      const remoteUpdate = yield* client.sync.pull({
+      // Step 1: Pull from server to get updates and server's state vector
+      const pullResult = yield* client.sync.pull({
         payload: {
           stateVector: stateVectorBase64.length > 0
             ? Option.some(stateVectorBase64)
             : Option.none(),
         },
       }).pipe(
-        Effect.orElseSucceed(() => ({ update: new Uint8Array(0) })),
+        Effect.orElseSucceed(() => ({
+          update: new Uint8Array(0),
+          serverStateVector: Option.none<string>(),
+        })),
       );
 
-      if (remoteUpdate.update.length > 0) {
-        yield* applyUpdate(remoteUpdate.update);
-        yield* Effect.log(`Sync: applied ${remoteUpdate.update.length} bytes from server`);
+      // Apply any updates from server
+      if (pullResult.update.length > 0) {
+        yield* applyUpdate(pullResult.update);
+        yield* Effect.log(`Sync: applied ${pullResult.update.length} bytes from server`);
       }
 
-      // Mark synced AFTER applying server state, so we only send local changes made after this
-      yield* markSynced;
+      // Step 2: Determine what to send to server
+      // Check if server is empty or behind us
+      const serverStateVector = Option.getOrElse(pullResult.serverStateVector, () => "");
+      const serverIsEmpty = serverStateVector === "";
 
-      // Step 2: Now compute and POST local changes (after merging server data)
-      const updateToSend = yield* getUpdateToSend;
+      let updateToSend: Uint8Array;
 
+      if (serverIsEmpty) {
+        // Server has no data - send our full document
+        updateToSend = Y.encodeStateAsUpdate(doc);
+        yield* Effect.log(`Sync: server is empty, preparing full state (${updateToSend.length} bytes)`);
+      } else if (serverStateVector !== stateVectorBase64) {
+        // Server has a different state than what we expected (it's behind or diverged)
+        // Decode server's state vector and compute what we have that server doesn't
+        const serverVectorBytes = yield* Encoding.decodeBase64(serverStateVector).pipe(
+          Effect.orElseSucceed(() => new Uint8Array(0)),
+        );
+        updateToSend = Y.encodeStateAsUpdate(doc, serverVectorBytes);
+        yield* Effect.log(`Sync: server is behind, preparing diff (${updateToSend.length} bytes)`);
+      } else {
+        // Server matches what we expected - only send changes since last sync
+        updateToSend = yield* getUpdateToSend;
+      }
+
+      // Step 3: Push updates to server if needed
       if (updateToSend.length > 0) {
         yield* client.sync.push({ payload: { update: updateToSend } }).pipe(
-          Effect.tap(() => Effect.log(`Sync: sent ${updateToSend.length} bytes to server`)),
+          Effect.tap(() => Effect.log(`Sync: pushed ${updateToSend.length} bytes to server`)),
           Effect.orElseSucceed(() => void 0),
         );
       }
+
+      // Mark synced - now server should have the same state as our doc
+      yield* markSynced;
     });
 
     // Stream-based debounced push: send local changes 500ms after last edit

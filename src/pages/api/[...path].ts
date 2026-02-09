@@ -28,10 +28,10 @@ const SyncGroupLive = HttpApiBuilder.group(KilnApi, "sync", (handlers) =>
           return yield* new UnauthorizedError({ message: "Unauthorized" });
         }
 
-        const update = yield* syncService.getSyncUpdate(userId, payload.stateVector).pipe(
+        const result = yield* syncService.getSyncUpdate(userId, payload.stateVector).pipe(
           Effect.mapError((error) => new SyncServiceError({ cause: error })),
         );
-        return { update };
+        return result;
       }))
     .handle("push", ({ payload }) =>
       Effect.gen(function*() {
