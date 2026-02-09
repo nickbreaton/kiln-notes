@@ -14,7 +14,13 @@ export class WebAuthnApiError extends Schema.TaggedError<WebAuthnApiError>()(
   HttpApiSchema.annotations({ status: 400 }),
 ) {}
 
-class AuthGroup extends HttpApiGroup.make("auth")
+export class SyncServiceError extends Schema.TaggedError<SyncServiceError>()(
+  "SyncServiceError",
+  { cause: Schema.Unknown },
+  HttpApiSchema.annotations({ status: 500 }),
+) {}
+
+export class AuthGroup extends HttpApiGroup.make("auth")
   .add(
     HttpApiEndpoint.get("registerOptions", "/api/auth/register-options")
       .addSuccess(PublicKeyCredentialCreationOptionsJSON)
@@ -45,6 +51,19 @@ export class ApiGroup extends HttpApiGroup.make("api", { topLevel: true })
   .add(
     HttpApiEndpoint.get("health", "/api/health")
       .addSuccess(HealthResponse),
+  )
+  .add(
+    HttpApiEndpoint.get("getSync", "/api/sync")
+      .addSuccess(Schema.Struct({ update: Schema.String }))
+      .addError(WebAuthnApiError)
+      .addError(SyncServiceError),
+  )
+  .add(
+    HttpApiEndpoint.post("postSync", "/api/sync")
+      .setPayload(Schema.Struct({ update: Schema.String }))
+      .addSuccess(Schema.Struct({ success: Schema.Boolean }))
+      .addError(WebAuthnApiError)
+      .addError(SyncServiceError),
   )
 {}
 

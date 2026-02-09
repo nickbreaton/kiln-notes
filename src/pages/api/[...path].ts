@@ -1,15 +1,48 @@
 import { HttpApiBuilder, HttpServer } from "@effect/platform";
 import type { APIRoute } from "astro";
 import { Effect, Layer } from "effect";
+import * as Y from "yjs";
 import { AstroConfigProvider } from "../../effect/server/AstroConfigProvider";
-import { SessionMiddlewareLive } from "../../effect/server/middleware/Session";
+import { Session, SessionMiddlewareLive } from "../../effect/server/middleware/Session";
+import { SyncService } from "../../effect/server/SyncService";
 import { WebAuthnService } from "../../effect/server/WebAuthnService";
-import { HealthResponse, KilnApi, WebAuthnApiError } from "../../effect/shared/http";
+import { HealthResponse, KilnApi, SyncServiceError, WebAuthnApiError } from "../../effect/shared/http";
 
 const ApiGroupLive = HttpApiBuilder.group(KilnApi, "api", (handlers) =>
-  handlers.handle("health", () => {
-    return Effect.succeed(new HealthResponse({ status: "ok", timestamp: new Date().toISOString() }));
-  }));
+  handlers
+    .handle("health", () => {
+      return Effect.succeed(new HealthResponse({ status: "ok", timestamp: new Date().toISOString() }));
+    })
+    .handle("getSync", () =>
+      Effect.gen(function*() {
+        const session = yield* Session;
+        const userId = session.user;
+        const syncService = yield* SyncService;
+
+        if (!userId) {
+          return yield* new WebAuthnApiError({ cause: "Unauthorized" });
+        }
+
+        const update = yield* syncService.getSyncUpdate(userId).pipe(
+          Effect.mapError((error) => new SyncServiceError({ cause: error })),
+        );
+        return { update };
+      }))
+    .handle("postSync", ({ payload }) =>
+      Effect.gen(function*() {
+        const session = yield* Session;
+        const userId = session.user;
+        const syncService = yield* SyncService;
+
+        if (!userId) {
+          return yield* new WebAuthnApiError({ cause: "Unauthorized" });
+        }
+
+        yield* syncService.saveSyncUpdate(userId, payload.update).pipe(
+          Effect.mapError((error) => new SyncServiceError({ cause: error })),
+        );
+        return { success: true };
+      })));
 
 const AuthGroupLive = HttpApiBuilder.group(KilnApi, "auth", (handlers) =>
   handlers
@@ -39,6 +72,7 @@ const ApiLayer = HttpApiBuilder.api(KilnApi).pipe(
   Layer.provide(ApiGroupLive),
   Layer.provide(AuthGroupLive),
   Layer.provide(WebAuthnService.Default),
+  Layer.provide(SyncService.Default),
   Layer.provide(SessionMiddlewareLive),
   Layer.provide(Layer.setConfigProvider(AstroConfigProvider)),
 );

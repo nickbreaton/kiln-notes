@@ -2,6 +2,7 @@ import { Atom } from "@effect-atom/atom-react";
 import { FetchHttpClient } from "@effect/platform";
 import { Console, Effect, Layer, Schema, Stream } from "effect";
 import { ClipboardService } from "./ClipboardService";
+import { DocumentStore } from "./DocumentStore";
 import { PhotoService } from "./PhotoService";
 import { PieceRepository } from "./PieceRepository";
 import { UserService } from "./UserService";
@@ -11,6 +12,7 @@ const runtime = Atom.runtime(
   Layer.mergeAll(
     ClipboardService.Default,
     PieceRepository.Default,
+    DocumentStore.Default,
     PhotoService.Default,
     UserService.Default,
     Layer.provide(WebAuthnClientService.Default, FetchHttpClient.layer),
