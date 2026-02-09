@@ -1,4 +1,6 @@
 import { HttpApiBuilder, HttpServer } from "@effect/platform";
+import { NodeContext } from "@effect/platform-node";
+
 import type { APIRoute } from "astro";
 import { Effect, Layer } from "effect";
 import * as Y from "yjs";
@@ -38,7 +40,8 @@ const ApiGroupLive = HttpApiBuilder.group(KilnApi, "api", (handlers) =>
           return yield* new WebAuthnApiError({ cause: "Unauthorized" });
         }
 
-        yield* syncService.saveSyncUpdate(userId, payload.update).pipe(
+        // Merge client update with existing state using Yjs CRDTs
+        yield* syncService.mergeAndSave(userId, payload.update).pipe(
           Effect.mapError((error) => new SyncServiceError({ cause: error })),
         );
         return { success: true };
@@ -74,6 +77,7 @@ const ApiLayer = HttpApiBuilder.api(KilnApi).pipe(
   Layer.provide(WebAuthnService.Default),
   Layer.provide(SyncService.Default),
   Layer.provide(SessionMiddlewareLive),
+  Layer.provide(NodeContext.layer),
   Layer.provide(Layer.setConfigProvider(AstroConfigProvider)),
 );
 

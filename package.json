@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@base-ui/react": "^1.1.0",
+    "@effect/platform-node": "^0.104.1",
     "@simplewebauthn/browser": "^13.2.2",
     "@simplewebauthn/server": "^13.2.2",
     "@tailwindcss/vite": "^4.1.18",

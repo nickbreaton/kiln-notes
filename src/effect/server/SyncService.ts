@@ -1,8 +1,10 @@
 import { KeyValueStore } from "@effect/platform";
-import { Effect, Option, Schema } from "effect";
+import { NodeFileSystem } from "@effect/platform-node";
+import { Effect, Option } from "effect";
+import * as Y from "yjs";
 
 export class SyncService extends Effect.Service<SyncService>()("kiln-notes/effect/server/SyncService", {
-  dependencies: [KeyValueStore.layerMemory],
+  dependencies: [KeyValueStore.layerFileSystem("node_modules/.kiln")],
   effect: Effect.gen(function*() {
     const kv = yield* KeyValueStore.KeyValueStore;
 
@@ -10,18 +12,40 @@ export class SyncService extends Effect.Service<SyncService>()("kiln-notes/effec
       Effect.gen(function*() {
         const key = `sync:${userId}`;
         const maybeValue = yield* kv.get(key);
-        return Option.match(maybeValue, { onNone: () => "", onSome: (value) => value });
+        return Option.getOrElse(maybeValue, () => "");
       });
 
-    const saveSyncUpdate = (userId: string, update: string) =>
+    const mergeAndSave = (userId: string, clientUpdate: string) =>
       Effect.gen(function*() {
         const key = `sync:${userId}`;
-        yield* kv.set(key, update);
+        const maybeExisting = yield* kv.get(key);
+
+        // Create a fresh Yjs Doc and load existing state if present
+        const doc = new Y.Doc();
+        const existingBase64 = Option.getOrElse(maybeExisting, () => "");
+
+        if (existingBase64.length > 0) {
+          const existingBytes = Uint8Array.from(atob(existingBase64), c => c.charCodeAt(0));
+          Y.applyUpdate(doc, existingBytes);
+        }
+
+        // Apply client update
+        if (clientUpdate.length > 0) {
+          const clientBytes = Uint8Array.from(atob(clientUpdate), c => c.charCodeAt(0));
+          Y.applyUpdate(doc, clientBytes);
+        }
+
+        // Save merged state back to KV
+        const mergedBytes = Y.encodeStateAsUpdate(doc);
+        const mergedBase64 = btoa(String.fromCharCode(...mergedBytes));
+        yield* kv.set(key, mergedBase64);
+
+        return mergedBase64;
       });
 
     return {
       getSyncUpdate,
-      saveSyncUpdate,
+      mergeAndSave,
     };
   }),
 }) {}
