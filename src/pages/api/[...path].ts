@@ -82,7 +82,6 @@ const ApiLayer = HttpApiBuilder.api(KilnApi).pipe(
   Layer.provide(WebAuthnService.Default),
   Layer.provide(SyncService.Default),
   Layer.provide(SessionMiddlewareLive),
-  Layer.provide(NodeContext.layer),
   Layer.provide(Layer.setConfigProvider(AstroConfigProvider)),
 );
 
