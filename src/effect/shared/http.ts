@@ -64,20 +64,14 @@ export class ApiGroup extends HttpApiGroup.make("api", { topLevel: true })
 export class SyncGroup extends HttpApiGroup.make("sync")
   .add(
     HttpApiEndpoint.post("pull", "/api/sync/pull")
-      // State vector is optional base64-encoded; omitted for initial sync
-      .setPayload(Schema.Struct({ stateVector: Schema.Option(Schema.String) }))
-      // Response contains Yjs update and server's current state vector
-      .addSuccess(Schema.Struct({
-        update: YjsUpdate,
-        serverStateVector: Schema.Option(Schema.String),
-      }))
+      .setPayload(Schema.Struct({ stateVector: Schema.Uint8Array }))
+      .addSuccess(Schema.Struct({ diff: Schema.Uint8Array, stateVector: Schema.Uint8Array }))
       .addError(UnauthorizedError)
       .addError(SyncServiceError),
   )
   .add(
     HttpApiEndpoint.post("push", "/api/sync/push")
-      // Request body contains Yjs update as Uint8Array (encoded as base64 on wire)
-      .setPayload(Schema.Struct({ update: YjsUpdate }))
+      .setPayload(Schema.Struct({ diff: Schema.Uint8Array }))
       .addSuccess(Schema.Struct({ success: Schema.Boolean }))
       .addError(UnauthorizedError)
       .addError(SyncServiceError),
