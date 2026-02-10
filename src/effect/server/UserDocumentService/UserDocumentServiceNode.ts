@@ -1,7 +1,7 @@
 import { KeyValueStore } from "@effect/platform";
 import { Effect, Layer, Option, Schema } from "effect";
 import * as Y from "yjs";
-import { UserDocumentError, UserDocumentService } from "./UserDocumentService";
+import { UserDocumentError, UserDocumentService } from "./index";
 
 export const UserDocumentServiceNode = Layer.effect(
   UserDocumentService,
@@ -40,6 +40,7 @@ export const UserDocumentServiceNode = Layer.effect(
   Layer.provide(Layer.unwrapEffect(
     Effect.promise(async () => {
       const { NodeContext } = await import("@effect/platform-node");
+      console.log(NodeContext.layer);
       return NodeContext.layer;
     }),
   )),

@@ -1,6 +1,6 @@
 import { Effect, Layer } from "effect";
 import * as Y from "yjs";
-import { UserDocumentError, UserDocumentService } from "./UserDocumentService";
+import { UserDocumentError, UserDocumentService } from "./index";
 
 export const UserDocumentServiceCloudflare = Layer.effect(
   UserDocumentService,
