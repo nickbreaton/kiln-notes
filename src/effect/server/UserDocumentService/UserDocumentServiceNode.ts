@@ -1,13 +1,11 @@
 import { KeyValueStore } from "@effect/platform";
-import { NodeContext } from "@effect/platform-node";
 import { Effect, Layer, Option, Schema } from "effect";
 import * as Y from "yjs";
+import { UserDocumentError, UserDocumentService } from "./UserDocumentService";
 
-const nodeKeyValueLayer = KeyValueStore.layerFileSystem("tmp/users").pipe(Layer.provide(NodeContext.layer));
-
-export class UserDocumentService extends Effect.Service<UserDocumentService>()("UserDocumentService", {
-  dependencies: [nodeKeyValueLayer],
-  effect: Effect.gen(function*() {
+export const UserDocumentServiceNode = Layer.effect(
+  UserDocumentService,
+  Effect.gen(function*() {
     const kv = (yield* KeyValueStore.KeyValueStore).forSchema(Schema.Uint8Array);
 
     const load = Effect.fn(function*(userId: string) {
@@ -23,18 +21,26 @@ export class UserDocumentService extends Effect.Service<UserDocumentService>()("
       });
 
       return doc;
-    });
+    }, Effect.catchAllCause(cause => new UserDocumentError({ cause })));
 
     const update = Effect.fn(function*(userId: string, updater: (doc: Y.Doc) => void) {
       const doc = yield* load(userId);
       updater(doc);
       const update = Y.encodeStateAsUpdate(doc);
       yield* kv.set(userId, update);
-    });
+    }, Effect.catchAllCause(cause => new UserDocumentError({ cause })));
 
     return {
       load,
       update,
     };
   }),
-}) {}
+).pipe(
+  Layer.provide(KeyValueStore.layerFileSystem("tmp/users")),
+  Layer.provide(Layer.unwrapEffect(
+    Effect.promise(async () => {
+      const { NodeContext } = await import("@effect/platform-node");
+      return NodeContext.layer;
+    }),
+  )),
+);

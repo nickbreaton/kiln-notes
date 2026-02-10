@@ -1,9 +1,9 @@
 import { Effect } from "effect";
 import * as Y from "yjs";
-import { UserDocumentService } from "./UserDocumentService";
+import { UserDocumentService } from "./UserDocumentService/UserDocumentService";
 
 export class SyncService extends Effect.Service<SyncService>()("SyncService", {
-  dependencies: [UserDocumentService.Default],
+  dependencies: [UserDocumentService.Live],
   scoped: Effect.gen(function*() {
     const userDocumentService = yield* UserDocumentService;
 

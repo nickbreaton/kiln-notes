@@ -1,9 +1,7 @@
 import { HttpApiBuilder, HttpServer } from "@effect/platform";
-import { NodeContext } from "@effect/platform-node";
 
 import type { APIRoute } from "astro";
 import { Effect, Layer } from "effect";
-import * as Y from "yjs";
 import { AstroConfigProvider } from "../../effect/server/AstroConfigProvider";
 import { Session, SessionMiddlewareLive } from "../../effect/server/middleware/Session";
 import { SyncService } from "../../effect/server/SyncService";
