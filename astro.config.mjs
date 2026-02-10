@@ -30,5 +30,8 @@ export default defineConfig({
     server: {
       allowedHosts: [".ngrok-free.dev"],
     },
+    ssr: {
+      external: ["@effect/platform-node"],
+    },
   },
 });
