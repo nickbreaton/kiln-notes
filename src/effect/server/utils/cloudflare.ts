@@ -1,3 +1,3 @@
 export function isCloudflare() {
-  return true;
+  return /Cloudflare/i.test(navigator.userAgent);
 }
