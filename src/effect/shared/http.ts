@@ -7,7 +7,6 @@ import {
   PublicKeyCredentialRequestOptionsJSON,
   RegistrationResponseJSON,
 } from "./webauthn";
-import { YjsUpdate } from "./YjsSchema";
 
 export class WebAuthnApiError extends Schema.TaggedError<WebAuthnApiError>()(
   "WebAuthnApiError",

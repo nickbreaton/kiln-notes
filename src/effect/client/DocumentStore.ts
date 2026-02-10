@@ -6,16 +6,19 @@ import { KilnApi } from "../shared/http";
 
 export class DocumentStore extends Effect.Service<DocumentStore>()("DocumentStore", {
   dependencies: [FetchHttpClient.layer],
-  effect: Effect.gen(function*() {
+  scoped: Effect.gen(function*() {
     const doc = new Y.Doc();
     const provider = new IndexeddbPersistence("kiln", doc);
     const client = yield* HttpApiClient.make(KilnApi);
 
-    // Wait for IndexedDB to sync, then initialize syncedStateVector
     yield* Effect.async((emit) => {
       provider.once("synced", () => {
         emit(Effect.void);
       });
+    });
+
+    yield* Effect.addFinalizer(() => {
+      return Effect.sync(() => doc.destroy());
     });
 
     const sync = Effect.gen(function*() {
@@ -32,7 +35,7 @@ export class DocumentStore extends Effect.Service<DocumentStore>()("DocumentStor
       });
     });
 
-    yield* sync;
+    yield* sync.pipe(Effect.forkDaemon);
 
     return {
       doc,
