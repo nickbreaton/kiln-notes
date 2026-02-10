@@ -40,6 +40,7 @@
     "dprint": "^0.51.1",
     "effect": "^3.19.16",
     "localtunnel": "^2.0.2",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "@effect/workflow": "^0.16.0"
   }
 }
