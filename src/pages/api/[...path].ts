@@ -8,13 +8,7 @@ import { AstroConfigProvider } from "../../effect/server/AstroConfigProvider";
 import { Session, SessionMiddlewareLive } from "../../effect/server/middleware/Session";
 import { SyncService } from "../../effect/server/SyncService";
 import { WebAuthnService } from "../../effect/server/WebAuthnService";
-import {
-  HealthResponse,
-  KilnApi,
-  SyncServiceError,
-  UnauthorizedError,
-  WebAuthnApiError,
-} from "../../effect/shared/http";
+import { HealthResponse, KilnApi, UnauthorizedError, WebAuthnApiError } from "../../effect/shared/http";
 
 const ApiGroupLive = HttpApiBuilder.group(KilnApi, "api", (handlers) =>
   handlers
@@ -34,8 +28,8 @@ const SyncGroupLive = HttpApiBuilder.group(KilnApi, "sync", (handlers) =>
           return yield* new UnauthorizedError({ message: "Unauthorized" });
         }
 
-        return yield* syncService.pull(payload.stateVector);
-      }))
+        return yield* syncService.pull(userId, payload.stateVector);
+      }).pipe(Effect.orDie))
     .handle("push", ({ payload }) =>
       Effect.gen(function*() {
         const session = yield* Session;
@@ -46,10 +40,10 @@ const SyncGroupLive = HttpApiBuilder.group(KilnApi, "sync", (handlers) =>
           return yield* new UnauthorizedError({ message: "Unauthorized" });
         }
 
-        yield* syncService.push(payload.diff);
+        yield* syncService.push(userId, payload.diff);
 
         return { success: true };
-      })));
+      }).pipe(Effect.orDie)));
 
 const AuthGroupLive = HttpApiBuilder.group(KilnApi, "auth", (handlers) =>
   handlers

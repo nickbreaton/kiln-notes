@@ -1,27 +1,22 @@
-import { KeyValueStore } from "@effect/platform";
-import { Effect, Either, Encoding, Option } from "effect";
+import { Effect } from "effect";
 import * as Y from "yjs";
+import { UserDocumentService } from "./UserDocumentService";
 
 export class SyncService extends Effect.Service<SyncService>()("SyncService", {
+  dependencies: [UserDocumentService.Default],
   scoped: Effect.gen(function*() {
-    // const kv = yield* KeyValueStore.KeyValueStore;
+    const userDocumentService = yield* UserDocumentService;
 
-    // TODO: need seperate document per user
-    const doc = new Y.Doc();
-
-    yield* Effect.addFinalizer(() => {
-      return Effect.sync(() => doc.destroy());
-    });
-
-    const pull = Effect.fn(function*(stateVector: Uint8Array) {
+    const pull = Effect.fn(function*(userId: string, stateVector: Uint8Array) {
+      const doc = yield* userDocumentService.load(userId);
       return {
         diff: Y.encodeStateAsUpdate(doc, stateVector),
         stateVector: Y.encodeStateVector(doc),
       };
     });
 
-    const push = Effect.fn(function*(diff: Uint8Array) {
-      Y.applyUpdate(doc, diff);
+    const push = Effect.fn(function*(userId: string, diff: Uint8Array) {
+      yield* userDocumentService.update(userId, doc => Y.applyUpdate(doc, diff));
     });
 
     return {
