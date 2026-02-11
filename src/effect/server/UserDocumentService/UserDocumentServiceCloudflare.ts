@@ -38,7 +38,7 @@ export const UserDocumentServiceCloudflare = Layer.effect(
       const value = Y.encodeStateAsUpdate(doc);
       const encoded = yield* Schema.encode(Schema.Uint8ArrayFromBase64)(value);
 
-      yield* Effect.promise(() => userDocument.set(encoded));
+      yield* Effect.promise(() => userDocument.put(encoded));
     }, Effect.catchAllCause(cause => new UserDocumentError({ cause })));
 
     return {

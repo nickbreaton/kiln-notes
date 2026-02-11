@@ -9,9 +9,7 @@ export class UserDocumentDurableObject extends DurableObject {
     return value ?? null;
   }
 
-  /** TODO: add an update – I think this is needed for transaction-like changes */
-
-  async set(value: string): Promise<void> {
+  async put(value: string): Promise<void> {
     await this.ctx.storage.put("data", value);
   }
 }
