@@ -24,7 +24,13 @@ export default defineConfig({
     react(),
   ],
   output: "static", // Static mode with server-rendered API routes (prerender: false)
-  adapter: cloudflare({ imageService: "compile" }),
+  adapter: cloudflare({
+    imageService: "compile",
+    workerEntryPoint: {
+      path: "cloudflare.ts",
+      namedExports: ["UserDocumentDurableObject"],
+    },
+  }),
   vite: {
     plugins: [tailwindcss()],
     server: {

@@ -3,6 +3,7 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
+    "postinstall": "wrangler types",
     "dev": "bun astro dev",
     "build": "bun astro build",
     "tunnel": "ngrok http 4321",

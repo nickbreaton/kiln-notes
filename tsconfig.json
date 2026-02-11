@@ -6,6 +6,7 @@
     "jsx": "react-jsx",
     "jsxImportSource": "react",
     "plugins": [{ "name": "@effect/language-service" }],
-    "verbatimModuleSyntax": true
+    "verbatimModuleSyntax": true,
+    "types": ["@cloudflare/workers-types"]
   }
 }
