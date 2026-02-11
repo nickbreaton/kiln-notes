@@ -3,6 +3,7 @@ import { HttpApiBuilder, HttpServer } from "@effect/platform";
 import type { APIRoute } from "astro";
 import { Effect, Layer } from "effect";
 import { AstroConfigProvider } from "../../effect/server/AstroConfigProvider";
+import { Locals } from "../../effect/server/Locals";
 import { Session, SessionMiddlewareLive } from "../../effect/server/middleware/Session";
 import { SyncService } from "../../effect/server/SyncService";
 import { WebAuthnService } from "../../effect/server/WebAuthnService";
@@ -75,12 +76,13 @@ const ApiLayer = HttpApiBuilder.api(KilnApi).pipe(
   Layer.provide(SyncService.Default),
   Layer.provide(SessionMiddlewareLive),
   Layer.provide(Layer.setConfigProvider(AstroConfigProvider)),
+  Layer.merge(HttpServer.layerContext),
 );
 
-const { handler } = HttpApiBuilder.toWebHandler(
-  Layer.mergeAll(ApiLayer, HttpServer.layerContext),
-);
+const { handler } = HttpApiBuilder.toWebHandler(ApiLayer);
 
-export const ALL: APIRoute = async ({ request }) => handler(request);
+export const ALL: APIRoute = async ({ request, locals }) => {
+  return handler(request, Locals.context(locals));
+};
 
 export const prerender = false;
