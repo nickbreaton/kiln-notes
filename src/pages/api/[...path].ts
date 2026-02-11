@@ -3,7 +3,7 @@ import { HttpApiBuilder, HttpServer } from "@effect/platform";
 import type { APIRoute } from "astro";
 import { Effect, Layer } from "effect";
 import { AstroConfigProvider } from "../../effect/server/AstroConfigProvider";
-import { Locals } from "../../effect/server/Locals";
+import { CloudflareBindings } from "../../effect/server/CloudflareBindings";
 import { Session, SessionMiddlewareLive } from "../../effect/server/middleware/Session";
 import { SyncService } from "../../effect/server/SyncService";
 import { WebAuthnService } from "../../effect/server/WebAuthnService";
@@ -82,7 +82,10 @@ const ApiLayer = HttpApiBuilder.api(KilnApi).pipe(
 const { handler } = HttpApiBuilder.toWebHandler(ApiLayer);
 
 export const ALL: APIRoute = async ({ request, locals }) => {
-  return handler(request, Locals.context(locals));
+  // @ts-ignore -- Astro ↔ Cloudflare typings are suboptimal
+  const bindings = CloudflareBindings.context(locals?.runtime?.env);
+
+  return handler(request, bindings);
 };
 
 export const prerender = false;

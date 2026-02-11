@@ -3,7 +3,6 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "postinstall": "wrangler types",
     "dev": "bun astro dev",
     "build": "bun astro build",
     "tunnel": "ngrok http 4321",
@@ -33,15 +32,16 @@
   "devDependencies": {
     "@astrojs/cloudflare": "^12.6.12",
     "@astrojs/react": "^4.4.2",
+    "@cloudflare/workers-types": "^4",
     "@effect-atom/atom-react": "^0.5.0",
     "@effect/language-service": "^0.73.1",
     "@effect/platform": "^0.94.4",
     "@effect/platform-browser": "^0.74.0",
+    "@effect/workflow": "^0.16.0",
     "@vite-pwa/astro": "^1.2.0",
     "dprint": "^0.51.1",
     "effect": "^3.19.16",
     "localtunnel": "^2.0.2",
-    "typescript": "^5.9.3",
-    "@effect/workflow": "^0.16.0"
+    "typescript": "^5.9.3"
   }
 }
