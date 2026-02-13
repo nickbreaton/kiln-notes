@@ -1,7 +1,7 @@
 import { HttpApiBuilder, HttpServer, Multipart } from "@effect/platform";
 
 import type { APIRoute } from "astro";
-import { Chunk, Console, Effect, Layer, Schema, Stream } from "effect";
+import { Chunk, Console, Effect, Layer, Option, Schema, Stream } from "effect";
 import { AstroConfigProvider } from "../../effect/server/AstroConfigProvider";
 import { CloudflareBindings } from "../../effect/server/CloudflareBindings";
 import { Session, SessionMiddlewareLive } from "../../effect/server/middleware/Session";
@@ -85,14 +85,14 @@ const ImageGroupLive = HttpApiBuilder.group(KilnApi, "images", (handlers) =>
           return yield* new UnauthorizedError({ message: "Unauthorized" });
         }
 
-        type Input = {
+        type Parts = {
           id?: string;
-          content?: Stream.Stream<Uint8Array, Multipart.MultipartError>;
+          file?: Stream.Stream<Uint8Array, Multipart.MultipartError>;
         };
 
-        const parts = yield* Stream.runFold(payload, {} as Input, (acc, part) => {
+        const parts = yield* Stream.runFold(payload, {} as Parts, (acc, part) => {
           if (Multipart.isFile(part) && part.key === "file") {
-            return { ...acc, content: part.content };
+            return { ...acc, file: part.content };
           }
           if (Multipart.isField(part) && part.key === "id") {
             return { ...acc, id: part.value };
@@ -100,7 +100,11 @@ const ImageGroupLive = HttpApiBuilder.group(KilnApi, "images", (handlers) =>
           return acc;
         });
 
-        console.log(parts);
+        const id = yield* Option.fromNullable(parts.id);
+        const file = yield* Option.fromNullable(parts.file);
+
+        // TODO: persist via service
+        console.log(id, file);
 
         // TODO: Implement image upload logic
         return { url: "" };
