@@ -7,6 +7,12 @@ export const Status = Schema.Literal(
   "complete",
 );
 
+export const Image = Schema.Struct({
+  id: Schema.UUID,
+  status: Status,
+  createdAt: Schema.DateTimeUtc,
+});
+
 export const Piece = Schema.Struct({
   id: Schema.UUID,
   status: Status,
@@ -21,12 +27,7 @@ export const Piece = Schema.Struct({
    */
   updatedAt: Schema.DateTimeUtc,
 
-  /**
-   * This should ideally match the updatedAt field, otherwise a sync is needed.
-   */
-  serverSyncedAt: Schema.optional(Schema.DateTimeUtc),
-
-  photoUploadedAt: Schema.optional(Schema.DateTimeUtc),
+  images: Schema.Array(Image),
 });
 
 export type Piece = typeof Piece.Encoded;

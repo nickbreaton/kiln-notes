@@ -1,9 +1,10 @@
 import { Atom } from "@effect-atom/atom-react";
 import { FetchHttpClient } from "@effect/platform";
-import { Console, Effect, Layer, Schema, Stream } from "effect";
+import { Array, Console, Effect, Layer, Option, Schema, Stream } from "effect";
+import { SyncService } from "../server/SyncService";
 import { ClipboardService } from "./ClipboardService";
 import { DocumentStore } from "./DocumentStore";
-import { PhotoService } from "./PhotoService";
+import { LocalPhotoService } from "./LocalPhotoService";
 import { PieceRepository } from "./PieceRepository";
 import { UserService } from "./UserService";
 import { WebAuthnClientService } from "./WebAuthnClientService";
@@ -13,7 +14,7 @@ const runtime = Atom.runtime(
     ClipboardService.Default,
     PieceRepository.Default,
     DocumentStore.Default,
-    PhotoService.Default,
+    LocalPhotoService.Default,
     UserService.Default,
     Layer.provide(WebAuthnClientService.Default, FetchHttpClient.layer),
   ),
@@ -40,11 +41,18 @@ export const createPiecesAtom = runtime.fn((files: File[]) => {
   });
 });
 
+export const pieceAtom = Atom.family((id: string) => {
+  return Atom.mapResult(collectionAtom, Array.findFirst((piece) => piece.id === id));
+});
+
 export const getPhotoUrlAtom = Atom.family((id: string) =>
   runtime.atom((context) => {
     return Effect.gen(function*() {
-      const service = yield* PhotoService;
-      const blob = yield* service.get(id);
+      const localPhotos = yield* LocalPhotoService;
+      const pieceResult = yield* context.result(pieceAtom(id));
+      const { images } = yield* pieceResult;
+      const { id: imageId } = yield* Array.get(images, 0);
+      const blob = yield* localPhotos.get(imageId);
       const url = URL.createObjectURL(blob);
       context.addFinalizer(() => URL.revokeObjectURL(url));
       return url;
