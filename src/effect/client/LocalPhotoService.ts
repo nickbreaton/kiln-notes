@@ -27,7 +27,7 @@ export class LocalPhotoService extends Effect.Service<LocalPhotoService>()("Loca
         }),
 
       list: () =>
-        Stream.fromAsyncIterable(photosHandle.entries(), (cause) => {
+        Stream.fromAsyncIterable(photosHandle.keys(), (cause) => {
           return new LocalPhotoError({ cause });
         }),
 

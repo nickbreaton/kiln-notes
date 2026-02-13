@@ -1,4 +1,4 @@
-import { HttpApi, HttpApiEndpoint, HttpApiGroup, HttpApiMiddleware, HttpApiSchema } from "@effect/platform";
+import { HttpApi, HttpApiEndpoint, HttpApiGroup, HttpApiMiddleware, HttpApiSchema, Multipart } from "@effect/platform";
 import { Context, Ref, Schema } from "effect";
 import { SessionMiddleware } from "../server/middleware/Session";
 import {
@@ -24,6 +24,12 @@ export class SyncServiceError extends Schema.TaggedError<SyncServiceError>()(
   "SyncServiceError",
   { cause: Schema.Unknown },
   HttpApiSchema.annotations({ status: 500 }),
+) {}
+
+export class ImageUploadError extends Schema.TaggedError<ImageUploadError>()(
+  "ImageUploadError",
+  { cause: Schema.Unknown },
+  HttpApiSchema.annotations({ status: 400 }),
 ) {}
 
 export class AuthGroup extends HttpApiGroup.make("auth")
@@ -77,9 +83,23 @@ export class SyncGroup extends HttpApiGroup.make("sync")
   )
 {}
 
+export class ImageGroup extends HttpApiGroup.make("images")
+  .add(
+    HttpApiEndpoint.post("uploadImage", "/api/images/upload")
+      .setPayload(HttpApiSchema.MultipartStream(Schema.Struct({
+        id: Schema.String,
+        image: Multipart.FileSchema,
+      })))
+      .addSuccess(Schema.Struct({ url: Schema.String }))
+      .addError(UnauthorizedError)
+      .addError(ImageUploadError),
+  )
+{}
+
 export class KilnApi extends HttpApi.make("kiln")
   .add(ApiGroup)
   .add(AuthGroup)
   .add(SyncGroup)
+  .add(ImageGroup)
   .middleware(SessionMiddleware)
 {}

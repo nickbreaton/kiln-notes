@@ -1,13 +1,19 @@
-import { HttpApiBuilder, HttpServer } from "@effect/platform";
+import { HttpApiBuilder, HttpServer, Multipart } from "@effect/platform";
 
 import type { APIRoute } from "astro";
-import { Effect, Layer } from "effect";
+import { Chunk, Console, Effect, Layer, Schema, Stream } from "effect";
 import { AstroConfigProvider } from "../../effect/server/AstroConfigProvider";
 import { CloudflareBindings } from "../../effect/server/CloudflareBindings";
 import { Session, SessionMiddlewareLive } from "../../effect/server/middleware/Session";
 import { SyncService } from "../../effect/server/SyncService";
 import { WebAuthnService } from "../../effect/server/WebAuthnService";
-import { HealthResponse, KilnApi, UnauthorizedError, WebAuthnApiError } from "../../effect/shared/http";
+import {
+  HealthResponse,
+  ImageUploadError,
+  KilnApi,
+  UnauthorizedError,
+  WebAuthnApiError,
+} from "../../effect/shared/http";
 
 const ApiGroupLive = HttpApiBuilder.group(KilnApi, "api", (handlers) =>
   handlers
@@ -68,10 +74,43 @@ const AuthGroupLive = HttpApiBuilder.group(KilnApi, "auth", (handlers) =>
         return result;
       }).pipe(Effect.mapError((error) => new WebAuthnApiError({ cause: error })))));
 
+const ImageGroupLive = HttpApiBuilder.group(KilnApi, "images", (handlers) =>
+  handlers
+    .handle("uploadImage", ({ payload }) =>
+      Effect.gen(function*() {
+        const session = yield* Session;
+        const userId = session.user;
+
+        if (!userId) {
+          return yield* new UnauthorizedError({ message: "Unauthorized" });
+        }
+
+        type Input = {
+          id?: string;
+          content?: Stream.Stream<Uint8Array, Multipart.MultipartError>;
+        };
+
+        const parts = yield* Stream.runFold(payload, {} as Input, (acc, part) => {
+          if (Multipart.isFile(part) && part.key === "file") {
+            return { ...acc, content: part.content };
+          }
+          if (Multipart.isField(part) && part.key === "id") {
+            return { ...acc, id: part.value };
+          }
+          return acc;
+        });
+
+        console.log(parts);
+
+        // TODO: Implement image upload logic
+        return { url: "" };
+      }).pipe(Effect.mapError((error) => new ImageUploadError({ cause: error })))));
+
 const ApiLayer = HttpApiBuilder.api(KilnApi).pipe(
   Layer.provide(ApiGroupLive),
   Layer.provide(AuthGroupLive),
   Layer.provide(SyncGroupLive),
+  Layer.provide(ImageGroupLive),
   Layer.provide(WebAuthnService.Default),
   Layer.provide(SyncService.Default),
   Layer.provide(SessionMiddlewareLive),
