@@ -35,10 +35,9 @@ export class DocumentStore extends Effect.Service<DocumentStore>()("DocumentStor
       });
     });
 
-    yield* sync.pipe(Effect.forkDaemon);
-
     return {
       doc,
+      sync,
     };
   }),
 }) {}

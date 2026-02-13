@@ -6,6 +6,7 @@ import { ClipboardService } from "./ClipboardService";
 import { DocumentStore } from "./DocumentStore";
 import { LocalPhotoService } from "./LocalPhotoService";
 import { PieceRepository } from "./PieceRepository";
+import { SyncManager } from "./SyncManager";
 import { UserService } from "./UserService";
 import { WebAuthnClientService } from "./WebAuthnClientService";
 
@@ -16,6 +17,7 @@ const runtime = Atom.runtime(
     DocumentStore.Default,
     LocalPhotoService.Default,
     UserService.Default,
+    SyncManager.Default,
     Layer.provide(WebAuthnClientService.Default, FetchHttpClient.layer),
   ),
 );

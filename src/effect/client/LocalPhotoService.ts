@@ -1,4 +1,8 @@
-import { Effect } from "effect";
+import { Effect, Schema, Stream } from "effect";
+
+export class LocalPhotoError extends Schema.TaggedError<LocalPhotoError>()("LocalPhotoError", {
+  cause: Schema.Unknown,
+}) {}
 
 export class LocalPhotoService extends Effect.Service<LocalPhotoService>()("LocalPhotoService", {
   dependencies: [],
@@ -20,6 +24,11 @@ export class LocalPhotoService extends Effect.Service<LocalPhotoService>()("Loca
       delete: (id: string) =>
         Effect.gen(function*() {
           yield* Effect.promise(() => photosHandle.removeEntry(id));
+        }),
+
+      list: () =>
+        Stream.fromAsyncIterable(photosHandle.entries(), (cause) => {
+          return new LocalPhotoError({ cause });
         }),
 
       set: (id: string, blob: Blob) =>

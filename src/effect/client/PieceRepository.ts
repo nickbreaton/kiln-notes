@@ -1,7 +1,7 @@
 import { KeyValueStore } from "@effect/platform";
 import { BrowserKeyValueStore } from "@effect/platform-browser";
 import { DateTime, Effect, Option, Schema, Stream, SubscriptionRef } from "effect";
-import { IndexeddbPersistence } from "y-indexeddb";
+
 import { Image, Piece } from "../schema";
 import { DocumentStore } from "./DocumentStore";
 import { LocalPhotoService } from "./LocalPhotoService";
