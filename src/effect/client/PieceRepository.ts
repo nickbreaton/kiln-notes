@@ -54,9 +54,6 @@ export class PieceRepository extends Effect.Service<PieceRepository>()("PieceRep
           }
 
           yield* syncQueue.sync;
-          yield* syncQueue.sync;
-          yield* syncQueue.sync;
-          yield* syncQueue.sync;
         }),
 
       movePiece: (uuid: Schema.UUID) =>
