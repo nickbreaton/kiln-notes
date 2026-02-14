@@ -25,5 +25,11 @@
       "tag": "v1",
       "new_sqlite_classes": ["UserDocumentDurableObject"]
     }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "IMAGES_BUCKET",
+      "bucket_name": "kiln-images"
+    }
   ]
 }

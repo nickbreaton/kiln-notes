@@ -1,16 +1,40 @@
+import type { ReadableStream } from "@cloudflare/workers-types";
 import { Effect, Layer, Stream } from "effect";
+import { CloudflareBindings } from "../CloudflareBindings";
 import { ImageStore, ImageStoreError } from "./ImageStore";
 
 export const ImageStoreCloudflare = Layer.effect(
   ImageStore,
   Effect.gen(function*() {
+    const bindings = yield* Effect.serviceOption(CloudflareBindings);
+    const { IMAGES_BUCKET } = yield* bindings;
+
     const upload = Effect.fn(function*(key: string, file: Stream.Stream<Uint8Array>) {
-      return yield* new ImageStoreError({ cause: "Not implemented" });
+      // @ts-ignore - Effect and Cloudflare opaque type mismatch
+      const stream: ReadableStream = Stream.toReadableStream(file);
+
+      yield* Effect.tryPromise({
+        try: () => IMAGES_BUCKET.put(key, stream),
+        catch: (cause) => new ImageStoreError({ cause }),
+      });
     });
 
-    const get = Effect.fn(function*(key: string) {
-      return yield* new ImageStoreError({ cause: "Not implemented" });
-    });
+    const get = (key: string) =>
+      Effect.gen(function*() {
+        const object = yield* Effect.tryPromise({
+          try: () => IMAGES_BUCKET.get(key),
+          catch: (cause) => new ImageStoreError({ cause }),
+        });
+
+        if (!object?.body) {
+          return yield* new ImageStoreError({ cause: new Error(`Image not found: ${key}`) });
+        }
+
+        // @ts-ignore - Effect and Cloudflare opaque type mismatch
+        const stream: Stream.Stream<Uint8Array> = Stream.fromReadableStream(object.body);
+
+        return stream;
+      }).pipe(Stream.unwrap);
 
     return {
       upload,

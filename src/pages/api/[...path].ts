@@ -1,7 +1,7 @@
 import { HttpApiBuilder, HttpServer, HttpServerResponse, Multipart } from "@effect/platform";
 
 import type { APIRoute } from "astro";
-import { Chunk, Console, Effect, Layer, Option, Schema, Stream } from "effect";
+import { Effect, Layer, Option, Stream } from "effect";
 import { AstroConfigProvider } from "../../effect/server/AstroConfigProvider";
 import { CloudflareBindings } from "../../effect/server/CloudflareBindings";
 import { ImageStore } from "../../effect/server/ImageStore";
