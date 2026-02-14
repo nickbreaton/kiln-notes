@@ -29,7 +29,7 @@ export class SyncManager extends Effect.Service<SyncManager>()("SyncManager", {
       Stream.fromSchedule(Schedule.spaced("1 minutes")),
       Stream.fromEventListener(window, "online"),
       Stream.fromEventListener(document, "visibilitychange"),
-      userService.user.pipe(Stream.tap(Console.log)),
+      userService.user,
     ], { concurrency: "unbounded" })
       .pipe(
         Stream.throttle({
