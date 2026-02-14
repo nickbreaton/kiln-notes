@@ -4,6 +4,11 @@ import tailwindcss from "@tailwindcss/vite";
 import AstroPWA from "@vite-pwa/astro";
 import { defineConfig } from "astro/config";
 
+const external = [
+  "@effect/platform-node",
+  "@effect/platform-node-shared",
+];
+
 export default defineConfig({
   integrations: [
     // https://vite-pwa-org.netlify.app/guide/inject-manifest
@@ -40,7 +45,12 @@ export default defineConfig({
       },
     },
     ssr: {
-      external: ["@effect/platform-node"],
+      external,
+    },
+    build: {
+      rollupOptions: {
+        external,
+      },
     },
   },
 });
