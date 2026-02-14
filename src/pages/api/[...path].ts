@@ -148,6 +148,7 @@ const { handler } = HttpApiBuilder.toWebHandler(ApiLayer);
 export const ALL: APIRoute = async ({ request, locals }) => {
   // @ts-ignore -- Astro ↔ Cloudflare typings are suboptimal
   const bindings = CloudflareBindings.context(locals?.runtime?.env);
+  console.log({ bindings });
 
   return handler(request, bindings);
 };
