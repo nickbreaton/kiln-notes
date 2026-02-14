@@ -21,7 +21,7 @@ const navigationStrategy = new NetworkFirst({
   ],
 });
 
-registerRoute(new NavigationRoute(({ event }) => navigationStrategy.handle({ event, request: event.request })));
+registerRoute(new NavigationRoute(({ event, request }) => navigationStrategy.handle({ event, request })));
 
 // dprint-ignore
 registerRoute(({ url }) => url.origin === "https://fonts.googleapis.com", new StaleWhileRevalidate({
