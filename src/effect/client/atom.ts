@@ -54,10 +54,7 @@ export const getPhotoUrlAtom = Atom.family((id: string) =>
       const pieceResult = yield* context.result(pieceAtom(id));
       const { images } = yield* pieceResult;
       const { id: imageId } = yield* Array.get(images, 0);
-      const blob = yield* localPhotos.get(imageId);
-      const url = URL.createObjectURL(blob);
-      context.addFinalizer(() => URL.revokeObjectURL(url));
-      return url;
+      return `/api/image/get/${imageId}`;
     });
   })
 );

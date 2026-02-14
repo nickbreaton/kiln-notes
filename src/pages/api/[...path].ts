@@ -1,4 +1,4 @@
-import { HttpApiBuilder, HttpServer, Multipart } from "@effect/platform";
+import { HttpApiBuilder, HttpServer, HttpServerResponse, Multipart } from "@effect/platform";
 
 import type { APIRoute } from "astro";
 import { Chunk, Console, Effect, Layer, Option, Schema, Stream } from "effect";
@@ -11,6 +11,7 @@ import { SyncService } from "../../effect/server/SyncService";
 import { WebAuthnService } from "../../effect/server/WebAuthnService";
 import {
   HealthResponse,
+  ImageNotFoundError,
   ImageUploadError,
   KilnApi,
   UnauthorizedError,
@@ -113,7 +114,24 @@ const ImageGroupLive = HttpApiBuilder.group(KilnApi, "images", (handlers) =>
         return { success: true };
       }).pipe(
         Effect.mapError((error) => new ImageUploadError({ cause: error })),
-      )));
+      ))
+    .handleRaw("getImage", ({ path }) =>
+      Effect.gen(function*() {
+        const session = yield* Session;
+        const imageStore = yield* ImageStore;
+        const userId = session.user;
+
+        if (!userId) {
+          return yield* new UnauthorizedError({ message: "Unauthorized" });
+        }
+
+        const key = `${userId}/${path.id}`;
+        const url = yield* imageStore.get(key).pipe(
+          Effect.mapError((error) => new ImageNotFoundError({ message: error.cause?.toString() ?? "Image not found" })),
+        );
+
+        return HttpServerResponse.redirect(url.toString(), { status: 302 });
+      })));
 
 const ApiLayer = HttpApiBuilder.api(KilnApi).pipe(
   Layer.provide(ApiGroupLive),

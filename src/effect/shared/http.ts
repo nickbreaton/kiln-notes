@@ -83,6 +83,12 @@ export class SyncGroup extends HttpApiGroup.make("sync")
   )
 {}
 
+export class ImageNotFoundError extends Schema.TaggedError<ImageNotFoundError>()(
+  "ImageNotFoundError",
+  { message: Schema.String },
+  HttpApiSchema.annotations({ status: 404 }),
+) {}
+
 export class ImageGroup extends HttpApiGroup.make("images")
   .add(
     HttpApiEndpoint.post("uploadImage", "/api/images/upload")
@@ -93,6 +99,12 @@ export class ImageGroup extends HttpApiGroup.make("images")
       .addSuccess(Schema.Struct({ success: Schema.Boolean }))
       .addError(UnauthorizedError)
       .addError(ImageUploadError),
+  )
+  .add(
+    HttpApiEndpoint.get("getImage", "/api/image/get/:id")
+      .setPath(Schema.Struct({ id: Schema.String }))
+      .addError(UnauthorizedError)
+      .addError(ImageNotFoundError),
   )
 {}
 

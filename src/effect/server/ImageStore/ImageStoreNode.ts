@@ -18,7 +18,9 @@ export const ImageStoreNode = Layer.effect(
     const get = Effect.fn(function*(key: string) {
       const request = yield* HttpServerRequest.HttpServerRequest;
       const baseUrl = yield* Schema.decode(Schema.URL)(request.originalUrl);
-      return new URL(`/tmp/images/${key}`, baseUrl.origin);
+      const url = new URL(`/tmp/images/${key}`, baseUrl.origin);
+      url.searchParams.set("raw", "");
+      return url;
     }, Effect.catchAllCause(cause => new ImageStoreError({ cause })));
 
     return {
