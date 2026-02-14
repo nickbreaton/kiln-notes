@@ -22,7 +22,10 @@ export const ImageStoreCloudflare = Layer.effect(
 
       yield* Effect.tryPromise({
         try: () => IMAGES_BUCKET.put(key, stream),
-        catch: (cause) => new ImageStoreError({ cause }),
+        catch: (cause) => {
+          console.log("Error uploading image:", cause);
+          return new ImageStoreError({ cause });
+        },
       });
     });
 
