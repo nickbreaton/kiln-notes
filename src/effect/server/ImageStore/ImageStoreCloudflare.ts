@@ -6,8 +6,11 @@ import { ImageStore, ImageStoreError } from "./ImageStore";
 export const ImageStoreCloudflare = Layer.effect(
   ImageStore,
   Effect.gen(function*() {
+    console.log("before");
     const bindings = yield* Effect.serviceOption(CloudflareBindings);
+    console.log("bindings", bindings);
     const { IMAGES_BUCKET } = yield* bindings;
+    console.log("IMAGES", IMAGES_BUCKET);
 
     const upload = Effect.fn(function*(key: string, file: Stream.Stream<Uint8Array>) {
       // @ts-ignore - Effect and Cloudflare opaque type mismatch
