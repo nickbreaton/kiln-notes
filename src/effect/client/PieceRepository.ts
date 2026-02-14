@@ -50,6 +50,19 @@ export class PieceRepository extends Effect.Service<PieceRepository>()("PieceRep
 
             yield* photoService.set(image.id, file);
 
+            // Cache the image in the service worker cache for offline access
+            yield* Effect.promise(async () => {
+              const cache = await caches.open("piece-images");
+              const response = new Response(file, {
+                status: 200,
+                headers: {
+                  "Content-Type": file.type,
+                  "Content-Length": String(file.size),
+                },
+              });
+              await cache.put(`/api/image/get/${image.id}`, response);
+            });
+
             map.set(piece.id, piece);
           }
 

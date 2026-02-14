@@ -37,3 +37,14 @@ registerRoute(({ url }) => url.origin === "https://fonts.gstatic.com", new Cache
     new ExpirationPlugin({ maxEntries: 20, maxAgeSeconds: Duration.toSeconds("365 days") }),
   ],
 }));
+
+// Piece images: cache-first for offline viewing
+// The API returns a 302 redirect when the image isn't cached; fetch follows it automatically
+// dprint-ignore
+registerRoute(({ url }) => url.pathname.startsWith("/api/image/get/"), new CacheFirst({
+  cacheName: "piece-images",
+  plugins: [
+    new CacheableResponsePlugin({ statuses: [0, 200] }),
+    new ExpirationPlugin({ maxEntries: 500, maxAgeSeconds: Duration.toSeconds("365 days") }),
+  ],
+}));
