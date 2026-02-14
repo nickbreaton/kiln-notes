@@ -55,9 +55,12 @@ export class PieceRepository extends Effect.Service<PieceRepository>()("PieceRep
               images: [image],
             });
 
-            yield* photoService.set(image.id, file);
-
-            yield* cacheService.cacheImage(image.id, file);
+            yield* Effect.all([
+              photoService.set(image.id, file),
+              cacheService.cacheImage(image.id, file),
+            ], {
+              concurrency: "unbounded",
+            });
 
             map.set(piece.id, piece);
           }
@@ -74,13 +77,8 @@ export class PieceRepository extends Effect.Service<PieceRepository>()("PieceRep
 
       deletePiece: (id: string) =>
         Effect.gen(function*() {
-          // Plan
-          // 1. Call API to delete piece
-          // 2. Invalidates local storage stream
-
-          yield* photoService.delete(id);
-
           map.delete(id);
+          yield* syncQueue.sync;
         }),
     };
   }),
