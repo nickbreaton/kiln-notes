@@ -1,18 +1,18 @@
-import { KeyValueStore } from "@effect/platform";
-import { BrowserKeyValueStore } from "@effect/platform-browser";
 import { DateTime, Effect, Option, Schema, Stream, SubscriptionRef } from "effect";
 
 import { Image, Piece } from "../schema";
 import { DocumentStore } from "./DocumentStore";
 import { LocalPhotoService } from "./LocalPhotoService";
+import { SyncQueue } from "./SyncQueue";
 
 export class PieceRepository extends Effect.Service<PieceRepository>()("PieceRepository", {
-  dependencies: [LocalPhotoService.Default, DocumentStore.Default],
+  dependencies: [LocalPhotoService.Default, DocumentStore.Default, SyncQueue.Default],
   effect: Effect.gen(function*() {
     const { doc } = yield* DocumentStore;
     const map = doc.getMap<typeof Piece.Type>("piecesCollection");
 
     const photoService = yield* LocalPhotoService;
+    const syncQueue = yield* SyncQueue;
 
     return {
       pieces: Stream.async<typeof Piece.Type[]>((emit) => {
@@ -31,9 +31,9 @@ export class PieceRepository extends Effect.Service<PieceRepository>()("PieceRep
 
       createPieces: (files: File[]) =>
         Effect.gen(function*() {
-          for (const file of files) {
-            const now = yield* DateTime.now;
+          const now = yield* DateTime.now;
 
+          for (const file of files) {
             const image = Image.make({
               id: crypto.randomUUID(),
               createdAt: now,
@@ -52,6 +52,11 @@ export class PieceRepository extends Effect.Service<PieceRepository>()("PieceRep
 
             map.set(piece.id, piece);
           }
+
+          yield* syncQueue.sync;
+          yield* syncQueue.sync;
+          yield* syncQueue.sync;
+          yield* syncQueue.sync;
         }),
 
       movePiece: (uuid: Schema.UUID) =>
