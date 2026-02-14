@@ -40,7 +40,6 @@ export const UserDocumentServiceNode = Layer.effect(
   Layer.provide(Layer.unwrapEffect(
     Effect.promise(async () => {
       const { NodeContext } = await import("@effect/platform-node");
-      console.log(NodeContext.layer);
       return NodeContext.layer;
     }),
   )),
