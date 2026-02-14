@@ -1,3 +1,4 @@
+import { Duration } from "effect";
 import { CacheableResponsePlugin } from "workbox-cacheable-response";
 import { ExpirationPlugin } from "workbox-expiration";
 import { cleanupOutdatedCaches, precacheAndRoute } from "workbox-precaching";
@@ -16,7 +17,7 @@ const navigationStrategy = new NetworkFirst({
   networkTimeoutSeconds: 3,
   plugins: [
     new CacheableResponsePlugin({ statuses: [0, 200] }),
-    new ExpirationPlugin({ maxEntries: 50, maxAgeSeconds: 60 * 60 * 24 * 365 }),
+    new ExpirationPlugin({ maxEntries: 50, maxAgeSeconds: Duration.toSeconds("365 days") }),
   ],
 });
 
@@ -33,6 +34,6 @@ registerRoute(({ url }) => url.origin === "https://fonts.gstatic.com", new Cache
   cacheName: "google-fonts-webfonts",
   plugins: [
     new CacheableResponsePlugin({ statuses: [0, 200] }),
-    new ExpirationPlugin({ maxEntries: 20, maxAgeSeconds: 60 * 60 * 24 * 365 }),
+    new ExpirationPlugin({ maxEntries: 20, maxAgeSeconds: Duration.toSeconds("365 days") }),
   ],
 }));
