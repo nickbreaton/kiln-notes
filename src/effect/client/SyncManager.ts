@@ -20,11 +20,18 @@ export class SyncManager extends Effect.Service<SyncManager>()("SyncManager", {
       Effect.forkDaemon,
     );
 
-    yield* Stream.fromSchedule(Schedule.spaced("30 seconds")).pipe(
-      Stream.tap(() => syncQueue.sync),
-      Stream.runDrain,
-      Effect.forkDaemon,
-    );
+    yield* Stream.mergeAll([
+      Stream.fromSchedule(Schedule.spaced("1 minutes")),
+      Stream.fromEventListener(window, "online"),
+      Stream.fromEventListener(document, "visibilitychange"),
+    ], { concurrency: "unbounded" })
+      .pipe(
+        Stream.throttle({ cost: () => 1, units: 1, duration: "3 seconds", strategy: "enforce" }),
+        Stream.filter(() => navigator.onLine),
+        Stream.tap(() => syncQueue.sync),
+        Stream.runDrain,
+        Effect.forkDaemon,
+      );
 
     return {};
   }),
