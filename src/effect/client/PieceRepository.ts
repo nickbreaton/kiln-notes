@@ -3,15 +3,22 @@ import { DateTime, Effect, Option, Schema, Stream, SubscriptionRef } from "effec
 import { Image, Piece } from "../schema";
 import { DocumentStore } from "./DocumentStore";
 import { LocalPhotoService } from "./LocalPhotoService";
+import { ServiceWorkerCacheService } from "./ServiceWorkerCacheService";
 import { SyncQueue } from "./SyncQueue";
 
 export class PieceRepository extends Effect.Service<PieceRepository>()("PieceRepository", {
-  dependencies: [LocalPhotoService.Default, DocumentStore.Default, SyncQueue.Default],
+  dependencies: [
+    LocalPhotoService.Default,
+    DocumentStore.Default,
+    SyncQueue.Default,
+    ServiceWorkerCacheService.Default,
+  ],
   effect: Effect.gen(function*() {
     const { doc } = yield* DocumentStore;
     const map = doc.getMap<typeof Piece.Type>("piecesCollection");
 
     const photoService = yield* LocalPhotoService;
+    const cacheService = yield* ServiceWorkerCacheService;
     const syncQueue = yield* SyncQueue;
 
     return {
@@ -50,18 +57,7 @@ export class PieceRepository extends Effect.Service<PieceRepository>()("PieceRep
 
             yield* photoService.set(image.id, file);
 
-            // Cache the image in the service worker cache for offline access
-            yield* Effect.promise(async () => {
-              const cache = await caches.open("piece-images");
-              const response = new Response(file, {
-                status: 200,
-                headers: {
-                  "Content-Type": file.type,
-                  "Content-Length": String(file.size),
-                },
-              });
-              await cache.put(`/api/image/get/${image.id}`, response);
-            });
+            yield* cacheService.cacheImage(image.id, file);
 
             map.set(piece.id, piece);
           }
