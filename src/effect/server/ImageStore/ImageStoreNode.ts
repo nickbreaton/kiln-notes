@@ -9,19 +9,21 @@ export const ImageStoreNode = Layer.effect(
     const fs = yield* FileSystem.FileSystem;
     const path = yield* Path.Path;
 
-    const upload = Effect.fn(function*(key: string, file: Stream.Stream<Uint8Array>) {
-      const writePath = `./tmp/images/${key}`;
-      yield* fs.makeDirectory(path.dirname(writePath), { recursive: true });
-      yield* file.pipe(Stream.run(fs.sink(writePath)));
-    }, Effect.catchAllCause(cause => new ImageStoreError({ cause })));
+    const getPath = (key: string) => `./tmp/images/${key}`;
 
-    const get = Effect.fn(function*(key: string) {
-      const request = yield* HttpServerRequest.HttpServerRequest;
-      const baseUrl = yield* Schema.decode(Schema.URL)(request.originalUrl);
-      const url = new URL(`/tmp/images/${key}`, baseUrl.origin);
-      url.searchParams.set("raw", "");
-      return url;
-    }, Effect.catchAllCause(cause => new ImageStoreError({ cause })));
+    const upload = Effect.fn(
+      function*(key: string, file: Stream.Stream<Uint8Array>) {
+        const resolved = getPath(key);
+        yield* fs.makeDirectory(path.dirname(resolved), { recursive: true });
+        yield* file.pipe(Stream.run(fs.sink(resolved)));
+      },
+      Effect.catchAllCause(cause => new ImageStoreError({ cause })),
+    );
+
+    const get = (key: string) =>
+      fs.stream(getPath(key)).pipe(
+        Stream.catchAllCause(cause => new ImageStoreError({ cause })),
+      );
 
     return {
       upload,

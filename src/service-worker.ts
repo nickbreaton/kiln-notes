@@ -39,7 +39,6 @@ registerRoute(({ url }) => url.origin === "https://fonts.gstatic.com", new Cache
 }));
 
 // Piece images: cache-first for offline viewing
-// The API returns a 302 redirect when the image isn't cached; fetch follows it automatically
 // dprint-ignore
 registerRoute(({ url }) => url.pathname.startsWith("/api/image/get/"), new CacheFirst({
   cacheName: "piece-images",

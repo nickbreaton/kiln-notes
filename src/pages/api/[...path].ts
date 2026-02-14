@@ -11,7 +11,6 @@ import { SyncService } from "../../effect/server/SyncService";
 import { WebAuthnService } from "../../effect/server/WebAuthnService";
 import {
   HealthResponse,
-  ImageNotFoundError,
   ImageUploadError,
   KilnApi,
   UnauthorizedError,
@@ -126,11 +125,9 @@ const ImageGroupLive = HttpApiBuilder.group(KilnApi, "images", (handlers) =>
         }
 
         const key = `${userId}/${path.id}`;
-        const url = yield* imageStore.get(key).pipe(
-          Effect.mapError((error) => new ImageNotFoundError({ message: error.cause?.toString() ?? "Image not found" })),
-        );
+        const stream = imageStore.get(key);
 
-        return HttpServerResponse.redirect(url.toString(), { status: 302 });
+        return HttpServerResponse.stream(stream);
       })));
 
 const ApiLayer = HttpApiBuilder.api(KilnApi).pipe(
