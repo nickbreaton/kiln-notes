@@ -109,6 +109,8 @@ const ImageGroupLive = HttpApiBuilder.group(KilnApi, "images", (handlers) =>
         const key = `${userId}/${id}`;
 
         yield* imageStore.upload(key, file.pipe(Stream.orDie));
+
+        return { success: true };
       }).pipe(
         Effect.mapError((error) => new ImageUploadError({ cause: error })),
       )));

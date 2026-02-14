@@ -30,12 +30,17 @@ export class ImageSyncService extends Effect.Service<ImageSyncService>()("ImageS
 
       for (const imageId of chunk) {
         if (yield* requiresSync(imageId)) {
-          const payload = new FormData();
           const image = yield* photoService.get(imageId);
+
+          const payload = new FormData();
           payload.append("id", imageId);
           payload.append("file", image);
-          yield* client.images.uploadImage({ payload });
-          // TODO: delete from local store
+
+          const { success } = yield* client.images.uploadImage({ payload });
+
+          if (success) {
+            yield* photoService.delete(imageId);
+          }
         }
       }
     }).pipe(syncSemaphore.withPermits(1));
