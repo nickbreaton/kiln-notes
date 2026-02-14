@@ -90,7 +90,7 @@ export class ImageGroup extends HttpApiGroup.make("images")
         id: Schema.String,
         image: Multipart.FileSchema,
       })))
-      .addSuccess(Schema.Struct({ url: Schema.String }))
+      .addSuccess(Schema.Void)
       .addError(UnauthorizedError)
       .addError(ImageUploadError),
   )

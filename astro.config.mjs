@@ -35,6 +35,9 @@ export default defineConfig({
     plugins: [tailwindcss()],
     server: {
       allowedHosts: [".ngrok-free.dev"],
+      watch: {
+        ignored: ["tmp/**"],
+      },
     },
     ssr: {
       external: ["@effect/platform-node"],

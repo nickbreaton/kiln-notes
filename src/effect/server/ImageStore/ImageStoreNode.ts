@@ -1,17 +1,18 @@
-import { FileSystem, HttpServerRequest } from "@effect/platform";
+import { FileSystem, HttpServerRequest, Path } from "@effect/platform";
 import { NodeContext } from "@effect/platform-node";
-import { Effect, Layer, Schema } from "effect";
+import { Effect, Layer, Schema, Stream } from "effect";
 import { ImageStore, ImageStoreError } from "./ImageStore";
 
 export const ImageStoreNode = Layer.effect(
   ImageStore,
   Effect.gen(function*() {
     const fs = yield* FileSystem.FileSystem;
+    const path = yield* Path.Path;
 
-    const upload = Effect.fn(function*(key: string, file: Uint8Array) {
-      const path = `./tmp/images/${key}`;
-      yield* fs.makeDirectory("./tmp/images", { recursive: true });
-      yield* fs.writeFile(path, file);
+    const upload = Effect.fn(function*(key: string, file: Stream.Stream<Uint8Array>) {
+      const writePath = `./tmp/images/${key}`;
+      yield* fs.makeDirectory(path.dirname(writePath), { recursive: true });
+      yield* file.pipe(Stream.run(fs.sink(writePath)));
     }, Effect.catchAllCause(cause => new ImageStoreError({ cause })));
 
     const get = Effect.fn(function*(key: string) {

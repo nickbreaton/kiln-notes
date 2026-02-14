@@ -4,6 +4,8 @@ import type { APIRoute } from "astro";
 import { Chunk, Console, Effect, Layer, Option, Schema, Stream } from "effect";
 import { AstroConfigProvider } from "../../effect/server/AstroConfigProvider";
 import { CloudflareBindings } from "../../effect/server/CloudflareBindings";
+import { ImageStore } from "../../effect/server/ImageStore";
+import { ImageStoreLive } from "../../effect/server/ImageStore/ImageStoreLive";
 import { Session, SessionMiddlewareLive } from "../../effect/server/middleware/Session";
 import { SyncService } from "../../effect/server/SyncService";
 import { WebAuthnService } from "../../effect/server/WebAuthnService";
@@ -79,6 +81,7 @@ const ImageGroupLive = HttpApiBuilder.group(KilnApi, "images", (handlers) =>
     .handle("uploadImage", ({ payload }) =>
       Effect.gen(function*() {
         const session = yield* Session;
+        const imageStore = yield* ImageStore;
         const userId = session.user;
 
         if (!userId) {
@@ -103,12 +106,12 @@ const ImageGroupLive = HttpApiBuilder.group(KilnApi, "images", (handlers) =>
         const id = yield* Option.fromNullable(parts.id);
         const file = yield* Option.fromNullable(parts.file);
 
-        // TODO: persist via service
-        console.log(id, file);
+        const key = `${userId}/${id}`;
 
-        // TODO: Implement image upload logic
-        return { url: "" };
-      }).pipe(Effect.mapError((error) => new ImageUploadError({ cause: error })))));
+        yield* imageStore.upload(key, file.pipe(Stream.orDie));
+      }).pipe(
+        Effect.mapError((error) => new ImageUploadError({ cause: error })),
+      )));
 
 const ApiLayer = HttpApiBuilder.api(KilnApi).pipe(
   Layer.provide(ApiGroupLive),
@@ -117,6 +120,7 @@ const ApiLayer = HttpApiBuilder.api(KilnApi).pipe(
   Layer.provide(ImageGroupLive),
   Layer.provide(WebAuthnService.Default),
   Layer.provide(SyncService.Default),
+  Layer.provide(ImageStoreLive),
   Layer.provide(SessionMiddlewareLive),
   Layer.provide(Layer.setConfigProvider(AstroConfigProvider)),
   Layer.merge(HttpServer.layerContext),
