@@ -94,6 +94,7 @@ export class ImageGroup extends HttpApiGroup.make("images")
     HttpApiEndpoint.post("uploadImage", "/api/images/upload")
       .setPayload(HttpApiSchema.MultipartStream(Schema.Struct({
         id: Schema.String,
+        "content-length": Schema.String,
         image: Multipart.FileSchema,
       })))
       .addSuccess(Schema.Struct({ success: Schema.Boolean }))

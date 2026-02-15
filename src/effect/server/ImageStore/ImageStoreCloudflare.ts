@@ -12,13 +12,15 @@ export const ImageStoreCloudflare = Layer.effect(
       return IMAGES_BUCKET;
     });
 
-    const upload = Effect.fn(function*(key: string, file: Stream.Stream<Uint8Array>) {
+    const upload = Effect.fn(function*(key: string, file: Stream.Stream<Uint8Array>, contentLength: number) {
       const IMAGES_BUCKET = yield* getImagesBucket.pipe(
         Effect.catchAllCause(cause => new ImageStoreError({ cause })),
       );
 
       // @ts-ignore - Effect and Cloudflare opaque type mismatch
-      const stream: ReadableStream = Stream.toReadableStream(file);
+      const stream: ReadableStream = Stream.toReadableStream(file).pipeThrough(
+        new FixedLengthStream(contentLength),
+      );
 
       yield* Effect.tryPromise({
         try: () => IMAGES_BUCKET.put(key, stream),

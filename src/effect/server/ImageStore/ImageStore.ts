@@ -6,6 +6,10 @@ export class ImageStoreError extends Schema.TaggedError<ImageStoreError>()("Imag
 }) {}
 
 export class ImageStore extends Context.Tag("ImageStore")<ImageStore, {
-  readonly upload: (key: string, file: Stream.Stream<Uint8Array>) => Effect.Effect<void, ImageStoreError, never>;
+  readonly upload: (
+    key: string,
+    file: Stream.Stream<Uint8Array>,
+    contentLength: number,
+  ) => Effect.Effect<void, ImageStoreError, never>;
   readonly get: (key: string) => Stream.Stream<Uint8Array, ImageStoreError>;
 }>() {}

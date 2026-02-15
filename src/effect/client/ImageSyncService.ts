@@ -35,6 +35,7 @@ export class ImageSyncService extends Effect.Service<ImageSyncService>()("ImageS
           const payload = new FormData();
           payload.append("id", imageId);
           payload.append("file", image);
+          payload.append("content-length", String(image.size));
 
           const { success } = yield* client.images.uploadImage({ payload });
 

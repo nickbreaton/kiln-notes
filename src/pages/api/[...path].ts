@@ -1,7 +1,8 @@
 import { HttpApiBuilder, HttpServer, HttpServerResponse, Multipart } from "@effect/platform";
 
 import type { APIRoute } from "astro";
-import { Effect, Layer, Option, Stream } from "effect";
+import { Effect, Layer, Option, Schema, Stream } from "effect";
+import { NumberFromString } from "effect/Schema";
 import { AstroConfigProvider } from "../../effect/server/AstroConfigProvider";
 import { CloudflareBindings } from "../../effect/server/CloudflareBindings";
 import { ImageStore } from "../../effect/server/ImageStore";
@@ -90,6 +91,7 @@ const ImageGroupLive = HttpApiBuilder.group(KilnApi, "images", (handlers) =>
 
         type Parts = {
           id?: string;
+          contentLength?: string;
           file?: Stream.Stream<Uint8Array, Multipart.MultipartError>;
         };
 
@@ -100,15 +102,22 @@ const ImageGroupLive = HttpApiBuilder.group(KilnApi, "images", (handlers) =>
           if (Multipart.isField(part) && part.key === "id") {
             return { ...acc, id: part.value };
           }
+          if (Multipart.isField(part) && part.key === "content-length") {
+            return { ...acc, contentLength: part.value };
+          }
           return acc;
         });
 
         const id = yield* Option.fromNullable(parts.id);
         const file = yield* Option.fromNullable(parts.file);
 
+        const contentLength = yield* Option.fromNullable(parts.contentLength).pipe(
+          Effect.andThen(Schema.decode(NumberFromString)),
+        );
+
         const key = `${userId}/${id}`;
 
-        yield* imageStore.upload(key, file.pipe(Stream.orDie));
+        yield* imageStore.upload(key, file.pipe(Stream.orDie), contentLength);
 
         return { success: true };
       }).pipe(
