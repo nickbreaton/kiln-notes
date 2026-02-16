@@ -1,4 +1,5 @@
 import { Effect, Schema, Stream } from "effect";
+import { ImageId } from "../schema";
 
 export class LocalImageError extends Schema.TaggedError<LocalImageError>()("LocalImageError", {
   cause: Schema.Unknown,
@@ -13,7 +14,7 @@ export class LocalImageService extends Effect.Service<LocalImageService>()("Loca
     });
 
     return {
-      get: (id: string) =>
+      get: (id: ImageId) =>
         Effect.gen(function*() {
           const fileHandle = yield* Effect.promise(() => imagesHandle.getFileHandle(id));
           const file = yield* Effect.promise(() => fileHandle.getFile());
@@ -21,7 +22,7 @@ export class LocalImageService extends Effect.Service<LocalImageService>()("Loca
           return new Blob([buffer]);
         }),
 
-      delete: (id: string) =>
+      delete: (id: ImageId) =>
         Effect.gen(function*() {
           yield* Effect.promise(() => imagesHandle.removeEntry(id));
         }),
@@ -29,9 +30,15 @@ export class LocalImageService extends Effect.Service<LocalImageService>()("Loca
       list: () =>
         Stream.fromAsyncIterable(imagesHandle.keys(), (cause) => {
           return new LocalImageError({ cause });
-        }),
+        }).pipe(
+          Stream.mapEffect(id =>
+            Schema.decodeUnknown(ImageId)(id).pipe(
+              Effect.mapError(cause => new LocalImageError({ cause })),
+            )
+          ),
+        ),
 
-      set: (id: string, blob: Blob) =>
+      set: (id: ImageId, blob: Blob) =>
         Effect.gen(function*() {
           const fileHandle = yield* Effect.promise(() => imagesHandle.getFileHandle(id, { create: true }));
           const file = yield* Effect.promise(() => fileHandle.createWritable());

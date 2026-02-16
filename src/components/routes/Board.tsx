@@ -1,6 +1,7 @@
 import { Result, useAtomSet, useAtomValue } from "@effect-atom/atom-react";
 import { useLocation } from "wouter";
 import { collectionAtom, deletePieceAtom, getImageUrlAtom } from "../../effect/client/atom";
+import { PieceId } from "../../effect/schema";
 import { NavigationBar } from "../NavigationBar";
 import { Piece } from "../Piece";
 import { PiecesSection } from "../PiecesSection";
@@ -9,7 +10,7 @@ const Image = ({
   id,
   children,
 }: {
-  id: string;
+  id: PieceId;
   children: (src?: string) => React.ReactNode;
 }) => {
   const url = useAtomValue(getImageUrlAtom(id));

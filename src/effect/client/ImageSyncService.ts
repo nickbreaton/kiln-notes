@@ -1,5 +1,6 @@
 import { FetchHttpClient, HttpApiClient } from "@effect/platform";
 import { Effect, Option, Stream } from "effect";
+import { ImageId } from "../schema";
 import { KilnApi } from "../shared/http";
 import { LocalImageService } from "./LocalImageService";
 import { PieceRepository } from "./PieceRepository";
@@ -12,7 +13,7 @@ export class ImageSyncService extends Effect.Service<ImageSyncService>()("ImageS
     const syncSemaphore = yield* Effect.makeSemaphore(1);
     const client = yield* HttpApiClient.make(KilnApi);
 
-    const requiresSync = Effect.fn(function*(id: string) {
+    const requiresSync = Effect.fn(function*(id: ImageId) {
       // TODO: move this into loop below
       const pieces = yield* Stream.runHead(pieceRepository.pieces);
 

@@ -3,6 +3,7 @@ import { HttpApiBuilder, HttpMiddleware, HttpServer, HttpServerResponse, Multipa
 import type { APIRoute } from "astro";
 import { Effect, Layer, Option, Schema, Stream } from "effect";
 import { NumberFromString } from "effect/Schema";
+import { ImageId } from "../../effect/schema";
 import { AstroConfigProvider } from "../../effect/server/AstroConfigProvider";
 import { CloudflareBindings } from "../../effect/server/CloudflareBindings";
 import { ImageStore } from "../../effect/server/ImageStore";
@@ -110,7 +111,7 @@ const ImageGroupLive = HttpApiBuilder.group(KilnApi, "images", (handlers) =>
           return acc;
         });
 
-        const id = yield* Option.fromNullable(parts.id);
+        const id = yield* Option.fromNullable(parts.id).pipe(Effect.andThen(Schema.decodeUnknown(ImageId)));
         const file = yield* Option.fromNullable(parts.file);
 
         const contentLength = yield* Option.fromNullable(parts.contentLength).pipe(

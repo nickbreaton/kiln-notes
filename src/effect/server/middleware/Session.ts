@@ -1,6 +1,7 @@
 import { HttpApiMiddleware, HttpApp, HttpServerRequest, HttpServerResponse } from "@effect/platform";
 import { Config, Context, Effect, Layer, Redacted, Schema } from "effect";
 import { getIronSession } from "iron-session";
+import { UserId } from "../../schema";
 
 /**
  * This data can be trusted as its cryptographically secured,
@@ -8,7 +9,7 @@ import { getIronSession } from "iron-session";
  */
 export interface SessionData {
   expectedChallenge: string;
-  user: string;
+  user: UserId;
 }
 
 /**

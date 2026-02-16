@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { UserId } from "../schema";
 import * as Y from "yjs";
 import * as UserDocumentService from "./UserDocumentService";
 
@@ -7,7 +8,7 @@ export class SyncService extends Effect.Service<SyncService>()("SyncService", {
   scoped: Effect.gen(function*() {
     const userDocumentService = yield* UserDocumentService.UserDocumentService;
 
-    const pull = Effect.fn(function*(userId: string, stateVector: Uint8Array) {
+    const pull = Effect.fn(function*(userId: UserId, stateVector: Uint8Array) {
       const doc = yield* userDocumentService.load(userId);
       return {
         diff: Y.encodeStateAsUpdate(doc, stateVector),
@@ -15,7 +16,7 @@ export class SyncService extends Effect.Service<SyncService>()("SyncService", {
       };
     });
 
-    const push = Effect.fn(function*(userId: string, diff: Uint8Array) {
+    const push = Effect.fn(function*(userId: UserId, diff: Uint8Array) {
       yield* userDocumentService.update(userId, doc => Y.applyUpdate(doc, diff));
     });
 

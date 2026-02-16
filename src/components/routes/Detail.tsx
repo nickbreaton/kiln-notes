@@ -1,24 +1,23 @@
 import { Result, useAtomSet, useAtomValue } from "@effect-atom/atom-react";
+import { Schema } from "effect";
 import { Trash2 } from "lucide-react";
 import { useState } from "react";
 import { useLocation, useParams } from "wouter";
 import { deletePieceAtom, getImageUrlAtom } from "../../effect/client/atom";
+import { PieceId } from "../../effect/schema";
 import { DeleteModal } from "../DeleteModal";
 import { NavigationBar } from "../NavigationBar";
 
-export const Detail = () => {
-  const { id } = useParams();
-  const url = useAtomValue(getImageUrlAtom(id!));
+const DetailContent = ({ pieceId }: { pieceId: PieceId }) => {
+  const url = useAtomValue(getImageUrlAtom(pieceId));
   const src = Result.isSuccess(url) ? url.value : undefined;
   const [, navigate] = useLocation();
   const deletePiece = useAtomSet(deletePieceAtom);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const handleDelete = () => {
-    if (id) {
-      deletePiece(id);
-      navigate("/");
-    }
+    deletePiece(pieceId);
+    navigate("/");
   };
 
   return (
@@ -42,4 +41,19 @@ export const Detail = () => {
       />
     </>
   );
+};
+
+export const Detail = () => {
+  const { id } = useParams();
+
+  if (!id) {
+    return null;
+  }
+
+  try {
+    const pieceId = Schema.decodeUnknownSync(PieceId)(id);
+    return <DetailContent pieceId={pieceId} />;
+  } catch {
+    return null;
+  }
 };

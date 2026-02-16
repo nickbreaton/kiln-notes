@@ -1,11 +1,12 @@
 import { Effect } from "effect";
+import { ImageId } from "../schema";
 
 export class ServiceWorkerCacheService
   extends Effect.Service<ServiceWorkerCacheService>()("kiln-notes/effect/client/ServiceWorkerCacheService", {
     effect: Effect.gen(function*() {
       const CACHE_NAME = "piece-images";
 
-      const cacheImage = (imageId: string, file: File) =>
+      const cacheImage = (imageId: ImageId, file: File) =>
         Effect.gen(function*() {
           yield* Effect.promise(async () => {
             const cache = await caches.open(CACHE_NAME);

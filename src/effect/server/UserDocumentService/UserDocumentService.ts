@@ -1,4 +1,5 @@
 import { Context, Effect, Schema, Scope } from "effect";
+import { UserId } from "../../schema";
 import * as Y from "yjs";
 
 export class UserDocumentError extends Schema.TaggedError<UserDocumentError>()("UserDocumentError", {
@@ -6,9 +7,9 @@ export class UserDocumentError extends Schema.TaggedError<UserDocumentError>()("
 }) {}
 
 export class UserDocumentService extends Context.Tag("UserDocumentService")<UserDocumentService, {
-  readonly load: (userId: string) => Effect.Effect<Y.Doc, UserDocumentError, Scope.Scope>;
+  readonly load: (userId: UserId) => Effect.Effect<Y.Doc, UserDocumentError, Scope.Scope>;
   readonly update: (
-    userId: string,
+    userId: UserId,
     updater: (doc: Y.Doc) => void,
   ) => Effect.Effect<void, UserDocumentError, Scope.Scope>;
 }>() {}

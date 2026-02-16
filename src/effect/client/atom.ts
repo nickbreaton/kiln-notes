@@ -1,6 +1,7 @@
 import { Atom } from "@effect-atom/atom-react";
 import { FetchHttpClient } from "@effect/platform";
-import { Array, Console, Effect, Layer, Option, Schema, Stream } from "effect";
+import { Array, Console, Effect, Layer, Stream } from "effect";
+import { PieceId } from "../schema";
 import { SyncService } from "../server/SyncService";
 import { ClipboardService } from "./ClipboardService";
 import { DocumentStore } from "./DocumentStore";
@@ -45,11 +46,11 @@ export const createPiecesAtom = runtime.fn((files: File[]) => {
   });
 });
 
-export const pieceAtom = Atom.family((id: string) => {
+export const pieceAtom = Atom.family((id: PieceId) => {
   return Atom.mapResult(collectionAtom, Array.findFirst((piece) => piece.id === id));
 });
 
-export const getImageUrlAtom = Atom.family((id: string) =>
+export const getImageUrlAtom = Atom.family((id: PieceId) =>
   runtime.atom((context) => {
     return Effect.gen(function*() {
       const localImages = yield* LocalImageService;
@@ -61,7 +62,7 @@ export const getImageUrlAtom = Atom.family((id: string) =>
   })
 );
 
-export const deletePieceAtom = runtime.fn((id: string) => {
+export const deletePieceAtom = runtime.fn((id: PieceId) => {
   return Effect.gen(function*() {
     const repo = yield* PieceRepository;
     yield* repo.deletePiece(id);

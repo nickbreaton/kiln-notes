@@ -1,5 +1,6 @@
 import { HttpApi, HttpApiEndpoint, HttpApiGroup, HttpApiMiddleware, HttpApiSchema, Multipart } from "@effect/platform";
 import { Context, Ref, Schema } from "effect";
+import { ImageId } from "../schema";
 import { SessionMiddleware } from "../server/middleware/Session";
 import {
   AuthenticationResponseJSON,
@@ -91,9 +92,9 @@ export class ImageNotFoundError extends Schema.TaggedError<ImageNotFoundError>()
 
 export class ImageGroup extends HttpApiGroup.make("images")
   .add(
-    HttpApiEndpoint.post("uploadImage", "/api/images/upload")
+      HttpApiEndpoint.post("uploadImage", "/api/images/upload")
       .setPayload(HttpApiSchema.MultipartStream(Schema.Struct({
-        id: Schema.String,
+        id: ImageId,
         "content-length": Schema.String,
         image: Multipart.FileSchema,
       })))
@@ -103,7 +104,7 @@ export class ImageGroup extends HttpApiGroup.make("images")
   )
   .add(
     HttpApiEndpoint.get("getImage", "/api/image/get/:id")
-      .setPath(Schema.Struct({ id: Schema.String }))
+      .setPath(Schema.Struct({ id: ImageId }))
       .addError(UnauthorizedError)
       .addError(ImageNotFoundError),
   )

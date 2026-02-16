@@ -1,6 +1,6 @@
 import { DateTime, Effect, Option, Schema, Stream, SubscriptionRef } from "effect";
 
-import { Image, Piece } from "../schema";
+import { Image, ImageId, Piece, PieceId } from "../schema";
 import { ImageCompressionService } from "./ImageCompressionService";
 import { DocumentStore } from "./DocumentStore";
 import { LocalImageService } from "./LocalImageService";
@@ -45,13 +45,13 @@ export class PieceRepository extends Effect.Service<PieceRepository>()("PieceRep
 
           for (const file of files) {
             const image = Image.make({
-              id: crypto.randomUUID(),
+              id: ImageId.make(crypto.randomUUID()),
               createdAt: now,
               status: "drying",
             });
 
             const piece = Piece.make({
-              id: crypto.randomUUID(),
+              id: PieceId.make(crypto.randomUUID()),
               status: "drying",
               statusUpdatedAt: now,
               updatedAt: now,
@@ -73,14 +73,14 @@ export class PieceRepository extends Effect.Service<PieceRepository>()("PieceRep
           yield* syncQueue.sync;
         }),
 
-      movePiece: (uuid: Schema.UUID) =>
+      movePiece: (pieceId: PieceId) =>
         Effect.gen(function*() {
           // Plan
           // 1. Call API to update piece with new status and tiemstamp
           // 2. Invaliates local storage stream
         }),
 
-      deletePiece: (id: string) =>
+      deletePiece: (id: PieceId) =>
         Effect.gen(function*() {
           map.delete(id);
           yield* syncQueue.sync;

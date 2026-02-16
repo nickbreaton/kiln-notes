@@ -1,4 +1,5 @@
 import { Effect, Layer, Option, Schema } from "effect";
+import { UserId } from "../../schema";
 import * as Y from "yjs";
 import { CloudflareBindings } from "../CloudflareBindings";
 import { UserDocumentError, UserDocumentService } from "./index";
@@ -6,13 +7,13 @@ import { UserDocumentError, UserDocumentService } from "./index";
 export const UserDocumentServiceCloudflare = Layer.effect(
   UserDocumentService,
   Effect.gen(function*() {
-    const getUserDocumentStub = Effect.fn(function*(userId: string) {
+    const getUserDocumentStub = Effect.fn(function*(userId: UserId) {
       const bindings = yield* Effect.serviceOption(CloudflareBindings);
       const { USER_DOCUMENTS } = yield* bindings;
       return USER_DOCUMENTS.getByName(userId);
     });
 
-    const load = Effect.fn(function*(userId: string) {
+    const load = Effect.fn(function*(userId: UserId) {
       const userDocument = yield* getUserDocumentStub(userId);
       const stored = yield* Effect.promise(() => userDocument.get());
       const doc = new Y.Doc();
@@ -29,7 +30,7 @@ export const UserDocumentServiceCloudflare = Layer.effect(
       return doc;
     }, Effect.catchAllCause(cause => new UserDocumentError({ cause })));
 
-    const update = Effect.fn(function*(userId: string, updater: (doc: Y.Doc) => void) {
+    const update = Effect.fn(function*(userId: UserId, updater: (doc: Y.Doc) => void) {
       const userDocument = yield* getUserDocumentStub(userId);
       const doc = yield* load(userId);
 
