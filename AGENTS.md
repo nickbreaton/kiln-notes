@@ -30,6 +30,7 @@
 - Use bun commands only (no npm).
 - Check for project skills / subagents when working with unfamiliar tech (e.g., Effect).
 - If working in Effect code (likely), do not "break out" of it and start writing vanilla JavaScript when running into problems, instead do more research to find a solution within the Effect ecosystem.
+- Prefer `Schema.decodeUnknown(...)` over `Schema.decodeUnknownEither(...)` and `Schema.decodeUnknownOption(...)` to keep decoding in the Effect workflow.
 - Do not run the development server (`bun dev` / `bun astro dev`) since it is most likely being run by the user.
 - Do not run `bun run build` unless instructed to. Doing this takes time and eats context.
 
