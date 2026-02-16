@@ -156,7 +156,7 @@ const ImageGroupLive = HttpApiBuilder.group(KilnApi, "images", (handlers) =>
           Effect.mapError((error) => new ImageNotFoundError({ message: String(error.cause) })),
         );
 
-        return HttpServerResponse.stream(stream);
+        return HttpServerResponse.stream(stream, { headers: { "Content-Type": "image/webp" } });
       }))
     .handleRaw("getThumbnail", ({ path }) =>
       Effect.gen(function*() {
@@ -173,7 +173,7 @@ const ImageGroupLive = HttpApiBuilder.group(KilnApi, "images", (handlers) =>
           Effect.mapError((error) => new ImageNotFoundError({ message: String(error.cause) })),
         );
 
-        return HttpServerResponse.stream(stream);
+        return HttpServerResponse.stream(stream, { headers: { "Content-Type": "image/webp" } });
       })));
 
 const ApiLayer = HttpApiBuilder.api(KilnApi).pipe(
