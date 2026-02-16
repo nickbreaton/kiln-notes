@@ -1,6 +1,6 @@
-import { FileSystem, HttpServerRequest, Path } from "@effect/platform";
+import { FileSystem, Path } from "@effect/platform";
 import { NodeContext } from "@effect/platform-node";
-import { Effect, Layer, Schema, Stream } from "effect";
+import { Effect, Layer, Stream } from "effect";
 import { ImageStore, ImageStoreError } from "./ImageStore";
 
 export const ImageStoreNode = Layer.effect(
@@ -21,9 +21,11 @@ export const ImageStoreNode = Layer.effect(
     );
 
     const get = (key: string) =>
-      fs.stream(getPath(key)).pipe(
-        Stream.catchAllCause(cause => new ImageStoreError({ cause })),
-      );
+      Effect.succeed({
+        stream: fs.stream(getPath(key)).pipe(
+          Stream.catchAllCause(cause => new ImageStoreError({ cause })),
+        ),
+      });
 
     return {
       upload,

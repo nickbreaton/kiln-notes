@@ -31,26 +31,28 @@ export const ImageStoreCloudflare = Layer.effect(
       });
     });
 
-    const get = (key: string) =>
-      Effect.gen(function*() {
-        const IMAGES_BUCKET = yield* getImagesBucket.pipe(
-          Effect.catchAllCause(cause => new ImageStoreError({ cause })),
-        );
+    const get = Effect.fn(function*(key: string) {
+      const IMAGES_BUCKET = yield* getImagesBucket.pipe(
+        Effect.catchAllCause(cause => new ImageStoreError({ cause })),
+      );
 
-        const object = yield* Effect.tryPromise({
-          try: () => IMAGES_BUCKET.get(key),
-          catch: (cause) => new ImageStoreError({ cause }),
-        });
+      const object = yield* Effect.tryPromise({
+        try: () => IMAGES_BUCKET.get(key),
+        catch: (cause) => new ImageStoreError({ cause }),
+      });
 
-        if (!object?.body) {
-          return yield* new ImageStoreError({ cause: new Error(`Image not found: ${key}`) });
-        }
+      if (!object?.body) {
+        return yield* new ImageStoreError({ cause: new Error(`Image not found: ${key}`) });
+      }
 
-        // @ts-ignore - Effect and Cloudflare opaque type mismatch
-        const stream: Stream.Stream<Uint8Array> = Stream.fromReadableStream(object.body);
+      // @ts-ignore - Effect and Cloudflare opaque type mismatch
+      const stream: Stream.Stream<Uint8Array> = Stream.fromReadableStream(object.body);
 
-        return stream;
-      }).pipe(Stream.unwrap);
+      return {
+        stream,
+        size: object.size,
+      };
+    });
 
     return {
       upload,
