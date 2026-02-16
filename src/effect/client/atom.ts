@@ -50,13 +50,13 @@ export const pieceAtom = Atom.family((id: PieceId) => {
   return Atom.mapResult(collectionAtom, Array.findFirst((piece) => piece.id === id));
 });
 
-export const getImageUrlAtom = Atom.family((id: PieceId) =>
+export const getFullUrlAtom = Atom.family((id: PieceId) =>
   runtime.atom((context) => {
     return Effect.gen(function*() {
       const pieceResult = yield* context.result(pieceAtom(id));
       const { images } = yield* pieceResult;
       const { id: imageId } = yield* Array.get(images, 0);
-      return `/api/image/${imageId}`;
+      return `/api/image/${imageId}/full`;
     });
   })
 );

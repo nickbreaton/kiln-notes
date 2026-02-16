@@ -3,13 +3,13 @@ import { Schema } from "effect";
 import { Trash2 } from "lucide-react";
 import { useState } from "react";
 import { useLocation, useParams } from "wouter";
-import { deletePieceAtom, getImageUrlAtom } from "../../effect/client/atom";
+import { deletePieceAtom, getFullUrlAtom } from "../../effect/client/atom";
 import { PieceId } from "../../effect/schema";
 import { DeleteModal } from "../DeleteModal";
 import { NavigationBar } from "../NavigationBar";
 
 const DetailContent = ({ pieceId }: { pieceId: PieceId }) => {
-  const url = useAtomValue(getImageUrlAtom(pieceId));
+  const url = useAtomValue(getFullUrlAtom(pieceId));
   const src = Result.isSuccess(url) ? url.value : undefined;
   const [, navigate] = useLocation();
   const deletePiece = useAtomSet(deletePieceAtom);

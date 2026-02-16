@@ -101,14 +101,14 @@ const ImageGroupLive = HttpApiBuilder.group(KilnApi, "images", (handlers) =>
         };
 
         const parts = yield* Stream.runFold(payload, {} as Parts, (acc, part) => {
+          if (Multipart.isField(part) && part.key === "id") {
+            return { ...acc, id: part.value };
+          }
           if (Multipart.isFile(part) && part.key === "full") {
             return { ...acc, full: part.content };
           }
           if (Multipart.isFile(part) && part.key === "thumbnail") {
             return { ...acc, thumbnail: part.content };
-          }
-          if (Multipart.isField(part) && part.key === "id") {
-            return { ...acc, id: part.value };
           }
           if (Multipart.isField(part) && part.key === "full-content-length") {
             return { ...acc, fullContentLength: part.value };
@@ -141,7 +141,7 @@ const ImageGroupLive = HttpApiBuilder.group(KilnApi, "images", (handlers) =>
       }).pipe(
         Effect.mapError((error) => new ImageUploadError({ cause: error })),
       ))
-    .handleRaw("getImage", ({ path }) =>
+    .handleRaw("getFull", ({ path }) =>
       Effect.gen(function*() {
         const session = yield* Session;
         const imageStore = yield* ImageStore;

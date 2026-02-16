@@ -21,7 +21,7 @@ export class ServiceWorkerCacheService
           });
         });
 
-      const cacheFull = (imageId: ImageId, file: File) => cache(`/api/image/${imageId}`, file);
+      const cacheFull = (imageId: ImageId, file: File) => cache(`/api/image/${imageId}/full`, file);
       const cacheThumbnail = (imageId: ImageId, file: File) => cache(`/api/image/${imageId}/thumbnail`, file);
 
       return { cacheFull, cacheThumbnail };

@@ -41,7 +41,7 @@
 - OPFS is a temporary staging area. Store optimized `full` and `thumbnail` image files there; do not keep the original source file.
 - In `PieceRepository.createPieces`, generate full + thumbnail in parallel, then prepopulate service worker cache for both URLs before inserting the piece into the map.
 - UI fetches thumbnail for gallery/board views and full for detail views.
-- Service worker caches `/api/image/` routes with cache-first behavior, including `/api/image/:id` and `/api/image/:id/thumbnail`.
+- Service worker caches `/api/image/` routes with cache-first behavior, including `/api/image/:id/full` and `/api/image/:id/thumbnail`.
 
 ## Design
 
