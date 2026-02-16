@@ -92,11 +92,13 @@ export class ImageNotFoundError extends Schema.TaggedError<ImageNotFoundError>()
 
 export class ImageGroup extends HttpApiGroup.make("images")
   .add(
-      HttpApiEndpoint.post("uploadImage", "/api/images/upload")
+    HttpApiEndpoint.post("uploadImage", "/api/images/upload")
       .setPayload(HttpApiSchema.MultipartStream(Schema.Struct({
         id: ImageId,
-        "content-length": Schema.String,
-        image: Multipart.FileSchema,
+        "full-content-length": Schema.String,
+        "thumbnail-content-length": Schema.String,
+        full: Multipart.FileSchema,
+        thumbnail: Multipart.FileSchema,
       })))
       .addSuccess(Schema.Struct({ success: Schema.Boolean }))
       .addError(UnauthorizedError)
@@ -104,6 +106,12 @@ export class ImageGroup extends HttpApiGroup.make("images")
   )
   .add(
     HttpApiEndpoint.get("getImage", "/api/image/:id")
+      .setPath(Schema.Struct({ id: ImageId }))
+      .addError(UnauthorizedError)
+      .addError(ImageNotFoundError),
+  )
+  .add(
+    HttpApiEndpoint.get("getThumbnail", "/api/image/:id/thumbnail")
       .setPath(Schema.Struct({ id: ImageId }))
       .addError(UnauthorizedError)
       .addError(ImageNotFoundError),

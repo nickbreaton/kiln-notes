@@ -6,7 +6,7 @@ export class ServiceWorkerCacheService
     effect: Effect.gen(function*() {
       const CACHE_NAME = "piece-images";
 
-      const cacheImage = (imageId: ImageId, file: File) =>
+      const cache = (url: string, file: File) =>
         Effect.gen(function*() {
           yield* Effect.promise(async () => {
             const cache = await caches.open(CACHE_NAME);
@@ -17,11 +17,14 @@ export class ServiceWorkerCacheService
                 "Content-Length": String(file.size),
               },
             });
-            await cache.put(`/api/image/${imageId}`, response);
+            await cache.put(url, response);
           });
         });
 
-      return { cacheImage };
+      const cacheFull = (imageId: ImageId, file: File) => cache(`/api/image/${imageId}`, file);
+      const cacheThumbnail = (imageId: ImageId, file: File) => cache(`/api/image/${imageId}/thumbnail`, file);
+
+      return { cacheFull, cacheThumbnail };
     }),
   })
 {}

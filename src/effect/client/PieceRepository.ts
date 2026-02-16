@@ -1,8 +1,8 @@
 import { DateTime, Effect, Option, Schema, Stream, SubscriptionRef } from "effect";
 
 import { Image, ImageId, Piece, PieceId } from "../schema";
-import { ImageCompressionService } from "./ImageCompressionService";
 import { DocumentStore } from "./DocumentStore";
+import { ImageCompressionService } from "./ImageCompressionService";
 import { LocalImageService } from "./LocalImageService";
 import { ServiceWorkerCacheService } from "./ServiceWorkerCacheService";
 import { SyncQueue } from "./SyncQueue";
@@ -12,8 +12,8 @@ export class PieceRepository extends Effect.Service<PieceRepository>()("PieceRep
     LocalImageService.Default,
     ImageCompressionService.Default,
     DocumentStore.Default,
-    SyncQueue.Default,
     ServiceWorkerCacheService.Default,
+    SyncQueue.Default,
   ],
   effect: Effect.gen(function*() {
     const { doc } = yield* DocumentStore;
@@ -58,11 +58,17 @@ export class PieceRepository extends Effect.Service<PieceRepository>()("PieceRep
               images: [image],
             });
 
-            const optimizedFile = yield* imageCompressionService.optimize(file);
+            const [optimizedFile, thumbnailFile] = yield* Effect.all([
+              imageCompressionService.optimize(file),
+              imageCompressionService.createThumbnail(file),
+            ], {
+              concurrency: "unbounded",
+            });
 
             yield* Effect.all([
-              imageService.set(image.id, optimizedFile),
-              cacheService.cacheImage(image.id, optimizedFile),
+              imageService.set(image.id, { full: optimizedFile, thumbnail: thumbnailFile }),
+              cacheService.cacheFull(image.id, optimizedFile),
+              cacheService.cacheThumbnail(image.id, thumbnailFile),
             ], {
               concurrency: "unbounded",
             });

@@ -94,33 +94,48 @@ const ImageGroupLive = HttpApiBuilder.group(KilnApi, "images", (handlers) =>
 
         type Parts = {
           id?: string;
-          contentLength?: string;
-          file?: Stream.Stream<Uint8Array, Multipart.MultipartError>;
+          fullContentLength?: string;
+          thumbnailContentLength?: string;
+          full?: Stream.Stream<Uint8Array, Multipart.MultipartError>;
+          thumbnail?: Stream.Stream<Uint8Array, Multipart.MultipartError>;
         };
 
         const parts = yield* Stream.runFold(payload, {} as Parts, (acc, part) => {
-          if (Multipart.isFile(part) && part.key === "file") {
-            return { ...acc, file: part.content };
+          if (Multipart.isFile(part) && part.key === "full") {
+            return { ...acc, full: part.content };
+          }
+          if (Multipart.isFile(part) && part.key === "thumbnail") {
+            return { ...acc, thumbnail: part.content };
           }
           if (Multipart.isField(part) && part.key === "id") {
             return { ...acc, id: part.value };
           }
-          if (Multipart.isField(part) && part.key === "content-length") {
-            return { ...acc, contentLength: part.value };
+          if (Multipart.isField(part) && part.key === "full-content-length") {
+            return { ...acc, fullContentLength: part.value };
+          }
+          if (Multipart.isField(part) && part.key === "thumbnail-content-length") {
+            return { ...acc, thumbnailContentLength: part.value };
           }
           return acc;
         });
 
         const id = yield* Option.fromNullable(parts.id).pipe(Effect.andThen(Schema.decodeUnknown(ImageId)));
-        const file = yield* Option.fromNullable(parts.file);
+        const full = yield* Option.fromNullable(parts.full);
+        const thumbnail = yield* Option.fromNullable(parts.thumbnail);
 
-        const contentLength = yield* Option.fromNullable(parts.contentLength).pipe(
+        const fullContentLength = yield* Option.fromNullable(parts.fullContentLength).pipe(
           Effect.andThen(Schema.decode(NumberFromString)),
         );
 
-        const key = `${userId}/${id}`;
+        const thumbnailContentLength = yield* Option.fromNullable(parts.thumbnailContentLength).pipe(
+          Effect.andThen(Schema.decode(NumberFromString)),
+        );
 
-        yield* imageStore.upload(key, file.pipe(Stream.orDie), contentLength);
+        const fullKey = `${userId}/${id}/full`;
+        const thumbnailKey = `${userId}/${id}/thumbnail`;
+
+        yield* imageStore.upload(fullKey, full.pipe(Stream.orDie), fullContentLength);
+        yield* imageStore.upload(thumbnailKey, thumbnail.pipe(Stream.orDie), thumbnailContentLength);
 
         return { success: true };
       }).pipe(
@@ -136,7 +151,24 @@ const ImageGroupLive = HttpApiBuilder.group(KilnApi, "images", (handlers) =>
           return yield* new UnauthorizedError({ message: "Unauthorized" });
         }
 
-        const key = `${userId}/${path.id}`;
+        const key = `${userId}/${path.id}/full`;
+        const { stream } = yield* imageStore.get(key).pipe(
+          Effect.mapError((error) => new ImageNotFoundError({ message: String(error.cause) })),
+        );
+
+        return HttpServerResponse.stream(stream);
+      }))
+    .handleRaw("getThumbnail", ({ path }) =>
+      Effect.gen(function*() {
+        const session = yield* Session;
+        const imageStore = yield* ImageStore;
+        const userId = session.user;
+
+        if (!userId) {
+          return yield* new UnauthorizedError({ message: "Unauthorized" });
+        }
+
+        const key = `${userId}/${path.id}/thumbnail`;
         const { stream } = yield* imageStore.get(key).pipe(
           Effect.mapError((error) => new ImageNotFoundError({ message: String(error.cause) })),
         );

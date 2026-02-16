@@ -53,11 +53,21 @@ export const pieceAtom = Atom.family((id: PieceId) => {
 export const getImageUrlAtom = Atom.family((id: PieceId) =>
   runtime.atom((context) => {
     return Effect.gen(function*() {
-      const localImages = yield* LocalImageService;
       const pieceResult = yield* context.result(pieceAtom(id));
       const { images } = yield* pieceResult;
       const { id: imageId } = yield* Array.get(images, 0);
       return `/api/image/${imageId}`;
+    });
+  })
+);
+
+export const getThumbnailUrlAtom = Atom.family((id: PieceId) =>
+  runtime.atom((context) => {
+    return Effect.gen(function*() {
+      const pieceResult = yield* context.result(pieceAtom(id));
+      const { images } = yield* pieceResult;
+      const { id: imageId } = yield* Array.get(images, 0);
+      return `/api/image/${imageId}/thumbnail`;
     });
   })
 );

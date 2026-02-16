@@ -6,7 +6,11 @@ import { LocalImageService } from "./LocalImageService";
 import { PieceRepository } from "./PieceRepository";
 
 export class ImageSyncService extends Effect.Service<ImageSyncService>()("ImageSyncService", {
-  dependencies: [LocalImageService.Default, PieceRepository.Default, FetchHttpClient.layer],
+  dependencies: [
+    LocalImageService.Default,
+    PieceRepository.Default,
+    FetchHttpClient.layer,
+  ],
   effect: Effect.gen(function*() {
     const imageService = yield* LocalImageService;
     const pieceRepository = yield* PieceRepository;
@@ -31,12 +35,15 @@ export class ImageSyncService extends Effect.Service<ImageSyncService>()("ImageS
 
       for (const imageId of chunk) {
         if (yield* requiresSync(imageId)) {
-          const image = yield* imageService.get(imageId);
+          const full = yield* imageService.getFull(imageId);
+          const thumbnail = yield* imageService.getThumbnail(imageId);
 
           const payload = new FormData();
           payload.append("id", imageId);
-          payload.append("file", image);
-          payload.append("content-length", String(image.size));
+          payload.append("full", full);
+          payload.append("thumbnail", thumbnail);
+          payload.append("full-content-length", String(full.size));
+          payload.append("thumbnail-content-length", String(thumbnail.size));
 
           const { success } = yield* client.images.uploadImage({ payload });
 

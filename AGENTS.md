@@ -34,6 +34,15 @@
 - Do not run the development server (`bun dev` / `bun astro dev`) since it is most likely being run by the user.
 - Do not run `bun run build` unless instructed to. Doing this takes time and eats context.
 
+## Image pipeline
+
+- Each image ID has two server objects: full (`${userId}/${id}/full`) and thumbnail (`${userId}/${id}/thumbnail`).
+- Image upload is strict: both `full` and `thumbnail` must be provided in one upload request (no fallback behavior, no legacy compatibility requirements).
+- OPFS is a temporary staging area. Store optimized `full` and `thumbnail` image files there; do not keep the original source file.
+- In `PieceRepository.createPieces`, generate full + thumbnail in parallel, then prepopulate service worker cache for both URLs before inserting the piece into the map.
+- UI fetches thumbnail for gallery/board views and full for detail views.
+- Service worker caches `/api/image/` routes with cache-first behavior, including `/api/image/:id` and `/api/image/:id/thumbnail`.
+
 ## Design
 
 - Design is being complete in Pencil.dev via Pencil MCP and rule.
