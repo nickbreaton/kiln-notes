@@ -90,6 +90,8 @@ export class ImageNotFoundError extends Schema.TaggedError<ImageNotFoundError>()
   HttpApiSchema.annotations({ status: 404 }),
 ) {}
 
+export class ImageVariant extends Schema.Literal("full", "thumbnail") {}
+
 export class ImageGroup extends HttpApiGroup.make("images")
   .add(
     HttpApiEndpoint.post("uploadImage", "/api/images/upload")
@@ -105,14 +107,8 @@ export class ImageGroup extends HttpApiGroup.make("images")
       .addError(ImageUploadError),
   )
   .add(
-    HttpApiEndpoint.get("getFull", "/api/image/:id/full")
-      .setPath(Schema.Struct({ id: ImageId }))
-      .addError(UnauthorizedError)
-      .addError(ImageNotFoundError),
-  )
-  .add(
-    HttpApiEndpoint.get("getThumbnail", "/api/image/:id/thumbnail")
-      .setPath(Schema.Struct({ id: ImageId }))
+    HttpApiEndpoint.get("getImage", "/api/image/:id/:variant")
+      .setPath(Schema.Struct({ id: ImageId, variant: ImageVariant }))
       .addError(UnauthorizedError)
       .addError(ImageNotFoundError),
   )

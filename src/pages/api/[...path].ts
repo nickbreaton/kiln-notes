@@ -141,7 +141,7 @@ const ImageGroupLive = HttpApiBuilder.group(KilnApi, "images", (handlers) =>
       }).pipe(
         Effect.mapError((error) => new ImageUploadError({ cause: error })),
       ))
-    .handleRaw("getFull", ({ path }) =>
+    .handleRaw("getImage", ({ path }) =>
       Effect.gen(function*() {
         const session = yield* Session;
         const imageStore = yield* ImageStore;
@@ -151,24 +151,7 @@ const ImageGroupLive = HttpApiBuilder.group(KilnApi, "images", (handlers) =>
           return yield* new UnauthorizedError({ message: "Unauthorized" });
         }
 
-        const key = `${userId}/${path.id}/full`;
-        const { stream } = yield* imageStore.get(key).pipe(
-          Effect.mapError((error) => new ImageNotFoundError({ message: String(error.cause) })),
-        );
-
-        return HttpServerResponse.stream(stream, { headers: { "Content-Type": "image/webp" } });
-      }))
-    .handleRaw("getThumbnail", ({ path }) =>
-      Effect.gen(function*() {
-        const session = yield* Session;
-        const imageStore = yield* ImageStore;
-        const userId = session.user;
-
-        if (!userId) {
-          return yield* new UnauthorizedError({ message: "Unauthorized" });
-        }
-
-        const key = `${userId}/${path.id}/thumbnail`;
+        const key = `${userId}/${path.id}/${path.variant}`;
         const { stream } = yield* imageStore.get(key).pipe(
           Effect.mapError((error) => new ImageNotFoundError({ message: String(error.cause) })),
         );
