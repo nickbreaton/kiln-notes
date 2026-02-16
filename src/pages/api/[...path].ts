@@ -1,4 +1,4 @@
-import { HttpApiBuilder, HttpServer, HttpServerResponse, Multipart } from "@effect/platform";
+import { HttpApiBuilder, HttpMiddleware, HttpServer, HttpServerResponse, Multipart } from "@effect/platform";
 
 import type { APIRoute } from "astro";
 import { Effect, Layer, Option, Schema, Stream } from "effect";
@@ -7,6 +7,7 @@ import { AstroConfigProvider } from "../../effect/server/AstroConfigProvider";
 import { CloudflareBindings } from "../../effect/server/CloudflareBindings";
 import { ImageStore } from "../../effect/server/ImageStore";
 import { ImageStoreLive } from "../../effect/server/ImageStore/ImageStoreLive";
+import { ApiErrorLoggingMiddlewareLive } from "../../effect/server/middleware/ApiErrorLogging";
 import { Session, SessionMiddlewareLive } from "../../effect/server/middleware/Session";
 import { SyncService } from "../../effect/server/SyncService";
 import { WebAuthnService } from "../../effect/server/WebAuthnService";
@@ -150,6 +151,7 @@ const ApiLayer = HttpApiBuilder.api(KilnApi).pipe(
   Layer.provide(WebAuthnService.Default),
   Layer.provide(SyncService.Default),
   Layer.provide(ImageStoreLive),
+  Layer.provide(ApiErrorLoggingMiddlewareLive),
   Layer.provide(SessionMiddlewareLive),
   Layer.provide(Layer.setConfigProvider(AstroConfigProvider)),
   Layer.merge(HttpServer.layerContext),
