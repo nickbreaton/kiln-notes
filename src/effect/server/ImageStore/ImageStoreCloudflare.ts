@@ -45,8 +45,11 @@ export const ImageStoreCloudflare = Layer.effect(
         return yield* new ImageStoreError({ cause: new Error(`Image not found: ${key}`) });
       }
 
-      // @ts-ignore - Effect and Cloudflare opaque type mismatch
-      const stream: Stream.Stream<Uint8Array> = Stream.fromReadableStream(object.body);
+      const stream: Stream.Stream<Uint8Array, ImageStoreError> = Stream.fromReadableStream({
+        // @ts-ignore - Effect and Cloudflare opaque type mismatch
+        evaluate: () => object.body,
+        onError: () => new ImageStoreError({ cause: new Error(`Error reading image: ${key}`) }),
+      });
 
       const metadataHeaders = new Headers();
       // @ts-ignore - Workers Headers typing differs in Astro runtime
