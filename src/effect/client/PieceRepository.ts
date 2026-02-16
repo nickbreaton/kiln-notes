@@ -2,15 +2,15 @@ import { DateTime, Effect, Option, Schema, Stream, SubscriptionRef } from "effec
 
 import { Image, Piece } from "../schema";
 import { DocumentStore } from "./DocumentStore";
-import { ImageCompressionService } from "./ImageCompressionService";
 import { LocalPhotoService } from "./LocalPhotoService";
 import { ServiceWorkerCacheService } from "./ServiceWorkerCacheService";
+import { ImageThumbnailService } from "./ImageThumbnailService";
 import { SyncQueue } from "./SyncQueue";
 
 export class PieceRepository extends Effect.Service<PieceRepository>()("PieceRepository", {
   dependencies: [
     LocalPhotoService.Default,
-    ImageCompressionService.Default,
+    ImageThumbnailService.Default,
     DocumentStore.Default,
     SyncQueue.Default,
     ServiceWorkerCacheService.Default,
@@ -20,7 +20,7 @@ export class PieceRepository extends Effect.Service<PieceRepository>()("PieceRep
     const map = doc.getMap<typeof Piece.Type>("piecesCollection");
 
     const photoService = yield* LocalPhotoService;
-    const imageCompressionService = yield* ImageCompressionService;
+    const imageThumbnailService = yield* ImageThumbnailService;
     const cacheService = yield* ServiceWorkerCacheService;
     const syncQueue = yield* SyncQueue;
 
@@ -62,11 +62,11 @@ export class PieceRepository extends Effect.Service<PieceRepository>()("PieceRep
             // the thumbnail has been generated (takes a second or two).
             // yield* cacheService.cacheImage(image.id, file);
 
-            const optimizedFile = yield* imageCompressionService.createThumbnail(file);
+            const thumbnailFile = yield* imageThumbnailService.createThumbnail(file);
 
             yield* Effect.all([
-              photoService.set(image.id, optimizedFile),
-              cacheService.cacheImage(image.id, optimizedFile),
+              photoService.set(image.id, thumbnailFile),
+              cacheService.cacheImage(image.id, thumbnailFile),
             ], {
               concurrency: "unbounded",
             });

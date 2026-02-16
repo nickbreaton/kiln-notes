@@ -15,9 +15,6 @@ const OPTIMIZED_MAX_EDGE = 2560;
 const OPTIMIZED_QUALITY = 86;
 const WEBP_ENCODE_METHOD = 2;
 const WEBP_THREAD_LEVEL = 1;
-const THUMBNAIL_CSS_EDGE = 320;
-const THUMBNAIL_DPR = 3;
-const THUMBNAIL_QUALITY = 75;
 
 let codecsReadyPromise: Promise<void> | undefined;
 
@@ -123,15 +120,6 @@ export class ImageCompressionService extends Effect.Service<ImageCompressionServ
           const decoded = yield* decodeImageData(file);
           const resized = yield* resizeToMaxEdge(decoded, OPTIMIZED_MAX_EDGE);
           return yield* encodeAsWebpFile(file, resized, OPTIMIZED_QUALITY);
-        }),
-
-      createThumbnail: (file: File) =>
-        Effect.gen(function*() {
-          yield* ensureCodecsReady();
-          const maxEdge = Math.round(THUMBNAIL_CSS_EDGE * THUMBNAIL_DPR);
-          const decoded = yield* decodeImageData(file);
-          const resized = yield* resizeToMaxEdge(decoded, maxEdge);
-          return yield* encodeAsWebpFile(file, resized, THUMBNAIL_QUALITY);
         }),
     };
   }),
