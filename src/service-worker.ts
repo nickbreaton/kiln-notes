@@ -40,7 +40,7 @@ registerRoute(({ url }) => url.origin === "https://fonts.gstatic.com", new Cache
 
 // Piece images: cache-first for offline viewing
 // dprint-ignore
-registerRoute(({ url }) => url.pathname.startsWith("/api/image/get/"), new CacheFirst({
+registerRoute(({ url }) => url.pathname.startsWith("/api/image/"), new CacheFirst({
   cacheName: "piece-images",
   plugins: [
     new CacheableResponsePlugin({ statuses: [0, 200] }),

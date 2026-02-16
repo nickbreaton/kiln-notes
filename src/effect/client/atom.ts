@@ -57,7 +57,7 @@ export const getImageUrlAtom = Atom.family((id: PieceId) =>
       const pieceResult = yield* context.result(pieceAtom(id));
       const { images } = yield* pieceResult;
       const { id: imageId } = yield* Array.get(images, 0);
-      return `/api/image/get/${imageId}`;
+      return `/api/image/${imageId}`;
     });
   })
 );
