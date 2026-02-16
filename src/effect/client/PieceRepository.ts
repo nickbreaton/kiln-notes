@@ -3,13 +3,13 @@ import { DateTime, Effect, Option, Schema, Stream, SubscriptionRef } from "effec
 import { Image, Piece } from "../schema";
 import { ImageCompressionService } from "./ImageCompressionService";
 import { DocumentStore } from "./DocumentStore";
-import { LocalPhotoService } from "./LocalPhotoService";
+import { LocalImageService } from "./LocalImageService";
 import { ServiceWorkerCacheService } from "./ServiceWorkerCacheService";
 import { SyncQueue } from "./SyncQueue";
 
 export class PieceRepository extends Effect.Service<PieceRepository>()("PieceRepository", {
   dependencies: [
-    LocalPhotoService.Default,
+    LocalImageService.Default,
     ImageCompressionService.Default,
     DocumentStore.Default,
     SyncQueue.Default,
@@ -19,7 +19,7 @@ export class PieceRepository extends Effect.Service<PieceRepository>()("PieceRep
     const { doc } = yield* DocumentStore;
     const map = doc.getMap<typeof Piece.Type>("piecesCollection");
 
-    const photoService = yield* LocalPhotoService;
+    const imageService = yield* LocalImageService;
     const imageCompressionService = yield* ImageCompressionService;
     const cacheService = yield* ServiceWorkerCacheService;
     const syncQueue = yield* SyncQueue;
@@ -61,7 +61,7 @@ export class PieceRepository extends Effect.Service<PieceRepository>()("PieceRep
             const optimizedFile = yield* imageCompressionService.optimize(file);
 
             yield* Effect.all([
-              photoService.set(image.id, optimizedFile),
+              imageService.set(image.id, optimizedFile),
               cacheService.cacheImage(image.id, optimizedFile),
             ], {
               concurrency: "unbounded",

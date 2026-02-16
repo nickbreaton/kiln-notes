@@ -1,21 +1,21 @@
 import { Effect, Schema, Stream } from "effect";
 
-export class LocalPhotoError extends Schema.TaggedError<LocalPhotoError>()("LocalPhotoError", {
+export class LocalImageError extends Schema.TaggedError<LocalImageError>()("LocalImageError", {
   cause: Schema.Unknown,
 }) {}
 
-export class LocalPhotoService extends Effect.Service<LocalPhotoService>()("LocalPhotoService", {
+export class LocalImageService extends Effect.Service<LocalImageService>()("LocalImageService", {
   dependencies: [],
   effect: Effect.gen(function*() {
-    const photosHandle = yield* Effect.promise(async () => {
+    const imagesHandle = yield* Effect.promise(async () => {
       const opfsRoot = await navigator.storage.getDirectory();
-      return await opfsRoot.getDirectoryHandle("photos", { create: true });
+      return await opfsRoot.getDirectoryHandle("images", { create: true });
     });
 
     return {
       get: (id: string) =>
         Effect.gen(function*() {
-          const fileHandle = yield* Effect.promise(() => photosHandle.getFileHandle(id));
+          const fileHandle = yield* Effect.promise(() => imagesHandle.getFileHandle(id));
           const file = yield* Effect.promise(() => fileHandle.getFile());
           const buffer = yield* Effect.promise(() => file.arrayBuffer());
           return new Blob([buffer]);
@@ -23,17 +23,17 @@ export class LocalPhotoService extends Effect.Service<LocalPhotoService>()("Loca
 
       delete: (id: string) =>
         Effect.gen(function*() {
-          yield* Effect.promise(() => photosHandle.removeEntry(id));
+          yield* Effect.promise(() => imagesHandle.removeEntry(id));
         }),
 
       list: () =>
-        Stream.fromAsyncIterable(photosHandle.keys(), (cause) => {
-          return new LocalPhotoError({ cause });
+        Stream.fromAsyncIterable(imagesHandle.keys(), (cause) => {
+          return new LocalImageError({ cause });
         }),
 
       set: (id: string, blob: Blob) =>
         Effect.gen(function*() {
-          const fileHandle = yield* Effect.promise(() => photosHandle.getFileHandle(id, { create: true }));
+          const fileHandle = yield* Effect.promise(() => imagesHandle.getFileHandle(id, { create: true }));
           const file = yield* Effect.promise(() => fileHandle.createWritable());
           yield* Effect.promise(() => file.write(blob));
           yield* Effect.promise(() => file.close());

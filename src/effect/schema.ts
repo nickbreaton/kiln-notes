@@ -29,5 +29,3 @@ export const Piece = Schema.Struct({
 
   images: Schema.Array(Image),
 });
-
-export type Piece = typeof Piece.Encoded;

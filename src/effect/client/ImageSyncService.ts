@@ -1,13 +1,13 @@
 import { FetchHttpClient, HttpApiClient } from "@effect/platform";
 import { Effect, Option, Stream } from "effect";
 import { KilnApi } from "../shared/http";
-import { LocalPhotoService } from "./LocalPhotoService";
+import { LocalImageService } from "./LocalImageService";
 import { PieceRepository } from "./PieceRepository";
 
 export class ImageSyncService extends Effect.Service<ImageSyncService>()("ImageSyncService", {
-  dependencies: [LocalPhotoService.Default, PieceRepository.Default, FetchHttpClient.layer],
+  dependencies: [LocalImageService.Default, PieceRepository.Default, FetchHttpClient.layer],
   effect: Effect.gen(function*() {
-    const photoService = yield* LocalPhotoService;
+    const imageService = yield* LocalImageService;
     const pieceRepository = yield* PieceRepository;
     const syncSemaphore = yield* Effect.makeSemaphore(1);
     const client = yield* HttpApiClient.make(KilnApi);
@@ -26,11 +26,11 @@ export class ImageSyncService extends Effect.Service<ImageSyncService>()("ImageS
     });
 
     const sync = Effect.gen(function*() {
-      const chunk = yield* Stream.runCollect(photoService.list());
+      const chunk = yield* Stream.runCollect(imageService.list());
 
       for (const imageId of chunk) {
         if (yield* requiresSync(imageId)) {
-          const image = yield* photoService.get(imageId);
+          const image = yield* imageService.get(imageId);
 
           const payload = new FormData();
           payload.append("id", imageId);
@@ -40,7 +40,7 @@ export class ImageSyncService extends Effect.Service<ImageSyncService>()("ImageS
           const { success } = yield* client.images.uploadImage({ payload });
 
           if (success) {
-            yield* photoService.delete(imageId);
+            yield* imageService.delete(imageId);
           }
         }
       }

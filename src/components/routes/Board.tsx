@@ -1,18 +1,18 @@
 import { Result, useAtomSet, useAtomValue } from "@effect-atom/atom-react";
 import { useLocation } from "wouter";
-import { collectionAtom, deletePieceAtom, getPhotoUrlAtom } from "../../effect/client/atom";
+import { collectionAtom, deletePieceAtom, getImageUrlAtom } from "../../effect/client/atom";
 import { NavigationBar } from "../NavigationBar";
 import { Piece } from "../Piece";
 import { PiecesSection } from "../PiecesSection";
 
-const Photo = ({
+const Image = ({
   id,
   children,
 }: {
   id: string;
   children: (src?: string) => React.ReactNode;
 }) => {
-  const url = useAtomValue(getPhotoUrlAtom(id));
+  const url = useAtomValue(getImageUrlAtom(id));
   return children(Result.isSuccess(url) ? url.value : undefined);
 };
 
@@ -35,9 +35,9 @@ export const Board = () => {
             ({ id, status }) =>
               status === "drying" && (
                 <button onClick={() => navigate(`/piece/${id}`)} key={id}>
-                  <Photo id={id}>
+                  <Image id={id}>
                     {(src) => (src ? <Piece imageUrl={src} /> : <div className="aspect-square" />)}
-                  </Photo>
+                  </Image>
                 </button>
               ),
           )}

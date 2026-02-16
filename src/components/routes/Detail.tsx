@@ -2,13 +2,13 @@ import { Result, useAtomSet, useAtomValue } from "@effect-atom/atom-react";
 import { Trash2 } from "lucide-react";
 import { useState } from "react";
 import { useLocation, useParams } from "wouter";
-import { deletePieceAtom, getPhotoUrlAtom } from "../../effect/client/atom";
+import { deletePieceAtom, getImageUrlAtom } from "../../effect/client/atom";
 import { DeleteModal } from "../DeleteModal";
 import { NavigationBar } from "../NavigationBar";
 
 export const Detail = () => {
   const { id } = useParams();
-  const url = useAtomValue(getPhotoUrlAtom(id!));
+  const url = useAtomValue(getImageUrlAtom(id!));
   const src = Result.isSuccess(url) ? url.value : undefined;
   const [, navigate] = useLocation();
   const deletePiece = useAtomSet(deletePieceAtom);

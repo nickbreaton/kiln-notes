@@ -4,7 +4,7 @@ import { Array, Console, Effect, Layer, Option, Schema, Stream } from "effect";
 import { SyncService } from "../server/SyncService";
 import { ClipboardService } from "./ClipboardService";
 import { DocumentStore } from "./DocumentStore";
-import { LocalPhotoService } from "./LocalPhotoService";
+import { LocalImageService } from "./LocalImageService";
 import { PieceRepository } from "./PieceRepository";
 import { ServiceWorkerCacheService } from "./ServiceWorkerCacheService";
 import { SyncManager } from "./SyncManager";
@@ -16,7 +16,7 @@ const runtime = Atom.runtime(
     ClipboardService.Default,
     PieceRepository.Default,
     DocumentStore.Default,
-    LocalPhotoService.Default,
+    LocalImageService.Default,
     ServiceWorkerCacheService.Default,
     UserService.Default,
     SyncManager.Default,
@@ -49,10 +49,10 @@ export const pieceAtom = Atom.family((id: string) => {
   return Atom.mapResult(collectionAtom, Array.findFirst((piece) => piece.id === id));
 });
 
-export const getPhotoUrlAtom = Atom.family((id: string) =>
+export const getImageUrlAtom = Atom.family((id: string) =>
   runtime.atom((context) => {
     return Effect.gen(function*() {
-      const localPhotos = yield* LocalPhotoService;
+      const localImages = yield* LocalImageService;
       const pieceResult = yield* context.result(pieceAtom(id));
       const { images } = yield* pieceResult;
       const { id: imageId } = yield* Array.get(images, 0);

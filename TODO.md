@@ -1,5 +1,5 @@
-- [ ] Run photo cleanup job post-sync on client (rare, but some local images may have been orphaned before syncing)
-- [ ] Run photo deletion job post-sync on the server (any orphaned images can safely be deleted)
+- [ ] Run image cleanup job post-sync on client (rare, but some local images may have been orphaned before syncing)
+- [ ] Run image deletion job post-sync on the server (any orphaned images can safely be deleted)
 - [ ] Implement cloudflare image service
 - [ ] Setup OTEL on cloudflare and locally
 - [ ] Image compression before upload (and thumbnail generation)
