@@ -16,7 +16,7 @@ export class ServiceWorkerCacheService
                 "Content-Length": String(file.size),
               },
             });
-            await cache.put(`/api/image/get/${imageId}`, response);
+            await cache.put(`/api/image/${imageId}`, response);
           });
         });
 

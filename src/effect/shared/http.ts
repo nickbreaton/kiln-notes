@@ -102,7 +102,7 @@ export class ImageGroup extends HttpApiGroup.make("images")
       .addError(ImageUploadError),
   )
   .add(
-    HttpApiEndpoint.get("getImage", "/api/image/get/:id")
+    HttpApiEndpoint.get("getImage", "/api/image/:id")
       .setPath(Schema.Struct({ id: Schema.String }))
       .addError(UnauthorizedError)
       .addError(ImageNotFoundError),
