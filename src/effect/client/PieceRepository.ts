@@ -1,16 +1,16 @@
 import { DateTime, Effect, Option, Schema, Stream, SubscriptionRef } from "effect";
 
 import { Image, Piece } from "../schema";
+import { ImageCompressionService } from "./ImageCompressionService";
 import { DocumentStore } from "./DocumentStore";
 import { LocalPhotoService } from "./LocalPhotoService";
 import { ServiceWorkerCacheService } from "./ServiceWorkerCacheService";
-import { ImageThumbnailService } from "./ImageThumbnailService";
 import { SyncQueue } from "./SyncQueue";
 
 export class PieceRepository extends Effect.Service<PieceRepository>()("PieceRepository", {
   dependencies: [
     LocalPhotoService.Default,
-    ImageThumbnailService.Default,
+    ImageCompressionService.Default,
     DocumentStore.Default,
     SyncQueue.Default,
     ServiceWorkerCacheService.Default,
@@ -20,7 +20,7 @@ export class PieceRepository extends Effect.Service<PieceRepository>()("PieceRep
     const map = doc.getMap<typeof Piece.Type>("piecesCollection");
 
     const photoService = yield* LocalPhotoService;
-    const imageThumbnailService = yield* ImageThumbnailService;
+    const imageCompressionService = yield* ImageCompressionService;
     const cacheService = yield* ServiceWorkerCacheService;
     const syncQueue = yield* SyncQueue;
 
@@ -58,15 +58,11 @@ export class PieceRepository extends Effect.Service<PieceRepository>()("PieceRep
               images: [image],
             });
 
-            // Initially cache the original image with the service worker until
-            // the thumbnail has been generated (takes a second or two).
-            // yield* cacheService.cacheImage(image.id, file);
-
-            const thumbnailFile = yield* imageThumbnailService.createThumbnail(file);
+            const optimizedFile = yield* imageCompressionService.optimize(file);
 
             yield* Effect.all([
-              photoService.set(image.id, thumbnailFile),
-              cacheService.cacheImage(image.id, thumbnailFile),
+              photoService.set(image.id, optimizedFile),
+              cacheService.cacheImage(image.id, optimizedFile),
             ], {
               concurrency: "unbounded",
             });
