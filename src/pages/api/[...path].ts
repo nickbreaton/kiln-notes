@@ -135,14 +135,11 @@ const ImageGroupLive = HttpApiBuilder.group(KilnApi, "images", (handlers) =>
         }
 
         const key = `${userId}/${path.id}`;
-        const { stream, size, headers } = yield* imageStore.get(key).pipe(
+        const { stream } = yield* imageStore.get(key).pipe(
           Effect.mapError((error) => new ImageNotFoundError({ message: String(error.cause) })),
         );
 
-        return HttpServerResponse.stream(stream, {
-          contentLength: size,
-          headers,
-        });
+        return HttpServerResponse.stream(stream);
       })));
 
 const ApiLayer = HttpApiBuilder.api(KilnApi).pipe(

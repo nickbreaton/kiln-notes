@@ -13,7 +13,5 @@ export class ImageStore extends Context.Tag("ImageStore")<ImageStore, {
   ) => Effect.Effect<void, ImageStoreError, never>;
   readonly get: (key: string) => Effect.Effect<{
     readonly stream: Stream.Stream<Uint8Array, ImageStoreError>;
-    readonly size?: number;
-    readonly headers?: Record<string, string>;
   }, ImageStoreError>;
 }>() {}

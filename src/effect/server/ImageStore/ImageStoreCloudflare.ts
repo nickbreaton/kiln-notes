@@ -51,19 +51,8 @@ export const ImageStoreCloudflare = Layer.effect(
         onError: () => new ImageStoreError({ cause: new Error(`Error reading image: ${key}`) }),
       });
 
-      const metadataHeaders = new Headers();
-      // @ts-ignore - Workers Headers typing differs in Astro runtime
-      object.writeHttpMetadata(metadataHeaders);
-      metadataHeaders.set("etag", object.httpEtag);
-
-      if (!metadataHeaders.has("content-length")) {
-        metadataHeaders.set("content-length", String(object.size));
-      }
-
       return {
         stream,
-        size: object.size,
-        headers: Object.fromEntries(metadataHeaders.entries()),
       };
     });
 
