@@ -22,7 +22,7 @@
 
 - Install deps: `bun install`
 - Start dev server: `bun dev`
-- Build: `bun build`
+- Build: `bun run build`
 - Preview build: `bun preview`
 
 ## Agent guidance
@@ -31,6 +31,7 @@
 - Check for project skills / subagents when working with unfamiliar tech (e.g., Effect).
 - If working in Effect code (likely), do not "break out" of it and start writing vanilla JavaScript when running into problems, instead do more research to find a solution within the Effect ecosystem.
 - Do not run the development server (`bun dev` / `bun astro dev`) since it is most likely being run by the user.
+- Do not run `bun run build` unless instructed to. Doing this takes time and eats context.
 
 ## Design
 
