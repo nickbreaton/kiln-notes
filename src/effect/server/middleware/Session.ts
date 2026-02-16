@@ -1,5 +1,5 @@
 import { HttpApiMiddleware, HttpApp, HttpServerRequest, HttpServerResponse } from "@effect/platform";
-import { Config, Context, Duration, Effect, Layer, Redacted } from "effect";
+import { Config, Context, Effect, Layer, Redacted, Schema } from "effect";
 import { getIronSession } from "iron-session";
 
 /**
@@ -35,20 +35,25 @@ export const SessionMiddlewareLive = Layer.effect(
         Effect.orDie,
       );
 
+      const secure = yield* Schema.decode(Schema.URL)(currentRequest.url).pipe(
+        Effect.andThen(url => url.protocol !== "http:"),
+        Effect.orDie,
+      );
+
       const placeholderResponse = new Response();
 
       const session = yield* Effect.promise(() =>
         getIronSession<typeof Session.Service>(currentRequest, placeholderResponse, {
           cookieName: "session",
           password: Redacted.value(sessionSecret),
-          cookieOptions: { sameSite: "strict" },
+          cookieOptions: { sameSite: "strict", secure },
         })
       );
 
       yield* HttpApp.appendPreResponseHandler((_, response) => {
         return Effect.gen(function*() {
           const applyUserCookie = session.user
-            ? HttpServerResponse.setCookie("user", session.user, { secure: true, maxAge: "365 days", path: "/" })
+            ? HttpServerResponse.setCookie("user", session.user, { secure, maxAge: "365 days", path: "/" })
             : HttpServerResponse.removeCookie("user");
 
           // Save session just before response
