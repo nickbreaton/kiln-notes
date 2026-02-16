@@ -48,9 +48,19 @@ export const ImageStoreCloudflare = Layer.effect(
       // @ts-ignore - Effect and Cloudflare opaque type mismatch
       const stream: Stream.Stream<Uint8Array> = Stream.fromReadableStream(object.body);
 
+      const metadataHeaders = new Headers();
+      // @ts-ignore - Workers Headers typing differs in Astro runtime
+      object.writeHttpMetadata(metadataHeaders);
+      metadataHeaders.set("etag", object.httpEtag);
+
+      if (!metadataHeaders.has("content-length")) {
+        metadataHeaders.set("content-length", String(object.size));
+      }
+
       return {
         stream,
         size: object.size,
+        headers: Object.fromEntries(metadataHeaders.entries()),
       };
     });
 
