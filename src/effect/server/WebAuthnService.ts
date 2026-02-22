@@ -1,6 +1,6 @@
 import { KeyValueStore } from "effect/unstable/persistence";
 import * as SimpleWebAuthnServer from "@simplewebauthn/server";
-import { Effect, Layer, Record, Schema, ServiceMap } from "effect";
+import { Effect, Layer, Option, Record, Schema, ServiceMap } from "effect";
 import { AuthenticationResponseJSON, RegistrationInfoFromBase64, RegistrationResponseJSON } from "../shared/webauthn";
 import { Session } from "./middleware/Session";
 import { RelayingPartyService } from "./RelayingPartyService";
@@ -93,9 +93,15 @@ export class WebAuthnService extends ServiceMap.Service<WebAuthnService>()("kiln
           return yield* new WebAuthnError({ cause: new Error("Expected challenge could not be recovered") });
         }
 
-        const [user, matchedPasskey] = yield* Record.findFirst(users.passkeys, (passkey) => {
+        const matched = Record.findFirst(users.passkeys, (passkey) => {
           return passkey.credential.id === response.id;
         });
+
+        if (!matched) {
+          return yield* new WebAuthnError({ cause: new Error("Passkey not found") });
+        }
+
+        const [user, matchedPasskey] = matched;
 
         const { verified } = yield* Effect.tryPromise({
           try: () =>

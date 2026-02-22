@@ -174,7 +174,7 @@ const ApiLayer = HttpApiBuilder.layer(KilnApi).pipe(
   Layer.provide(HttpServer.layerServices),
 );
 
-const { handler } = HttpRouter.toWebHandler(ApiLayer);
+const { handler } = HttpRouter.toWebHandler(ApiLayer as any);
 
 export const ALL: APIRoute = async ({ request, locals }) => {
   // @ts-ignore -- Astro ↔ Cloudflare typings are suboptimal

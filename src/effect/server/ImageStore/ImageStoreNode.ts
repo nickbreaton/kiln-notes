@@ -1,5 +1,5 @@
 import { FileSystem, Path } from "effect";
-import { NodeContext } from "@effect/platform-node";
+import * as NodeServices from "@effect/platform-node/NodeServices";
 import { Effect, Layer, Stream } from "effect";
 import { ImageStore, ImageStoreError } from "./ImageStore";
 
@@ -11,19 +11,19 @@ export const ImageStoreNode = Layer.effect(
 
     const getPath = (key: string) => `./tmp/images/${key}`;
 
-    const upload = Effect.fn(
-      function*(key: string, file: Stream.Stream<Uint8Array>) {
+    const upload = (key: string, file: Stream.Stream<Uint8Array>, _contentLength: number) =>
+      Effect.gen(function*() {
         const resolved = getPath(key);
         yield* fs.makeDirectory(path.dirname(resolved), { recursive: true });
         yield* file.pipe(Stream.run(fs.sink(resolved)));
-      },
-      Effect.catchAllCause(cause => new ImageStoreError({ cause })),
-    );
+      }).pipe(
+        Effect.catchCause(cause => Effect.fail(new ImageStoreError({ cause }))),
+      );
 
     const get = (key: string) =>
       Effect.succeed({
         stream: fs.stream(getPath(key)).pipe(
-          Stream.catchAllCause(cause => new ImageStoreError({ cause })),
+          Stream.catchCause(cause => Stream.fail(new ImageStoreError({ cause }))),
         ),
       });
 
@@ -33,5 +33,5 @@ export const ImageStoreNode = Layer.effect(
     };
   }),
 ).pipe(
-  Layer.provide(NodeContext.layer),
+  Layer.provide(NodeServices.layer),
 );

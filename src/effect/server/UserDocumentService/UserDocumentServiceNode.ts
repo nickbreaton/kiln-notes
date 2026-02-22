@@ -1,5 +1,6 @@
 import { KeyValueStore } from "effect/unstable/persistence";
-import { Effect, Layer, Option, Schema } from "effect";
+import * as NodeServices from "@effect/platform-node/NodeServices";
+import { Effect, Layer, Option, Schema, Scope } from "effect";
 import { UserId } from "../../schema";
 import * as Y from "yjs";
 import { UserDocumentError, UserDocumentService } from "./UserDocumentService";
@@ -9,27 +10,27 @@ export const UserDocumentServiceNode = Layer.effect(
   Effect.gen(function*() {
     const kv = KeyValueStore.toSchemaStore(yield* KeyValueStore.KeyValueStore, Schema.Uint8Array);
 
-    const load = Effect.fn(function*(userId: UserId) {
-      const stored = yield* kv.get(userId);
-      const doc = new Y.Doc();
+    const load = (userId: UserId): Effect.Effect<Y.Doc, UserDocumentError, Scope.Scope> =>
+      Effect.gen(function*() {
+        const stored = yield* kv.get(userId);
+        const doc = new Y.Doc();
 
-      if (Option.isSome(stored)) {
-        Y.applyUpdate(doc, stored.value);
-      }
+        if (Option.isSome(stored)) {
+          Y.applyUpdate(doc, stored.value);
+        }
 
-      yield* Effect.addFinalizer(() => {
-        return Effect.sync(() => doc.destroy());
-      });
+        yield* Effect.addFinalizer(() => Effect.sync(() => doc.destroy()));
 
-      return doc;
-    }, Effect.catchAllCause(cause => new UserDocumentError({ cause })));
+        return doc;
+      }).pipe(Effect.catchCause(cause => Effect.fail(new UserDocumentError({ cause }))));
 
-    const update = Effect.fn(function*(userId: UserId, updater: (doc: Y.Doc) => void) {
-      const doc = yield* load(userId);
-      updater(doc);
-      const update = Y.encodeStateAsUpdate(doc);
-      yield* kv.set(userId, update);
-    }, Effect.catchAllCause(cause => new UserDocumentError({ cause })));
+    const update = (userId: UserId, updater: (doc: Y.Doc) => void): Effect.Effect<void, UserDocumentError, Scope.Scope> =>
+      Effect.gen(function*() {
+        const doc = yield* load(userId);
+        updater(doc);
+        const update = Y.encodeStateAsUpdate(doc);
+        yield* kv.set(userId, update);
+      }).pipe(Effect.catchCause(cause => Effect.fail(new UserDocumentError({ cause }))));
 
     return {
       load,
@@ -38,10 +39,5 @@ export const UserDocumentServiceNode = Layer.effect(
   }),
 ).pipe(
   Layer.provide(KeyValueStore.layerFileSystem("tmp/users")),
-  Layer.provide(Layer.unwrapEffect(
-    Effect.promise(async () => {
-      const { NodeContext } = await import("@effect/platform-node");
-      return NodeContext.layer;
-    }),
-  )),
+  Layer.provide(NodeServices.layer),
 );
