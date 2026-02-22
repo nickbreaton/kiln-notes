@@ -1,5 +1,5 @@
 import { HttpApiMiddleware, HttpApp, HttpServerRequest, HttpServerResponse } from "@effect/platform";
-import { Config, Context, Effect, Layer, Redacted, Schema } from "effect";
+import { Config, Effect, Layer, Redacted, Schema, ServiceMap } from "effect";
 import { getIronSession } from "iron-session";
 import { UserId } from "../../schema";
 
@@ -15,10 +15,7 @@ export interface SessionData {
 /**
  * @effect-leakable-service
  */
-export class Session extends Context.Tag("Session")<
-  Session,
-  Partial<SessionData>
->() {}
+export class Session extends ServiceMap.Service<Session, Partial<SessionData>>()("Session") {}
 
 export class SessionMiddleware extends HttpApiMiddleware.Tag<SessionMiddleware>()("SessionMiddleware", {
   provides: Session,

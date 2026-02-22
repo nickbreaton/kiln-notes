@@ -1,6 +1,6 @@
 import { KeyValueStore } from "@effect/platform";
 import * as SimpleWebAuthnServer from "@simplewebauthn/server";
-import { Effect, Record, Schema } from "effect";
+import { Effect, Layer, Record, Schema, ServiceMap } from "effect";
 import { AuthenticationResponseJSON, RegistrationInfoFromBase64, RegistrationResponseJSON } from "../shared/webauthn";
 import { Session } from "./middleware/Session";
 import { RelayingPartyService } from "./RelayingPartyService";
@@ -12,9 +12,8 @@ export class WebAuthnError extends Schema.TaggedError<WebAuthnError>()("WebAuthn
   cause: Schema.Unknown,
 }) {}
 
-export class WebAuthnService extends Effect.Service<WebAuthnService>()("kiln-notes/effect/server/WebAuthnService", {
-  dependencies: [KeyValueStore.layerMemory, RelayingPartyService.Default, UserService.Default],
-  effect: Effect.gen(function*() {
+export class WebAuthnService extends ServiceMap.Service<WebAuthnService>()("kiln-notes/effect/server/WebAuthnService", {
+  make: Effect.gen(function*() {
     const relayingParty = yield* RelayingPartyService;
     const users = yield* UserService;
 
@@ -122,4 +121,10 @@ export class WebAuthnService extends Effect.Service<WebAuthnService>()("kiln-not
       verifyAuthenticationResponse,
     };
   }),
-}) {}
+}) {
+  static layer = Layer.effect(this, this.make).pipe(
+    Layer.provide(KeyValueStore.layerMemory),
+    Layer.provide(RelayingPartyService.layer),
+    Layer.provide(UserService.layer),
+  );
+}

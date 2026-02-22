@@ -1,13 +1,12 @@
-import { Effect, Schema, Stream } from "effect";
+import { Effect, Layer, Schema, ServiceMap, Stream } from "effect";
 import { ImageId } from "../schema";
 
 export class LocalImageError extends Schema.TaggedError<LocalImageError>()("LocalImageError", {
   cause: Schema.Unknown,
 }) {}
 
-export class LocalImageService extends Effect.Service<LocalImageService>()("LocalImageService", {
-  dependencies: [],
-  effect: Effect.gen(function*() {
+export class LocalImageService extends ServiceMap.Service<LocalImageService>()("LocalImageService", {
+  make: Effect.gen(function*() {
     const imagesHandle = yield* Effect.promise(async () => {
       const opfsRoot = await navigator.storage.getDirectory();
       return await opfsRoot.getDirectoryHandle("images", { create: true });
@@ -64,4 +63,6 @@ export class LocalImageService extends Effect.Service<LocalImageService>()("Loca
         }),
     };
   }),
-}) {}
+}) {
+  static layer = Layer.effect(this, this.make);
+}

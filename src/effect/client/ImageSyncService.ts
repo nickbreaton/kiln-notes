@@ -1,17 +1,12 @@
 import { FetchHttpClient, HttpApiClient } from "@effect/platform";
-import { Effect, Option, Stream } from "effect";
+import { Effect, Layer, Option, ServiceMap, Stream } from "effect";
 import { ImageId } from "../schema";
 import { KilnApi } from "../shared/http";
 import { LocalImageService } from "./LocalImageService";
 import { PieceRepository } from "./PieceRepository";
 
-export class ImageSyncService extends Effect.Service<ImageSyncService>()("ImageSyncService", {
-  dependencies: [
-    LocalImageService.Default,
-    PieceRepository.Default,
-    FetchHttpClient.layer,
-  ],
-  effect: Effect.gen(function*() {
+export class ImageSyncService extends ServiceMap.Service<ImageSyncService>()("ImageSyncService", {
+  make: Effect.gen(function*() {
     const imageService = yield* LocalImageService;
     const pieceRepository = yield* PieceRepository;
     const syncSemaphore = yield* Effect.makeSemaphore(1);
@@ -56,4 +51,10 @@ export class ImageSyncService extends Effect.Service<ImageSyncService>()("ImageS
 
     return { sync };
   }),
-}) {}
+}) {
+  static layer = Layer.effect(this, this.make).pipe(
+    Layer.provide(LocalImageService.layer),
+    Layer.provide(PieceRepository.layer),
+    Layer.provide(FetchHttpClient.layer),
+  );
+}

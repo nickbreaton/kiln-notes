@@ -1,6 +1,6 @@
 import { HttpApiClient } from "@effect/platform";
 import * as SimpleWebAuthnBrowser from "@simplewebauthn/browser";
-import { Console, Effect, Option, Schema, SubscriptionRef } from "effect";
+import { Console, Effect, Layer, Option, Schema, ServiceMap, SubscriptionRef } from "effect";
 import { KilnApi } from "../shared/http";
 
 export class WebAuthnClientRegistrationError
@@ -16,8 +16,8 @@ export class WebAuthnClientAuthenticationError
 {}
 
 export class WebAuthnClientService
-  extends Effect.Service<WebAuthnClientService>()("kiln-notes/effect/client/WebAuthnClientService", {
-    effect: Effect.gen(function*() {
+  extends ServiceMap.Service<WebAuthnClientService>()("kiln-notes/effect/client/WebAuthnClientService", {
+    make: Effect.gen(function*() {
       const client = yield* HttpApiClient.make(KilnApi);
       const currentUser = yield* SubscriptionRef.make(Option.none<string>());
 
@@ -55,4 +55,6 @@ export class WebAuthnClientService
       return { register, authenticate };
     }),
   })
-{}
+{
+  static layer = Layer.effect(this, this.make);
+}

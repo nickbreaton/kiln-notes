@@ -1,12 +1,11 @@
 import { FetchHttpClient, HttpApiClient } from "@effect/platform";
-import { Effect, Encoding, Option, Ref, Schedule, Stream } from "effect";
+import { Effect, Layer, ServiceMap } from "effect";
 import { IndexeddbPersistence } from "y-indexeddb";
 import * as Y from "yjs";
 import { KilnApi } from "../shared/http";
 
-export class DocumentStore extends Effect.Service<DocumentStore>()("DocumentStore", {
-  dependencies: [FetchHttpClient.layer],
-  scoped: Effect.gen(function*() {
+export class DocumentStore extends ServiceMap.Service<DocumentStore>()("DocumentStore", {
+  make: Effect.gen(function*() {
     const doc = new Y.Doc();
     const provider = new IndexeddbPersistence("kiln", doc);
     const client = yield* HttpApiClient.make(KilnApi);
@@ -40,4 +39,8 @@ export class DocumentStore extends Effect.Service<DocumentStore>()("DocumentStor
       sync,
     };
   }),
-}) {}
+}) {
+  static layer = Layer.effect(this, this.make).pipe(
+    Layer.provide(FetchHttpClient.layer),
+  );
+}

@@ -1,12 +1,11 @@
-import { Console, Effect, Option, Queue, Schedule, Stream } from "effect";
+import { Effect, Layer, Option, Schedule, ServiceMap, Stream } from "effect";
 import { DocumentStore } from "./DocumentStore";
 import { ImageSyncService } from "./ImageSyncService";
 import { SyncQueue } from "./SyncQueue";
 import { UserService } from "./UserService";
 
-export class SyncManager extends Effect.Service<SyncManager>()("SyncManager", {
-  dependencies: [DocumentStore.Default, ImageSyncService.Default, SyncQueue.Default, UserService.Default],
-  effect: Effect.gen(function*() {
+export class SyncManager extends ServiceMap.Service<SyncManager>()("SyncManager", {
+  make: Effect.gen(function*() {
     const documentStore = yield* DocumentStore;
     const imageSyncService = yield* ImageSyncService;
     const syncQueue = yield* SyncQueue;
@@ -52,4 +51,11 @@ export class SyncManager extends Effect.Service<SyncManager>()("SyncManager", {
 
     return {};
   }),
-}) {}
+}) {
+  static layer = Layer.effect(this, this.make).pipe(
+    Layer.provide(DocumentStore.layer),
+    Layer.provide(ImageSyncService.layer),
+    Layer.provide(SyncQueue.layer),
+    Layer.provide(UserService.layer),
+  );
+}

@@ -1,5 +1,4 @@
-import { Atom } from "@effect-atom/atom-react";
-import { FetchHttpClient } from "@effect/platform";
+import { Atom } from "@effect/atom-react";
 import { Array, Console, Effect, Layer, Stream } from "effect";
 import { PieceId } from "../schema";
 import { SyncService } from "../server/SyncService";
@@ -14,14 +13,14 @@ import { WebAuthnClientService } from "./WebAuthnClientService";
 
 const runtime = Atom.runtime(
   Layer.mergeAll(
-    ClipboardService.Default,
-    PieceRepository.Default,
-    DocumentStore.Default,
-    LocalImageService.Default,
-    ServiceWorkerCacheService.Default,
-    UserService.Default,
-    SyncManager.Default,
-    Layer.provide(WebAuthnClientService.Default, FetchHttpClient.layer),
+    ClipboardService.layer,
+    PieceRepository.layer,
+    DocumentStore.layer,
+    LocalImageService.layer,
+    ServiceWorkerCacheService.layer,
+    UserService.layer,
+    SyncManager.layer,
+    WebAuthnClientService.layer,
   ),
 );
 

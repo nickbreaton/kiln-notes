@@ -164,8 +164,8 @@ const ApiLayer = HttpApiBuilder.api(KilnApi).pipe(
   Layer.provide(AuthGroupLive),
   Layer.provide(SyncGroupLive),
   Layer.provide(ImageGroupLive),
-  Layer.provide(WebAuthnService.Default),
-  Layer.provide(SyncService.Default),
+  Layer.provide(WebAuthnService.layer),
+  Layer.provide(SyncService.layer),
   Layer.provide(ImageStoreLive),
   Layer.provide(ApiErrorLoggingMiddlewareLive),
   Layer.provide(SessionMiddlewareLive),
@@ -177,7 +177,7 @@ const { handler } = HttpApiBuilder.toWebHandler(ApiLayer);
 
 export const ALL: APIRoute = async ({ request, locals }) => {
   // @ts-ignore -- Astro ↔ Cloudflare typings are suboptimal
-  const bindings = CloudflareBindings.context(locals?.runtime?.env);
+  const bindings = CloudflareBindings.serviceMap(locals?.runtime?.env);
 
   return handler(request, bindings);
 };

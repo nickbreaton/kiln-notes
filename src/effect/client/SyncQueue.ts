@@ -1,8 +1,7 @@
-import { Console, Effect, Queue } from "effect";
+import { Effect, Layer, Queue, ServiceMap } from "effect";
 
-export class SyncQueue extends Effect.Service<SyncQueue>()("SyncQueue", {
-  dependencies: [],
-  effect: Effect.gen(function*() {
+export class SyncQueue extends ServiceMap.Service<SyncQueue>()("SyncQueue", {
+  make: Effect.gen(function*() {
     const queue = yield* Queue.dropping<void>(0);
 
     return {
@@ -10,4 +9,6 @@ export class SyncQueue extends Effect.Service<SyncQueue>()("SyncQueue", {
       wait: Queue.take(queue),
     };
   }),
-}) {}
+}) {
+  static layer = Layer.effect(this, this.make);
+}

@@ -1,9 +1,9 @@
-import { Config, Effect, Schema } from "effect";
+import { Config, Effect, Layer, Schema, ServiceMap } from "effect";
 import { UserId } from "../schema";
 import { RegistrationInfo, RegistrationInfoFromBase64 } from "../shared/webauthn";
 
-export class UserService extends Effect.Service<UserService>()("kiln-notes/effect/server/UserService", {
-  effect: Effect.gen(function*() {
+export class UserService extends ServiceMap.Service<UserService>()("kiln-notes/effect/server/UserService", {
+  make: Effect.gen(function*() {
     const users = yield* Config.array(Config.string(), "USERS").pipe(
       Config.withDefault([]),
       Effect.andThen(Schema.decode(Schema.Array(UserId))),
@@ -17,4 +17,6 @@ export class UserService extends Effect.Service<UserService>()("kiln-notes/effec
 
     return { all: users, passkeys };
   }),
-}) {}
+}) {
+  static layer = Layer.effect(this, this.make);
+}

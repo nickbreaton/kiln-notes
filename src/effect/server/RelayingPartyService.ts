@@ -1,12 +1,12 @@
 import { HttpServerRequest } from "@effect/platform";
-import { Array, Config, Effect, Option, Schema } from "effect";
+import { Array, Config, Effect, Layer, Schema, ServiceMap } from "effect";
 
 export class RelayingPartyError extends Schema.TaggedError<RelayingPartyError>()("RelayingPartyError", {
   message: Schema.String,
 }) {}
 
-export class RelayingPartyService extends Effect.Service<RelayingPartyService>()("RelayingPartyService", {
-  effect: Effect.gen(function*() {
+export class RelayingPartyService extends ServiceMap.Service<RelayingPartyService>()("RelayingPartyService", {
+  make: Effect.gen(function*() {
     const allowedOrigins = yield* Config.array(Config.string(), "ALLOWED_ORIGINS").pipe(
       Config.withDefault([]),
       Config.map(Array.union(["http://localhost:4321"])),
@@ -25,4 +25,6 @@ export class RelayingPartyService extends Effect.Service<RelayingPartyService>()
 
     return { get };
   }),
-}) {}
+}) {
+  static layer = Layer.effect(this, this.make);
+}

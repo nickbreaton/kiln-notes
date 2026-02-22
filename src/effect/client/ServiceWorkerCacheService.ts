@@ -1,9 +1,9 @@
-import { Effect } from "effect";
+import { Effect, Layer, ServiceMap } from "effect";
 import { ImageId } from "../schema";
 
 export class ServiceWorkerCacheService
-  extends Effect.Service<ServiceWorkerCacheService>()("kiln-notes/effect/client/ServiceWorkerCacheService", {
-    effect: Effect.gen(function*() {
+  extends ServiceMap.Service<ServiceWorkerCacheService>()("kiln-notes/effect/client/ServiceWorkerCacheService", {
+    make: Effect.gen(function*() {
       const CACHE_NAME = "piece-images";
 
       const cache = (url: string, file: File) =>
@@ -27,4 +27,6 @@ export class ServiceWorkerCacheService
       return { cacheFull, cacheThumbnail };
     }),
   })
-{}
+{
+  static layer = Layer.effect(this, this.make);
+}

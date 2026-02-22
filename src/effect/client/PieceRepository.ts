@@ -1,4 +1,4 @@
-import { DateTime, Effect, Option, Schema, Stream, SubscriptionRef } from "effect";
+import { DateTime, Effect, Layer, ServiceMap, Stream } from "effect";
 
 import { Image, ImageId, Piece, PieceId } from "../schema";
 import { DocumentStore } from "./DocumentStore";
@@ -7,15 +7,8 @@ import { LocalImageService } from "./LocalImageService";
 import { ServiceWorkerCacheService } from "./ServiceWorkerCacheService";
 import { SyncQueue } from "./SyncQueue";
 
-export class PieceRepository extends Effect.Service<PieceRepository>()("PieceRepository", {
-  dependencies: [
-    LocalImageService.Default,
-    ImageCompressionService.Default,
-    DocumentStore.Default,
-    ServiceWorkerCacheService.Default,
-    SyncQueue.Default,
-  ],
-  effect: Effect.gen(function*() {
+export class PieceRepository extends ServiceMap.Service<PieceRepository>()("PieceRepository", {
+  make: Effect.gen(function*() {
     const { doc } = yield* DocumentStore;
     const map = doc.getMap<typeof Piece.Type>("piecesCollection");
 
@@ -93,4 +86,12 @@ export class PieceRepository extends Effect.Service<PieceRepository>()("PieceRep
         }),
     };
   }),
-}) {}
+}) {
+  static layer = Layer.effect(this, this.make).pipe(
+    Layer.provide(LocalImageService.layer),
+    Layer.provide(ImageCompressionService.layer),
+    Layer.provide(DocumentStore.layer),
+    Layer.provide(ServiceWorkerCacheService.layer),
+    Layer.provide(SyncQueue.layer),
+  );
+}
