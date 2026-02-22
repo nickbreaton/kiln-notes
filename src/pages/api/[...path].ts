@@ -1,7 +1,8 @@
-import { HttpApiBuilder, HttpMiddleware, HttpServer, HttpServerResponse, Multipart } from "@effect/platform";
+import { HttpServerResponse, HttpRouter, Multipart } from "effect/unstable/http";
+import { HttpApiBuilder } from "effect/unstable/httpapi";
 
 import type { APIRoute } from "astro";
-import { Effect, Layer, Option, Schema, Stream } from "effect";
+import { Effect, Layer, Schema, Stream } from "effect";
 import { NumberFromString } from "effect/Schema";
 import { ImageId } from "../../effect/schema";
 import { AstroConfigProvider } from "../../effect/server/AstroConfigProvider";
@@ -100,7 +101,7 @@ const ImageGroupLive = HttpApiBuilder.group(KilnApi, "images", (handlers) =>
           thumbnail?: Stream.Stream<Uint8Array, Multipart.MultipartError>;
         };
 
-        const parts = yield* Stream.runFold(payload, {} as Parts, (acc, part) => {
+        const parts = yield* Stream.runFold(payload, () => ({} as Parts), (acc, part) => {
           if (Multipart.isField(part) && part.key === "id") {
             return { ...acc, id: part.value };
           }
@@ -119,15 +120,15 @@ const ImageGroupLive = HttpApiBuilder.group(KilnApi, "images", (handlers) =>
           return acc;
         });
 
-        const id = yield* Option.fromNullable(parts.id).pipe(Effect.andThen(Schema.decodeUnknownEffect(ImageId)));
-        const full = yield* Option.fromNullable(parts.full);
-        const thumbnail = yield* Option.fromNullable(parts.thumbnail);
+        const id = yield* Effect.fromNullishOr(parts.id).pipe(Effect.andThen(Schema.decodeUnknownEffect(ImageId)));
+        const full = yield* Effect.fromNullishOr(parts.full);
+        const thumbnail = yield* Effect.fromNullishOr(parts.thumbnail);
 
-        const fullContentLength = yield* Option.fromNullable(parts.fullContentLength).pipe(
+        const fullContentLength = yield* Effect.fromNullishOr(parts.fullContentLength).pipe(
           Effect.andThen(Schema.decodeEffect(NumberFromString)),
         );
 
-        const thumbnailContentLength = yield* Option.fromNullable(parts.thumbnailContentLength).pipe(
+        const thumbnailContentLength = yield* Effect.fromNullishOr(parts.thumbnailContentLength).pipe(
           Effect.andThen(Schema.decodeEffect(NumberFromString)),
         );
 
@@ -141,7 +142,7 @@ const ImageGroupLive = HttpApiBuilder.group(KilnApi, "images", (handlers) =>
       }).pipe(
         Effect.mapError((error) => new ImageUploadError({ cause: error })),
       ))
-    .handleRaw("getImage", ({ path }) =>
+    .handleRaw("getImage", ({ params }) =>
       Effect.gen(function*() {
         const session = yield* Session;
         const imageStore = yield* ImageStore;
@@ -151,7 +152,7 @@ const ImageGroupLive = HttpApiBuilder.group(KilnApi, "images", (handlers) =>
           return yield* new UnauthorizedError({ message: "Unauthorized" });
         }
 
-        const key = `${userId}/${path.id}/${path.variant}`;
+        const key = `${userId}/${params.id}/${params.variant}`;
         const { stream } = yield* imageStore.get(key).pipe(
           Effect.mapError((error) => new ImageNotFoundError({ message: String(error.cause) })),
         );
@@ -159,7 +160,7 @@ const ImageGroupLive = HttpApiBuilder.group(KilnApi, "images", (handlers) =>
         return HttpServerResponse.stream(stream, { headers: { "Content-Type": "image/webp" } });
       })));
 
-const ApiLayer = HttpApiBuilder.api(KilnApi).pipe(
+const ApiLayer = HttpApiBuilder.layer(KilnApi).pipe(
   Layer.provide(ApiGroupLive),
   Layer.provide(AuthGroupLive),
   Layer.provide(SyncGroupLive),
@@ -169,11 +170,10 @@ const ApiLayer = HttpApiBuilder.api(KilnApi).pipe(
   Layer.provide(ImageStoreLive),
   Layer.provide(ApiErrorLoggingMiddlewareLive),
   Layer.provide(SessionMiddlewareLive),
-  Layer.provide(Layer.setConfigProvider(AstroConfigProvider)),
-  Layer.merge(HttpServer.layerContext),
+  Layer.provide(AstroConfigProvider),
 );
 
-const { handler } = HttpApiBuilder.toWebHandler(ApiLayer);
+const { handler } = HttpRouter.toWebHandler(ApiLayer);
 
 export const ALL: APIRoute = async ({ request, locals }) => {
   // @ts-ignore -- Astro ↔ Cloudflare typings are suboptimal

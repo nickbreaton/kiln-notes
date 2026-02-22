@@ -29,7 +29,7 @@ export class ImageUploadError extends Schema.TaggedErrorClass<ImageUploadError>(
   Schema.Struct({ cause: Schema.Unknown }).pipe(HttpApiSchema.status(400)),
 ) {}
 
-export class AuthGroup extends HttpApiGroup.make("auth")
+export const AuthGroup = HttpApiGroup.make("auth")
   .add(
     HttpApiEndpoint.get("registerOptions", "/api/auth/register-options", {
       success: PublicKeyCredentialCreationOptionsJSON,
@@ -52,23 +52,21 @@ export class AuthGroup extends HttpApiGroup.make("auth")
       success: Schema.Struct({ verified: Schema.Boolean }),
       error: WebAuthnApiError,
     }),
-  )
-{}
+  );
 
 export class HealthResponse extends Schema.Class<HealthResponse>("HealthResponse")({
   status: Schema.String,
   timestamp: Schema.String,
 }) {}
 
-export class ApiGroup extends HttpApiGroup.make("api", { topLevel: true })
+export const ApiGroup = HttpApiGroup.make("api", { topLevel: true })
   .add(
     HttpApiEndpoint.get("health", "/api/health", {
       success: HealthResponse,
     }),
-  )
-{}
+  );
 
-export class SyncGroup extends HttpApiGroup.make("sync")
+export const SyncGroup = HttpApiGroup.make("sync")
   .add(
     HttpApiEndpoint.post("pull", "/api/sync/pull", {
       payload: Schema.Struct({ stateVector: Schema.Uint8Array }),
@@ -82,8 +80,7 @@ export class SyncGroup extends HttpApiGroup.make("sync")
       success: Schema.Struct({ success: Schema.Boolean }),
       error: [UnauthorizedError, SyncServiceError],
     }),
-  )
-{}
+  );
 
 export class ImageNotFoundError extends Schema.TaggedErrorClass<ImageNotFoundError>()(
   "ImageNotFoundError",
@@ -92,7 +89,7 @@ export class ImageNotFoundError extends Schema.TaggedErrorClass<ImageNotFoundErr
 
 export const ImageVariant = Schema.Literals(["full", "thumbnail"]);
 
-export class ImageGroup extends HttpApiGroup.make("images")
+export const ImageGroup = HttpApiGroup.make("images")
   .add(
     HttpApiEndpoint.post("uploadImage", "/api/images/upload", {
       payload: Schema.Struct({
@@ -111,12 +108,11 @@ export class ImageGroup extends HttpApiGroup.make("images")
       params: Schema.Struct({ id: ImageId, variant: ImageVariant }),
       error: [UnauthorizedError, ImageNotFoundError],
     }),
-  )
-{}
+  );
 
-export class KilnApi extends HttpApi.make("kiln")
+export const KilnApi = HttpApi.make("kiln")
   .add(ApiGroup)
   .add(AuthGroup)
   .add(SyncGroup)
   .add(ImageGroup)
-{}
+;

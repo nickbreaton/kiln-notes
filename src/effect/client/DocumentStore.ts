@@ -1,5 +1,5 @@
 import { FetchHttpClient } from "effect/unstable/http";
-import { HttpApiClient } from "@effect/platform";
+import { HttpApiClient } from "effect/unstable/httpapi";
 import { Effect, Layer, ServiceMap } from "effect";
 import { IndexeddbPersistence } from "y-indexeddb";
 import * as Y from "yjs";

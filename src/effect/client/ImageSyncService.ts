@@ -1,5 +1,5 @@
 import { FetchHttpClient } from "effect/unstable/http";
-import { HttpApiClient } from "@effect/platform";
+import { HttpApiClient } from "effect/unstable/httpapi";
 import { Effect, Layer, Option, ServiceMap, Stream } from "effect";
 import { ImageId } from "../schema";
 import { KilnApi } from "../shared/http";

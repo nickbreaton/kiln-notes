@@ -1,4 +1,4 @@
-import { HttpApiClient } from "@effect/platform";
+import { HttpApiClient } from "effect/unstable/httpapi";
 import * as SimpleWebAuthnBrowser from "@simplewebauthn/browser";
 import { Console, Effect, Layer, Option, Schema, ServiceMap, SubscriptionRef } from "effect";
 import { KilnApi } from "../shared/http";
