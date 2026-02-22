@@ -1,4 +1,4 @@
-import { HttpServer, HttpServerResponse, HttpRouter, Multipart } from "effect/unstable/http";
+import { HttpRouter, HttpServer, HttpServerResponse, Multipart } from "effect/unstable/http";
 import { HttpApiBuilder } from "effect/unstable/httpapi";
 
 import type { APIRoute } from "astro";
@@ -174,13 +174,13 @@ const ApiLayer = HttpApiBuilder.layer(KilnApi).pipe(
   Layer.provide(HttpServer.layerServices),
 );
 
-const { handler } = HttpRouter.toWebHandler(ApiLayer as any);
-
 export const ALL: APIRoute = async ({ request, locals }) => {
   // @ts-ignore -- Astro ↔ Cloudflare typings are suboptimal
-  const bindings = CloudflareBindings.serviceMap(locals?.runtime?.env);
+  const bindings = locals?.runtime?.env;
+  const layer = Layer.provide(ApiLayer, Layer.succeed(CloudflareBindings, bindings));
+  const { handler } = HttpRouter.toWebHandler(layer);
 
-  return handler(request, bindings);
+  return handler(request);
 };
 
 export const prerender = false;

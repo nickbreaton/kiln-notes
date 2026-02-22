@@ -1,7 +1,7 @@
 import { Array, Console, Effect, Layer, Stream } from "effect";
+import { FetchHttpClient } from "effect/unstable/http";
 import * as Atom from "effect/unstable/reactivity/Atom";
 import { PieceId } from "../schema";
-import { SyncService } from "../server/SyncService";
 import { ClipboardService } from "./ClipboardService";
 import { DocumentStore } from "./DocumentStore";
 import { LocalImageService } from "./LocalImageService";
@@ -26,7 +26,7 @@ const runtime = Atom.runtime(() =>
     UserService.layer,
     SyncManager.layer,
     WebAuthnClientService.layer,
-  ) as any,
+  ).pipe(Layer.provide(FetchHttpClient.layer))
 );
 
 export const userAtom = runtime.atom(() => {
@@ -54,7 +54,10 @@ export const createPiecesAtom = runtime.fn((files: File[]) => {
 });
 
 export const pieceAtom = Atom.family((id: PieceId) => {
-  return Atom.mapResult(collectionAtom, (pieces) => Array.findFirst(pieces as ReadonlyArray<LocalPiece>, (piece) => piece.id === id));
+  return Atom.mapResult(
+    collectionAtom,
+    (pieces) => Array.findFirst(pieces as ReadonlyArray<LocalPiece>, (piece) => piece.id === id),
+  );
 });
 
 export const getFullUrlAtom = Atom.family((id: PieceId) =>

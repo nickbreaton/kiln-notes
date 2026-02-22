@@ -1,5 +1,5 @@
-import { HttpServerRequest, HttpServerResponse } from "effect/unstable/http";
 import { Config, Effect, Layer, Redacted, Schema, ServiceMap } from "effect";
+import { HttpServerRequest, HttpServerResponse } from "effect/unstable/http";
 import { HttpApiMiddleware } from "effect/unstable/httpapi";
 import { getIronSession } from "iron-session";
 import { UserId } from "../../schema";
@@ -14,8 +14,6 @@ export class Session extends ServiceMap.Service<Session, Partial<SessionData>>()
 export class SessionMiddleware extends HttpApiMiddleware.Service<SessionMiddleware, {
   provides: Session;
 }>()("SessionMiddleware") {}
-
-const emptySession: Partial<SessionData> = {};
 
 export const SessionMiddlewareLive = Layer.effect(
   SessionMiddleware,
@@ -57,6 +55,6 @@ export const SessionMiddlewareLive = Layer.effect(
         }
 
         return HttpServerResponse.removeCookie(withHeaders, "user");
-      })) as SessionMiddleware["Service"];
+      }));
   }),
 );

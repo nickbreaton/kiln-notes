@@ -1,5 +1,5 @@
-import { HttpServerRequest } from "@effect/platform";
 import { Array, Config, Effect, Layer, Schema, ServiceMap } from "effect";
+import { HttpServerRequest } from "effect/unstable/http";
 
 export class RelayingPartyError extends Schema.TaggedErrorClass<RelayingPartyError>()("RelayingPartyError", {
   message: Schema.String,
@@ -15,7 +15,7 @@ export class RelayingPartyService extends ServiceMap.Service<RelayingPartyServic
 
     const get = Effect.gen(function*() {
       const request = yield* HttpServerRequest.HttpServerRequest;
-      const url = yield* Schema.decodeEffect(Schema.URL)(request.originalUrl);
+      const url = yield* Schema.decodeUnknownEffect(Schema.URL)(request.originalUrl);
 
       if (!allowedOrigins.includes(url.origin)) {
         return yield* new RelayingPartyError({ message: `Origin "${url.origin}" not allowed as relaying party` });
