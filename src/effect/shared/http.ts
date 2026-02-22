@@ -2,6 +2,7 @@ import { Multipart } from "effect/unstable/http";
 import { HttpApi, HttpApiEndpoint, HttpApiGroup, HttpApiSchema } from "effect/unstable/httpapi";
 import { Schema } from "effect";
 import { ImageId } from "../schema";
+import { SessionMiddleware } from "../server/middleware/Session";
 import {
   AuthenticationResponseJSON,
   PublicKeyCredentialCreationOptionsJSON,
@@ -115,4 +116,5 @@ export const KilnApi = HttpApi.make("kiln")
   .add(AuthGroup)
   .add(SyncGroup)
   .add(ImageGroup)
+  .middleware(SessionMiddleware)
 ;
