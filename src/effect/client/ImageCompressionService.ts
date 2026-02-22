@@ -1,7 +1,7 @@
 import { Effect, Layer, Schema, ServiceMap } from "effect";
 
 export class ImageCompressionServiceError
-  extends Schema.TaggedError<ImageCompressionServiceError>()("ImageCompressionServiceError", {
+  extends Schema.TaggedErrorClass<ImageCompressionServiceError>()("ImageCompressionServiceError", {
     cause: Schema.Unknown,
   })
 {}

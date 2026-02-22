@@ -1,7 +1,7 @@
 import type { HttpServerRequest } from "@effect/platform";
 import { Effect, Schema, ServiceMap, Stream } from "effect";
 
-export class ImageStoreError extends Schema.TaggedError<ImageStoreError>()("ImageStoreError", {
+export class ImageStoreError extends Schema.TaggedErrorClass<ImageStoreError>()("ImageStoreError", {
   cause: Schema.Unknown,
 }) {}
 

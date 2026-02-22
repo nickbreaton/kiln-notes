@@ -33,7 +33,7 @@ export const SessionMiddlewareLive = Layer.effect(
         Effect.orDie,
       );
 
-      const secure = yield* Schema.decode(Schema.URL)(currentRequest.url).pipe(
+      const secure = yield* Schema.decodeEffect(Schema.URL)(currentRequest.url).pipe(
         Effect.andThen(url => url.protocol !== "http:"),
         Effect.orDie,
       );

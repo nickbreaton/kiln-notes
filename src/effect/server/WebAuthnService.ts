@@ -8,7 +8,7 @@ import { UserService } from "./UserService";
 
 const rpName = "Kiln Notes";
 
-export class WebAuthnError extends Schema.TaggedError<WebAuthnError>()("WebAuthnError", {
+export class WebAuthnError extends Schema.TaggedErrorClass<WebAuthnError>()("WebAuthnError", {
   cause: Schema.Unknown,
 }) {}
 
@@ -64,7 +64,7 @@ export class WebAuthnService extends ServiceMap.Service<WebAuthnService>()("kiln
           return yield* new WebAuthnError({ cause: new Error("verifyRegistrationResponse returned not verified") });
         }
 
-        return yield* Schema.encode(RegistrationInfoFromBase64)(result.registrationInfo);
+        return yield* Schema.encodeEffect(RegistrationInfoFromBase64)(result.registrationInfo);
       });
 
     const generateAuthenticationOptions = Effect.gen(function*() {

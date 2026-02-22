@@ -11,7 +11,7 @@ export class UserService extends ServiceMap.Service<UserService>()("UserService"
       Stream.concat(Stream.fromEventListener(window.cookieStore, "change")),
       Stream.mapEffect(() => getFromStore),
       Stream.map(item => item?.value ?? null),
-      Stream.mapEffect(Schema.decodeUnknown(UserCookieValue)),
+      Stream.mapEffect(value => Schema.decodeUnknownEffect(UserCookieValue)(value)),
       Stream.map(Option.fromNullable),
     );
 

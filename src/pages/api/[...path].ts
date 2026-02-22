@@ -119,16 +119,16 @@ const ImageGroupLive = HttpApiBuilder.group(KilnApi, "images", (handlers) =>
           return acc;
         });
 
-        const id = yield* Option.fromNullable(parts.id).pipe(Effect.andThen(Schema.decodeUnknown(ImageId)));
+        const id = yield* Option.fromNullable(parts.id).pipe(Effect.andThen(Schema.decodeUnknownEffect(ImageId)));
         const full = yield* Option.fromNullable(parts.full);
         const thumbnail = yield* Option.fromNullable(parts.thumbnail);
 
         const fullContentLength = yield* Option.fromNullable(parts.fullContentLength).pipe(
-          Effect.andThen(Schema.decode(NumberFromString)),
+          Effect.andThen(Schema.decodeEffect(NumberFromString)),
         );
 
         const thumbnailContentLength = yield* Option.fromNullable(parts.thumbnailContentLength).pipe(
-          Effect.andThen(Schema.decode(NumberFromString)),
+          Effect.andThen(Schema.decodeEffect(NumberFromString)),
         );
 
         const fullKey = `${userId}/${id}/full`;

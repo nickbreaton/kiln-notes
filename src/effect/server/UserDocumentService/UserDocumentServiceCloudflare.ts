@@ -19,7 +19,7 @@ export const UserDocumentServiceCloudflare = Layer.effect(
       const doc = new Y.Doc();
 
       if (stored) {
-        const deserialized = yield* Schema.decode(Schema.Uint8ArrayFromBase64)(stored);
+        const deserialized = yield* Schema.decodeEffect(Schema.Uint8ArrayFromBase64)(stored);
         Y.applyUpdate(doc, deserialized);
       }
 
@@ -37,7 +37,7 @@ export const UserDocumentServiceCloudflare = Layer.effect(
       updater(doc);
 
       const value = Y.encodeStateAsUpdate(doc);
-      const encoded = yield* Schema.encode(Schema.Uint8ArrayFromBase64)(value);
+      const encoded = yield* Schema.encodeEffect(Schema.Uint8ArrayFromBase64)(value);
 
       yield* Effect.promise(() => userDocument.put(encoded));
     }, Effect.catchAllCause(cause => new UserDocumentError({ cause })));

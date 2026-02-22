@@ -4,13 +4,13 @@ import { Console, Effect, Layer, Option, Schema, ServiceMap, SubscriptionRef } f
 import { KilnApi } from "../shared/http";
 
 export class WebAuthnClientRegistrationError
-  extends Schema.TaggedError<WebAuthnClientRegistrationError>()("WebAuthnClientRegistrationError", {
+  extends Schema.TaggedErrorClass<WebAuthnClientRegistrationError>()("WebAuthnClientRegistrationError", {
     cause: Schema.Unknown,
   })
 {}
 
 export class WebAuthnClientAuthenticationError
-  extends Schema.TaggedError<WebAuthnClientAuthenticationError>()("WebAuthnClientAuthenticationError", {
+  extends Schema.TaggedErrorClass<WebAuthnClientAuthenticationError>()("WebAuthnClientAuthenticationError", {
     cause: Schema.Unknown,
   })
 {}

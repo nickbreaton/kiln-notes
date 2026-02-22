@@ -2,7 +2,7 @@ import { Effect, Schema, Scope, ServiceMap } from "effect";
 import { UserId } from "../../schema";
 import * as Y from "yjs";
 
-export class UserDocumentError extends Schema.TaggedError<UserDocumentError>()("UserDocumentError", {
+export class UserDocumentError extends Schema.TaggedErrorClass<UserDocumentError>()("UserDocumentError", {
   cause: Schema.Unknown,
 }) {}
 
