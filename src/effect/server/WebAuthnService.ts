@@ -1,4 +1,4 @@
-import { KeyValueStore } from "@effect/platform";
+import { KeyValueStore } from "effect/unstable/persistence";
 import * as SimpleWebAuthnServer from "@simplewebauthn/server";
 import { Effect, Layer, Record, Schema, ServiceMap } from "effect";
 import { AuthenticationResponseJSON, RegistrationInfoFromBase64, RegistrationResponseJSON } from "../shared/webauthn";

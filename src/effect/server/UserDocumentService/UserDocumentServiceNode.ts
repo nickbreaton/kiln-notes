@@ -1,4 +1,4 @@
-import { KeyValueStore } from "@effect/platform";
+import { KeyValueStore } from "effect/unstable/persistence";
 import { Effect, Layer, Option, Schema } from "effect";
 import { UserId } from "../../schema";
 import * as Y from "yjs";
@@ -7,7 +7,7 @@ import { UserDocumentError, UserDocumentService } from "./UserDocumentService";
 export const UserDocumentServiceNode = Layer.effect(
   UserDocumentService,
   Effect.gen(function*() {
-    const kv = (yield* KeyValueStore.KeyValueStore).forSchema(Schema.Uint8Array);
+    const kv = KeyValueStore.toSchemaStore(yield* KeyValueStore.KeyValueStore, Schema.Uint8Array);
 
     const load = Effect.fn(function*(userId: UserId) {
       const stored = yield* kv.get(userId);
