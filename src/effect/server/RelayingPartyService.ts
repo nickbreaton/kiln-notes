@@ -7,8 +7,9 @@ export class RelayingPartyError extends Schema.TaggedErrorClass<RelayingPartyErr
 
 export class RelayingPartyService extends ServiceMap.Service<RelayingPartyService>()("RelayingPartyService", {
   make: Effect.gen(function*() {
-    const allowedOrigins = yield* Config.array(Config.string(), "ALLOWED_ORIGINS").pipe(
-      Config.withDefault([]),
+    const allowedOrigins = yield* Config.string("ALLOWED_ORIGINS").pipe(
+      Config.withDefault(() => ""),
+      Config.map((value) => (value as string).split(",").map((it: string) => it.trim()).filter((it: string) => it.length > 0)),
       Config.map(Array.union(["http://localhost:4321"])),
     );
 

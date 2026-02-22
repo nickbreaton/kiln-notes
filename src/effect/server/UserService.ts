@@ -4,9 +4,11 @@ import { RegistrationInfo, RegistrationInfoFromBase64 } from "../shared/webauthn
 
 export class UserService extends ServiceMap.Service<UserService>()("kiln-notes/effect/server/UserService", {
   make: Effect.gen(function*() {
-    const users = yield* Config.array(Config.string(), "USERS").pipe(
-      Config.withDefault([]),
-      Effect.andThen(Schema.decodeEffect(Schema.Array(UserId))),
+    const usersCsv = yield* Config.string("USERS").pipe(
+      Config.withDefault(() => ""),
+    );
+    const users = yield* Schema.decodeUnknownEffect(Schema.Array(UserId))(
+      usersCsv.split(",").map((it) => it.trim()).filter((it) => it.length > 0),
     );
     const passkeys: Record<UserId, RegistrationInfo> = {};
 

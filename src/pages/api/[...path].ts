@@ -1,8 +1,8 @@
-import { HttpServerResponse, HttpRouter, Multipart } from "effect/unstable/http";
+import { HttpServer, HttpServerResponse, HttpRouter, Multipart } from "effect/unstable/http";
 import { HttpApiBuilder } from "effect/unstable/httpapi";
 
 import type { APIRoute } from "astro";
-import { Effect, Layer, Schema, Stream } from "effect";
+import { ConfigProvider, Effect, Layer, Schema, Stream } from "effect";
 import { NumberFromString } from "effect/Schema";
 import { ImageId } from "../../effect/schema";
 import { AstroConfigProvider } from "../../effect/server/AstroConfigProvider";
@@ -170,7 +170,8 @@ const ApiLayer = HttpApiBuilder.layer(KilnApi).pipe(
   Layer.provide(ImageStoreLive),
   Layer.provide(ApiErrorLoggingMiddlewareLive),
   Layer.provide(SessionMiddlewareLive),
-  Layer.provide(AstroConfigProvider),
+  Layer.provide(ConfigProvider.layer(AstroConfigProvider)),
+  Layer.provide(HttpServer.layerServices),
 );
 
 const { handler } = HttpRouter.toWebHandler(ApiLayer);
