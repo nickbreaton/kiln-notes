@@ -1,5 +1,7 @@
-import { Effect, Layer, ServiceMap } from "effect";
+import { HttpServerRequest, HttpServerResponse } from "effect/unstable/http";
+import { Config, Effect, Layer, Redacted, Schema, ServiceMap } from "effect";
 import { HttpApiMiddleware } from "effect/unstable/httpapi";
+import { getIronSession } from "iron-session";
 import { UserId } from "../../schema";
 
 export interface SessionData {
@@ -15,7 +17,46 @@ export class SessionMiddleware extends HttpApiMiddleware.Service<SessionMiddlewa
 
 const emptySession: Partial<SessionData> = {};
 
-export const SessionMiddlewareLive = Layer.succeed(
+export const SessionMiddlewareLive = Layer.effect(
   SessionMiddleware,
-  ((httpEffect) => Effect.provideService(httpEffect, Session, emptySession)) as SessionMiddleware["Service"],
+  Effect.gen(function*() {
+    const sessionSecret = yield* Config.redacted("SESSION_SECRET");
+
+    return ((httpEffect, _options) =>
+      Effect.gen(function*() {
+        const request = yield* HttpServerRequest.HttpServerRequest;
+        const currentRequest = yield* HttpServerRequest.toWeb(request).pipe(Effect.orDie);
+
+        const secure = yield* Schema.decodeUnknownEffect(Schema.URL)(currentRequest.url).pipe(
+          Effect.map((url) => url.protocol !== "http:"),
+          Effect.orDie,
+        );
+
+        const placeholderResponse = new Response();
+
+        const session = yield* Effect.promise(() =>
+          getIronSession<Partial<SessionData>>(currentRequest, placeholderResponse, {
+            cookieName: "session",
+            password: Redacted.value(sessionSecret),
+            cookieOptions: { sameSite: "strict", secure },
+          })
+        );
+
+        const response = yield* Effect.provideService(httpEffect, Session, session);
+
+        yield* Effect.promise(() => session.save());
+
+        const withHeaders = HttpServerResponse.setHeaders(response, placeholderResponse.headers);
+
+        if (session.user) {
+          return yield* HttpServerResponse.setCookie(withHeaders, "user", session.user, {
+            secure,
+            maxAge: "365 days",
+            path: "/",
+          }).pipe(Effect.orDie);
+        }
+
+        return HttpServerResponse.removeCookie(withHeaders, "user");
+      })) as SessionMiddleware["Service"];
+  }),
 );
