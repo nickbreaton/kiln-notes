@@ -12,9 +12,6 @@ Track temporary removals made during the Effect v4 migration so they are restore
   - Replaced old base64+json composition with `Schema.fromJsonString(RegistrationInfo)` during schema API migration
   - This temporarily changes wire/storage encoding expectations from base64-json to plain json-string
 
-- Replaced API error logging middleware implementation with a temporary no-op layer:
-  - `src/effect/server/middleware/ApiErrorLogging.ts`
-  - Purpose: unblock broad v4 type migration while `HttpApiMiddleware` error inspection/wrapping is migrated
 
 ## Why this was removed
 
@@ -30,7 +27,6 @@ Track temporary removals made during the Effect v4 migration so they are restore
 - Restore base64 round-trip behavior for `RegistrationInfoFromBase64` after schema migration settles.
 - Verify `PASSKEY_*` config values and `registerVerify` credential codes remain backward compatible.
 
-- Restore API error logging middleware behavior with v4 Cause helpers and middleware function shape.
 
 ## Related files to revisit
 
