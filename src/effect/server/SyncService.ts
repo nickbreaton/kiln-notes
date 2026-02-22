@@ -1,11 +1,12 @@
 import { Effect, Layer, ServiceMap } from "effect";
 import { UserId } from "../schema";
 import * as Y from "yjs";
-import * as UserDocumentService from "./UserDocumentService";
+import { Live as UserDocumentServiceLive } from "./UserDocumentService";
+import { UserDocumentService } from "./UserDocumentService/UserDocumentService";
 
 export class SyncService extends ServiceMap.Service<SyncService>()("SyncService", {
   make: Effect.gen(function*() {
-    const userDocumentService = yield* UserDocumentService.UserDocumentService;
+    const userDocumentService = yield* UserDocumentService;
 
     const pull = Effect.fn(function*(userId: UserId, stateVector: Uint8Array) {
       const doc = yield* userDocumentService.load(userId);
@@ -26,6 +27,6 @@ export class SyncService extends ServiceMap.Service<SyncService>()("SyncService"
   }),
 }) {
   static layer = Layer.effect(this, this.make).pipe(
-    Layer.provide(UserDocumentService.Live),
+    Layer.provide(UserDocumentServiceLive),
   );
 }

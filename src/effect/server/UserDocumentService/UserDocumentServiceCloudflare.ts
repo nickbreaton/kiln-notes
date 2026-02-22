@@ -1,15 +1,15 @@
-import { Effect, Layer, Option, Schema } from "effect";
+import { Effect, Layer, Schema } from "effect";
 import { UserId } from "../../schema";
 import * as Y from "yjs";
 import { CloudflareBindings } from "../CloudflareBindings";
-import { UserDocumentError, UserDocumentService } from "./index";
+import { UserDocumentError, UserDocumentService } from "./UserDocumentService";
 
 export const UserDocumentServiceCloudflare = Layer.effect(
   UserDocumentService,
   Effect.gen(function*() {
+    const { USER_DOCUMENTS } = yield* CloudflareBindings;
+
     const getUserDocumentStub = Effect.fn(function*(userId: UserId) {
-      const bindings = yield* Effect.serviceOption(CloudflareBindings);
-      const { USER_DOCUMENTS } = yield* bindings;
       return USER_DOCUMENTS.getByName(userId);
     });
 

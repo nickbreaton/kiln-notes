@@ -2,7 +2,7 @@ import { KeyValueStore } from "@effect/platform";
 import { Effect, Layer, Option, Schema } from "effect";
 import { UserId } from "../../schema";
 import * as Y from "yjs";
-import { UserDocumentError, UserDocumentService } from "./index";
+import { UserDocumentError, UserDocumentService } from "./UserDocumentService";
 
 export const UserDocumentServiceNode = Layer.effect(
   UserDocumentService,
