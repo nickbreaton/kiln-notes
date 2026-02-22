@@ -1,5 +1,5 @@
-import { Atom } from "@effect/atom-react";
 import { Array, Console, Effect, Layer, Stream } from "effect";
+import * as Atom from "effect/unstable/reactivity/Atom";
 import { PieceId } from "../schema";
 import { SyncService } from "../server/SyncService";
 import { ClipboardService } from "./ClipboardService";

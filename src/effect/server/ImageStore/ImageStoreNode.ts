@@ -1,4 +1,4 @@
-import { FileSystem, Path } from "@effect/platform";
+import { FileSystem, Path } from "effect";
 import { NodeContext } from "@effect/platform-node";
 import { Effect, Layer, Stream } from "effect";
 import { ImageStore, ImageStoreError } from "./ImageStore";

@@ -1,5 +1,6 @@
-import { Result, useAtomValue } from "@effect-atom/atom-react";
+import { useAtomValue } from "@effect/atom-react";
 import { Option } from "effect";
+import * as AsyncResult from "effect/unstable/reactivity/AsyncResult";
 import { registerSW } from "virtual:pwa-register";
 import { Route, Switch } from "wouter";
 import { userAtom } from "../effect/client/atom";
@@ -12,11 +13,11 @@ registerSW({ immediate: true });
 export const App = () => {
   const user = useAtomValue(userAtom);
 
-  if (Result.isInitial(user)) {
+  if (AsyncResult.isInitial(user)) {
     return null;
   }
 
-  if (Result.isFailure(user)) {
+  if (AsyncResult.isFailure(user)) {
     throw user.cause;
   }
 

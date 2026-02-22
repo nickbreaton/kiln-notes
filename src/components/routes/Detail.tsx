@@ -1,5 +1,6 @@
-import { Result, useAtomSet, useAtomValue } from "@effect-atom/atom-react";
+import { useAtomSet, useAtomValue } from "@effect/atom-react";
 import { Schema } from "effect";
+import * as AsyncResult from "effect/unstable/reactivity/AsyncResult";
 import { Trash2 } from "lucide-react";
 import { useState } from "react";
 import { useLocation, useParams } from "wouter";
@@ -10,7 +11,7 @@ import { NavigationBar } from "../NavigationBar";
 
 const DetailContent = ({ pieceId }: { pieceId: PieceId }) => {
   const url = useAtomValue(getFullUrlAtom(pieceId));
-  const src = Result.isSuccess(url) ? url.value : undefined;
+  const src = AsyncResult.isSuccess(url) ? url.value : undefined;
   const [, navigate] = useLocation();
   const deletePiece = useAtomSet(deletePieceAtom);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
