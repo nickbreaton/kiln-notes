@@ -18,7 +18,7 @@ export class SyncManager extends ServiceMap.Service<SyncManager>()("SyncManager"
       yield* imageSyncService.sync;
     }).pipe(
       Effect.forever,
-      Effect.forkDaemon,
+      Effect.forkDetach,
     );
 
     // Attempt sync on startup
@@ -37,16 +37,19 @@ export class SyncManager extends ServiceMap.Service<SyncManager>()("SyncManager"
           duration: "3 seconds",
           strategy: "enforce",
         }),
-        Stream.filter(() => {
-          return navigator.onLine;
-        }),
-        Stream.filterEffect(Effect.fn(function*() {
-          const user = Option.flatten(yield* Stream.runHead(userService.user));
-          return Option.isSome(user);
-        })),
-        Stream.tap(() => syncQueue.sync),
-        Stream.runDrain,
-        Effect.forkDaemon,
+        Stream.runForEach(() =>
+          Effect.gen(function*() {
+            if (!navigator.onLine) {
+              return;
+            }
+
+            const user = Option.flatten(yield* Stream.runHead(userService.user));
+            if (Option.isSome(user)) {
+              yield* syncQueue.sync;
+            }
+          })
+        ),
+        Effect.forkDetach,
       );
 
     return {};

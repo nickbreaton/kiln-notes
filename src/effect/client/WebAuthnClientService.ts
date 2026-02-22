@@ -37,7 +37,7 @@ export class WebAuthnClientService
         return yield* client.auth.registerVerify({
           payload: { response },
         });
-      }).pipe(Effect.tapErrorCause(Console.error));
+      }).pipe(Effect.tapCause(Console.error));
 
       const authenticate = Effect.gen(function*() {
         const optionsJSON = yield* client.auth.authenticateOptions();
@@ -50,7 +50,7 @@ export class WebAuthnClientService
         return yield* client.auth.authenticateVerify({
           payload: { response },
         });
-      }).pipe(Effect.tapErrorCause(Console.error));
+      }).pipe(Effect.tapCause(Console.error));
 
       return { register, authenticate };
     }),

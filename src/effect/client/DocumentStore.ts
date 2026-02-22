@@ -11,11 +11,9 @@ export class DocumentStore extends ServiceMap.Service<DocumentStore>()("Document
     const provider = new IndexeddbPersistence("kiln", doc);
     const client = yield* HttpApiClient.make(KilnApi);
 
-    yield* Effect.async((emit) => {
-      provider.once("synced", () => {
-        emit(Effect.void);
-      });
-    });
+    yield* Effect.promise(() => new Promise<void>((resolve) => {
+      provider.once("synced", resolve);
+    }));
 
     yield* Effect.addFinalizer(() => {
       return Effect.sync(() => doc.destroy());

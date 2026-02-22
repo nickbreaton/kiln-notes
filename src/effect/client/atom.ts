@@ -11,7 +11,12 @@ import { SyncManager } from "./SyncManager";
 import { UserService } from "./UserService";
 import { WebAuthnClientService } from "./WebAuthnClientService";
 
-const runtime = Atom.runtime(
+type LocalPiece = {
+  id: PieceId;
+  images: ReadonlyArray<{ id: string }>;
+};
+
+const runtime = Atom.runtime(() =>
   Layer.mergeAll(
     ClipboardService.layer,
     PieceRepository.layer,
@@ -21,11 +26,14 @@ const runtime = Atom.runtime(
     UserService.layer,
     SyncManager.layer,
     WebAuthnClientService.layer,
-  ),
+  ) as any,
 );
 
 export const userAtom = runtime.atom(() => {
-  return UserService.pipe(Effect.andThen(service => service.user), Stream.unwrap);
+  return Effect.gen(function*() {
+    const service = yield* UserService;
+    return service.user;
+  }).pipe(Stream.unwrap);
 });
 
 export const collectionAtom = runtime.atom(() => {
@@ -46,14 +54,14 @@ export const createPiecesAtom = runtime.fn((files: File[]) => {
 });
 
 export const pieceAtom = Atom.family((id: PieceId) => {
-  return Atom.mapResult(collectionAtom, Array.findFirst((piece) => piece.id === id));
+  return Atom.mapResult(collectionAtom, (pieces) => Array.findFirst(pieces as ReadonlyArray<LocalPiece>, (piece) => piece.id === id));
 });
 
 export const getFullUrlAtom = Atom.family((id: PieceId) =>
   runtime.atom((context) => {
     return Effect.gen(function*() {
       const pieceResult = yield* context.result(pieceAtom(id));
-      const { images } = yield* pieceResult;
+      const { images } = (yield* pieceResult) as LocalPiece;
       const { id: imageId } = yield* Array.get(images, 0);
       return `/api/image/${imageId}/full`;
     });
@@ -64,7 +72,7 @@ export const getThumbnailUrlAtom = Atom.family((id: PieceId) =>
   runtime.atom((context) => {
     return Effect.gen(function*() {
       const pieceResult = yield* context.result(pieceAtom(id));
-      const { images } = yield* pieceResult;
+      const { images } = (yield* pieceResult) as LocalPiece;
       const { id: imageId } = yield* Array.get(images, 0);
       return `/api/image/${imageId}/thumbnail`;
     });

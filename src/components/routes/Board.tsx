@@ -22,18 +22,22 @@ export const Board = () => {
   const atomValue = useAtomValue(collectionAtom);
   const [, navigate] = useLocation();
 
+  const pieces = AsyncResult.isSuccess(atomValue)
+    ? atomValue.value as ReadonlyArray<{ id: PieceId; status: "drying" | "bisquing" | "glazed" | "complete" }>
+    : [];
+
   return (
     <>
       <NavigationBar />
       {AsyncResult.isSuccess(atomValue) && (
         <PiecesSection
           title="Drying"
-          count={atomValue.value.filter(
+          count={pieces.filter(
             (piece) => piece.status === "drying",
           ).length}
           status="drying"
         >
-          {atomValue.value.map(
+          {pieces.map(
             ({ id, status }) =>
               status === "drying" && (
                 <button onClick={() => navigate(`/piece/${id}`)} key={id}>

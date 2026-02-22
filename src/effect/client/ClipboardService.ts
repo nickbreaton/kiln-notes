@@ -14,7 +14,7 @@ export class ClipboardService extends ServiceMap.Service<ClipboardService>()("Cl
         yield* SubscriptionRef.set(copiedRef, false);
       });
 
-    const copied = copiedRef.changes;
+    const copied = SubscriptionRef.changes(copiedRef);
 
     return { copy, copied };
   }),
