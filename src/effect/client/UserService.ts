@@ -1,20 +1,22 @@
-import { Effect, Option, Schema, Stream } from "effect";
+import { Effect, Layer, Option, Schema, ServiceMap, Stream } from "effect";
 import { UserId } from "../schema";
 
 const UserCookieValue = Schema.NullOr(UserId);
 
-export class UserService extends Effect.Service<UserService>()("UserService", {
-  effect: Effect.gen(function*() {
+export class UserService extends ServiceMap.Service<UserService>()("UserService", {
+  make: Effect.gen(function*() {
     const getFromStore = Effect.promise(() => window.cookieStore.get("user"));
 
-    const user = Stream.void.pipe(
+    const user = Stream.make(void 0).pipe(
       Stream.concat(Stream.fromEventListener(window.cookieStore, "change")),
       Stream.mapEffect(() => getFromStore),
       Stream.map(item => item?.value ?? null),
-      Stream.mapEffect(Schema.decodeUnknown(UserCookieValue)),
-      Stream.map(Option.fromNullable),
+      Stream.mapEffect(value => Schema.decodeUnknownEffect(UserCookieValue)(value)),
+      Stream.map(Option.fromNullishOr),
     );
 
     return { user };
   }),
-}) {}
+}) {
+  static layer = Layer.effect(this, this.make);
+}

@@ -1,4 +1,4 @@
-import { DateTime, Effect, Option, Schema, Stream, SubscriptionRef } from "effect";
+import { DateTime, Effect, Layer, Queue, Schema, ServiceMap, Stream } from "effect";
 
 import { Image, ImageId, Piece, PieceId } from "../schema";
 import { DocumentStore } from "./DocumentStore";
@@ -7,15 +7,8 @@ import { LocalImageService } from "./LocalImageService";
 import { ServiceWorkerCacheService } from "./ServiceWorkerCacheService";
 import { SyncQueue } from "./SyncQueue";
 
-export class PieceRepository extends Effect.Service<PieceRepository>()("PieceRepository", {
-  dependencies: [
-    LocalImageService.Default,
-    ImageCompressionService.Default,
-    DocumentStore.Default,
-    ServiceWorkerCacheService.Default,
-    SyncQueue.Default,
-  ],
-  effect: Effect.gen(function*() {
+export class PieceRepository extends ServiceMap.Service<PieceRepository>()("PieceRepository", {
+  make: Effect.gen(function*() {
     const { doc } = yield* DocumentStore;
     const map = doc.getMap<typeof Piece.Type>("piecesCollection");
 
@@ -25,38 +18,40 @@ export class PieceRepository extends Effect.Service<PieceRepository>()("PieceRep
     const syncQueue = yield* SyncQueue;
 
     return {
-      pieces: Stream.async<typeof Piece.Type[]>((emit) => {
-        const callback = () => {
-          emit.single(Array.from(map.values()));
-        };
+      pieces: Stream.callback<typeof Piece.Type[]>((queue) =>
+        Effect.sync(() => {
+          const callback = () => {
+            Queue.offerUnsafe(queue, Array.from(map.values()));
+          };
 
-        callback();
+          callback();
 
-        map.observe(callback);
+          map.observe(callback);
 
-        return Effect.sync(() => {
-          map.unobserve(callback);
-        });
-      }),
+          return () => {
+            map.unobserve(callback);
+          };
+        })
+      ),
 
       createPieces: (files: File[]) =>
         Effect.gen(function*() {
           const now = yield* DateTime.now;
 
           for (const file of files) {
-            const image = Image.make({
-              id: ImageId.make(crypto.randomUUID()),
+            const image: typeof Image.Type = {
+              id: Schema.decodeUnknownSync(ImageId)(crypto.randomUUID()),
               createdAt: now,
               status: "drying",
-            });
+            };
 
-            const piece = Piece.make({
-              id: PieceId.make(crypto.randomUUID()),
+            const piece: typeof Piece.Type = {
+              id: Schema.decodeUnknownSync(PieceId)(crypto.randomUUID()),
               status: "drying",
               statusUpdatedAt: now,
               updatedAt: now,
               images: [image],
-            });
+            };
 
             const [optimizedFile, thumbnailFile] = yield* Effect.all([
               imageCompressionService.optimize(file),
@@ -93,4 +88,12 @@ export class PieceRepository extends Effect.Service<PieceRepository>()("PieceRep
         }),
     };
   }),
-}) {}
+}) {
+  static layer = Layer.effect(this, this.make).pipe(
+    Layer.provide(LocalImageService.layer),
+    Layer.provide(ImageCompressionService.layer),
+    Layer.provide(DocumentStore.layer),
+    Layer.provide(ServiceWorkerCacheService.layer),
+    Layer.provide(SyncQueue.layer),
+  );
+}

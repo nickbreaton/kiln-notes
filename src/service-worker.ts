@@ -17,7 +17,7 @@ const navigationStrategy = new NetworkFirst({
   networkTimeoutSeconds: 3,
   plugins: [
     new CacheableResponsePlugin({ statuses: [0, 200] }),
-    new ExpirationPlugin({ maxEntries: 50, maxAgeSeconds: Duration.toSeconds("365 days") }),
+    new ExpirationPlugin({ maxEntries: 50, maxAgeSeconds: Duration.toSeconds(Duration.days(365)) }),
   ],
 });
 
@@ -34,7 +34,7 @@ registerRoute(({ url }) => url.origin === "https://fonts.gstatic.com", new Cache
   cacheName: "google-fonts-webfonts",
   plugins: [
     new CacheableResponsePlugin({ statuses: [0, 200] }),
-    new ExpirationPlugin({ maxEntries: 20, maxAgeSeconds: Duration.toSeconds("365 days") }),
+    new ExpirationPlugin({ maxEntries: 20, maxAgeSeconds: Duration.toSeconds(Duration.days(365)) }),
   ],
 }));
 
@@ -44,6 +44,6 @@ registerRoute(({ url }) => url.pathname.startsWith("/api/image/"), new CacheFirs
   cacheName: "piece-images",
   plugins: [
     new CacheableResponsePlugin({ statuses: [0, 200] }),
-    new ExpirationPlugin({ maxEntries: 500, maxAgeSeconds: Duration.toSeconds("365 days") }),
+    new ExpirationPlugin({ maxEntries: 500, maxAgeSeconds: Duration.toSeconds(Duration.days(365)) }),
   ],
 }));

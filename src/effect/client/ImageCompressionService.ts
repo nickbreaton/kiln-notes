@@ -1,7 +1,7 @@
-import { Effect, Schema } from "effect";
+import { Effect, Layer, Schema, ServiceMap } from "effect";
 
 export class ImageCompressionServiceError
-  extends Schema.TaggedError<ImageCompressionServiceError>()("ImageCompressionServiceError", {
+  extends Schema.TaggedErrorClass<ImageCompressionServiceError>()("ImageCompressionServiceError", {
     cause: Schema.Unknown,
   })
 {}
@@ -71,13 +71,14 @@ const processImage = (file: File, maxEdge: number, quality: number) =>
     });
   });
 
-export class ImageCompressionService extends Effect.Service<ImageCompressionService>()("ImageCompressionService", {
-  dependencies: [],
-  effect: Effect.succeed({
+export class ImageCompressionService extends ServiceMap.Service<ImageCompressionService>()("ImageCompressionService", {
+  make: Effect.succeed({
     optimize: (file: File) => processImage(file, OPTIMIZED_MAX_EDGE, OPTIMIZED_QUALITY),
     createThumbnail: (file: File) => {
       const maxEdge = Math.round(THUMBNAIL_CSS_EDGE * THUMBNAIL_DPR);
       return processImage(file, maxEdge, THUMBNAIL_QUALITY);
     },
   }),
-}) {}
+}) {
+  static layer = Layer.effect(this, this.make);
+}

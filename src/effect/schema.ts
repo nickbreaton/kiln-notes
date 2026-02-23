@@ -1,23 +1,24 @@
 import { Schema } from "effect";
 
-export const PieceIdBrand: unique symbol = Symbol.for("PieceId");
-export const ImageIdBrand: unique symbol = Symbol.for("ImageId");
-export const UserIdBrand: unique symbol = Symbol.for("UserId");
+export const PieceIdBrand = "PieceId";
+export const ImageIdBrand = "ImageId";
+export const UserIdBrand = "UserId";
 
-export const PieceId = Schema.UUID.pipe(Schema.brand(PieceIdBrand));
-export const ImageId = Schema.UUID.pipe(Schema.brand(ImageIdBrand));
+export const PieceId = Schema.String.pipe(
+  Schema.check(Schema.isUUID(undefined)),
+  Schema.brand(PieceIdBrand),
+);
+export const ImageId = Schema.String.pipe(
+  Schema.check(Schema.isUUID(undefined)),
+  Schema.brand(ImageIdBrand),
+);
 export const UserId = Schema.String.pipe(Schema.brand(UserIdBrand));
 
 export type PieceId = typeof PieceId.Type;
 export type ImageId = typeof ImageId.Type;
 export type UserId = typeof UserId.Type;
 
-export const Status = Schema.Literal(
-  "drying",
-  "bisquing",
-  "glazed",
-  "complete",
-);
+export const Status = Schema.Literals(["drying", "bisquing", "glazed", "complete"]);
 
 export const Image = Schema.Struct({
   id: ImageId,

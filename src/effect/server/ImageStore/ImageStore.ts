@@ -1,11 +1,10 @@
-import type { HttpServerRequest } from "@effect/platform";
-import { Context, Effect, Schema, Stream } from "effect";
+import { Effect, Schema, ServiceMap, Stream } from "effect";
 
-export class ImageStoreError extends Schema.TaggedError<ImageStoreError>()("ImageStoreError", {
+export class ImageStoreError extends Schema.TaggedErrorClass<ImageStoreError>()("ImageStoreError", {
   cause: Schema.Unknown,
 }) {}
 
-export class ImageStore extends Context.Tag("ImageStore")<ImageStore, {
+export class ImageStore extends ServiceMap.Service<ImageStore, {
   readonly upload: (
     key: string,
     file: Stream.Stream<Uint8Array>,
@@ -14,4 +13,4 @@ export class ImageStore extends Context.Tag("ImageStore")<ImageStore, {
   readonly get: (key: string) => Effect.Effect<{
     readonly stream: Stream.Stream<Uint8Array, ImageStoreError>;
   }, ImageStoreError>;
-}>() {}
+}>()("ImageStore") {}

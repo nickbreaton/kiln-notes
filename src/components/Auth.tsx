@@ -1,5 +1,7 @@
-import { Atom, Result, useAtom, useAtomSet, useAtomValue } from "@effect-atom/atom-react";
+import { useAtom, useAtomSet, useAtomValue } from "@effect/atom-react";
 import { Cause } from "effect";
+import * as AsyncResult from "effect/unstable/reactivity/AsyncResult";
+import * as Atom from "effect/unstable/reactivity/Atom";
 import { useState } from "react";
 import { authenticatePasskeyAtom, copiedAtom, copyToClipboardAtom, registerPasskeyAtom } from "../effect/client/atom";
 import { LoginView, PasskeyCreatedView, RegisterView } from "./auth/AuthViews";
@@ -15,14 +17,14 @@ export const Auth = () => {
   const copyToClipboard = useAtomSet(copyToClipboardAtom);
 
   const handleCopyCode = () => {
-    if (Result.isSuccess(registration)) {
+    if (AsyncResult.isSuccess(registration)) {
       copyToClipboard(registration.value);
     }
   };
 
-  const copied = Result.isSuccess(copiedResult) ? copiedResult.value : false;
+  const copied = AsyncResult.isSuccess(copiedResult) ? copiedResult.value : false;
 
-  if (Result.isSuccess(registration)) {
+  if (AsyncResult.isSuccess(registration)) {
     return (
       <PasskeyCreatedView
         credentialCode={registration.value}
@@ -49,7 +51,7 @@ export const Auth = () => {
   }
 
   const errorMessage = (() => {
-    if (!Result.isFailure(authentication)) return "";
+    if (!AsyncResult.isFailure(authentication)) return "";
     const squashed = Cause.squash(authentication.cause);
     return squashed instanceof Error ? squashed.message : "Authentication failed";
   })();

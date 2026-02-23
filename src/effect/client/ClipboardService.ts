@@ -1,8 +1,7 @@
-import { Atom } from "@effect-atom/atom-react";
-import { Effect, Layer, Stream, SubscriptionRef } from "effect";
+import { Effect, Layer, ServiceMap, Stream, SubscriptionRef } from "effect";
 
-export class ClipboardService extends Effect.Service<ClipboardService>()("ClipboardService", {
-  effect: Effect.gen(function*() {
+export class ClipboardService extends ServiceMap.Service<ClipboardService>()("ClipboardService", {
+  make: Effect.gen(function*() {
     const copiedRef = yield* SubscriptionRef.make(false);
 
     const copy = (text: string) =>
@@ -15,8 +14,10 @@ export class ClipboardService extends Effect.Service<ClipboardService>()("Clipbo
         yield* SubscriptionRef.set(copiedRef, false);
       });
 
-    const copied = copiedRef.changes;
+    const copied = SubscriptionRef.changes(copiedRef);
 
     return { copy, copied };
   }),
-}) {}
+}) {
+  static layer = Layer.effect(this, this.make);
+}

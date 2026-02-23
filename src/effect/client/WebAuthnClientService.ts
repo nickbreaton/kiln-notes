@@ -1,23 +1,23 @@
-import { HttpApiClient } from "@effect/platform";
+import { HttpApiClient } from "effect/unstable/httpapi";
 import * as SimpleWebAuthnBrowser from "@simplewebauthn/browser";
-import { Console, Effect, Option, Schema, SubscriptionRef } from "effect";
+import { Console, Effect, Layer, Option, Schema, ServiceMap, SubscriptionRef } from "effect";
 import { KilnApi } from "../shared/http";
 
 export class WebAuthnClientRegistrationError
-  extends Schema.TaggedError<WebAuthnClientRegistrationError>()("WebAuthnClientRegistrationError", {
+  extends Schema.TaggedErrorClass<WebAuthnClientRegistrationError>()("WebAuthnClientRegistrationError", {
     cause: Schema.Unknown,
   })
 {}
 
 export class WebAuthnClientAuthenticationError
-  extends Schema.TaggedError<WebAuthnClientAuthenticationError>()("WebAuthnClientAuthenticationError", {
+  extends Schema.TaggedErrorClass<WebAuthnClientAuthenticationError>()("WebAuthnClientAuthenticationError", {
     cause: Schema.Unknown,
   })
 {}
 
 export class WebAuthnClientService
-  extends Effect.Service<WebAuthnClientService>()("kiln-notes/effect/client/WebAuthnClientService", {
-    effect: Effect.gen(function*() {
+  extends ServiceMap.Service<WebAuthnClientService>()("kiln-notes/effect/client/WebAuthnClientService", {
+    make: Effect.gen(function*() {
       const client = yield* HttpApiClient.make(KilnApi);
       const currentUser = yield* SubscriptionRef.make(Option.none<string>());
 
@@ -37,7 +37,7 @@ export class WebAuthnClientService
         return yield* client.auth.registerVerify({
           payload: { response },
         });
-      }).pipe(Effect.tapErrorCause(Console.error));
+      }).pipe(Effect.tapCause(Console.error));
 
       const authenticate = Effect.gen(function*() {
         const optionsJSON = yield* client.auth.authenticateOptions();
@@ -50,9 +50,11 @@ export class WebAuthnClientService
         return yield* client.auth.authenticateVerify({
           payload: { response },
         });
-      }).pipe(Effect.tapErrorCause(Console.error));
+      }).pipe(Effect.tapCause(Console.error));
 
       return { register, authenticate };
     }),
   })
-{}
+{
+  static layer = Layer.effect(this, this.make);
+}

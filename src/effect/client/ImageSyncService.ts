@@ -1,20 +1,16 @@
-import { FetchHttpClient, HttpApiClient } from "@effect/platform";
-import { Effect, Option, Stream } from "effect";
+import { FetchHttpClient } from "effect/unstable/http";
+import { HttpApiClient } from "effect/unstable/httpapi";
+import { Effect, Layer, Option, Semaphore, ServiceMap, Stream } from "effect";
 import { ImageId } from "../schema";
 import { KilnApi } from "../shared/http";
 import { LocalImageService } from "./LocalImageService";
 import { PieceRepository } from "./PieceRepository";
 
-export class ImageSyncService extends Effect.Service<ImageSyncService>()("ImageSyncService", {
-  dependencies: [
-    LocalImageService.Default,
-    PieceRepository.Default,
-    FetchHttpClient.layer,
-  ],
-  effect: Effect.gen(function*() {
+export class ImageSyncService extends ServiceMap.Service<ImageSyncService>()("ImageSyncService", {
+  make: Effect.gen(function*() {
     const imageService = yield* LocalImageService;
     const pieceRepository = yield* PieceRepository;
-    const syncSemaphore = yield* Effect.makeSemaphore(1);
+    const syncSemaphore = yield* Semaphore.make(1);
     const client = yield* HttpApiClient.make(KilnApi);
 
     const requiresSync = Effect.fn(function*(id: ImageId) {
@@ -25,7 +21,9 @@ export class ImageSyncService extends Effect.Service<ImageSyncService>()("ImageS
         return false;
       }
 
-      return pieces.value
+      const current = pieces.value as ReadonlyArray<{ images: ReadonlyArray<{ id: ImageId }> }>;
+
+      return current
         .flatMap(piece => piece.images)
         .some(image => image.id === id);
     });
@@ -56,4 +54,10 @@ export class ImageSyncService extends Effect.Service<ImageSyncService>()("ImageS
 
     return { sync };
   }),
-}) {}
+}) {
+  static layer = Layer.effect(this, this.make).pipe(
+    Layer.provide(LocalImageService.layer),
+    Layer.provide(PieceRepository.layer),
+    Layer.provide(FetchHttpClient.layer),
+  );
+}

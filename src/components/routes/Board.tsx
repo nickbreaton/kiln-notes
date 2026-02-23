@@ -1,4 +1,5 @@
-import { Result, useAtomValue } from "@effect-atom/atom-react";
+import { useAtomValue } from "@effect/atom-react";
+import * as AsyncResult from "effect/unstable/reactivity/AsyncResult";
 import { useLocation } from "wouter";
 import { collectionAtom, getThumbnailUrlAtom } from "../../effect/client/atom";
 import { PieceId } from "../../effect/schema";
@@ -14,25 +15,29 @@ const Image = ({
   children: (src?: string) => React.ReactNode;
 }) => {
   const url = useAtomValue(getThumbnailUrlAtom(id));
-  return children(Result.isSuccess(url) ? url.value : undefined);
+  return children(AsyncResult.isSuccess(url) ? url.value : undefined);
 };
 
 export const Board = () => {
   const atomValue = useAtomValue(collectionAtom);
   const [, navigate] = useLocation();
 
+  const pieces = AsyncResult.isSuccess(atomValue)
+    ? atomValue.value
+    : [];
+
   return (
     <>
       <NavigationBar />
-      {Result.isSuccess(atomValue) && (
+      {AsyncResult.isSuccess(atomValue) && (
         <PiecesSection
           title="Drying"
-          count={atomValue.value.filter(
+          count={pieces.filter(
             (piece) => piece.status === "drying",
           ).length}
           status="drying"
         >
-          {atomValue.value.map(
+          {pieces.map(
             ({ id, status }) =>
               status === "drying" && (
                 <button onClick={() => navigate(`/piece/${id}`)} key={id}>

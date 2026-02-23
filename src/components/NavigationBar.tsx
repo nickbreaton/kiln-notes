@@ -1,4 +1,4 @@
-import { useAtomSet } from "@effect-atom/atom-react";
+import { useAtomSet } from "@effect/atom-react";
 import { ArrowLeft, Plus } from "lucide-react";
 import { createPiecesAtom } from "../effect/client/atom";
 

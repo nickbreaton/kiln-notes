@@ -1,12 +1,11 @@
-import { Console, Effect, Option, Queue, Schedule, Stream } from "effect";
+import { Effect, Layer, Option, Schedule, ServiceMap, Stream } from "effect";
 import { DocumentStore } from "./DocumentStore";
 import { ImageSyncService } from "./ImageSyncService";
 import { SyncQueue } from "./SyncQueue";
 import { UserService } from "./UserService";
 
-export class SyncManager extends Effect.Service<SyncManager>()("SyncManager", {
-  dependencies: [DocumentStore.Default, ImageSyncService.Default, SyncQueue.Default, UserService.Default],
-  effect: Effect.gen(function*() {
+export class SyncManager extends ServiceMap.Service<SyncManager>()("SyncManager", {
+  make: Effect.gen(function*() {
     const documentStore = yield* DocumentStore;
     const imageSyncService = yield* ImageSyncService;
     const syncQueue = yield* SyncQueue;
@@ -19,7 +18,7 @@ export class SyncManager extends Effect.Service<SyncManager>()("SyncManager", {
       yield* imageSyncService.sync;
     }).pipe(
       Effect.forever,
-      Effect.forkDaemon,
+      Effect.forkDetach,
     );
 
     // Attempt sync on startup
@@ -38,18 +37,28 @@ export class SyncManager extends Effect.Service<SyncManager>()("SyncManager", {
           duration: "3 seconds",
           strategy: "enforce",
         }),
-        Stream.filter(() => {
-          return navigator.onLine;
-        }),
-        Stream.filterEffect(Effect.fn(function*() {
-          const user = Option.flatten(yield* Stream.runHead(userService.user));
-          return Option.isSome(user);
-        })),
-        Stream.tap(() => syncQueue.sync),
-        Stream.runDrain,
-        Effect.forkDaemon,
+        Stream.runForEach(() =>
+          Effect.gen(function*() {
+            if (!navigator.onLine) {
+              return;
+            }
+
+            const user = Option.flatten(yield* Stream.runHead(userService.user));
+            if (Option.isSome(user)) {
+              yield* syncQueue.sync;
+            }
+          })
+        ),
+        Effect.forkDetach,
       );
 
     return {};
   }),
-}) {}
+}) {
+  static layer = Layer.effect(this, this.make).pipe(
+    Layer.provide(DocumentStore.layer),
+    Layer.provide(ImageSyncService.layer),
+    Layer.provide(SyncQueue.layer),
+    Layer.provide(UserService.layer),
+  );
+}

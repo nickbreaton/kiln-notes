@@ -1,8 +1,7 @@
-import { Atom } from "@effect-atom/atom-react";
-import { FetchHttpClient } from "@effect/platform";
 import { Array, Console, Effect, Layer, Stream } from "effect";
+import { FetchHttpClient } from "effect/unstable/http";
+import * as Atom from "effect/unstable/reactivity/Atom";
 import { PieceId } from "../schema";
-import { SyncService } from "../server/SyncService";
 import { ClipboardService } from "./ClipboardService";
 import { DocumentStore } from "./DocumentStore";
 import { LocalImageService } from "./LocalImageService";
@@ -12,21 +11,29 @@ import { SyncManager } from "./SyncManager";
 import { UserService } from "./UserService";
 import { WebAuthnClientService } from "./WebAuthnClientService";
 
-const runtime = Atom.runtime(
+type LocalPiece = {
+  id: PieceId;
+  images: ReadonlyArray<{ id: string }>;
+};
+
+const runtime = Atom.runtime(() =>
   Layer.mergeAll(
-    ClipboardService.Default,
-    PieceRepository.Default,
-    DocumentStore.Default,
-    LocalImageService.Default,
-    ServiceWorkerCacheService.Default,
-    UserService.Default,
-    SyncManager.Default,
-    Layer.provide(WebAuthnClientService.Default, FetchHttpClient.layer),
-  ),
+    ClipboardService.layer,
+    PieceRepository.layer,
+    DocumentStore.layer,
+    LocalImageService.layer,
+    ServiceWorkerCacheService.layer,
+    UserService.layer,
+    SyncManager.layer,
+    WebAuthnClientService.layer,
+  ).pipe(Layer.provide(FetchHttpClient.layer))
 );
 
 export const userAtom = runtime.atom(() => {
-  return UserService.pipe(Effect.andThen(service => service.user), Stream.unwrap);
+  return Effect.gen(function*() {
+    const service = yield* UserService;
+    return service.user;
+  }).pipe(Stream.unwrap);
 });
 
 export const collectionAtom = runtime.atom(() => {
@@ -47,7 +54,10 @@ export const createPiecesAtom = runtime.fn((files: File[]) => {
 });
 
 export const pieceAtom = Atom.family((id: PieceId) => {
-  return Atom.mapResult(collectionAtom, Array.findFirst((piece) => piece.id === id));
+  return Atom.mapResult(
+    collectionAtom,
+    (pieces) => Array.findFirst(pieces, (piece) => piece.id === id),
+  );
 });
 
 export const getFullUrlAtom = Atom.family((id: PieceId) =>
