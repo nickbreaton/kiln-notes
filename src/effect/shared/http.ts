@@ -70,14 +70,14 @@ export const ApiGroup = HttpApiGroup.make("api", { topLevel: true })
 export const SyncGroup = HttpApiGroup.make("sync")
   .add(
     HttpApiEndpoint.post("pull", "/api/sync/pull", {
-      payload: Schema.Struct({ stateVector: Schema.Uint8Array }),
-      success: Schema.Struct({ diff: Schema.Uint8Array, stateVector: Schema.Uint8Array }),
+      payload: Schema.Struct({ stateVector: Schema.Uint8ArrayFromBase64 }),
+      success: Schema.Struct({ diff: Schema.Uint8ArrayFromBase64, stateVector: Schema.Uint8ArrayFromBase64 }),
       error: [UnauthorizedError, SyncServiceError],
     }),
   )
   .add(
     HttpApiEndpoint.post("push", "/api/sync/push", {
-      payload: Schema.Struct({ diff: Schema.Uint8Array }),
+      payload: Schema.Struct({ diff: Schema.Uint8ArrayFromBase64 }),
       success: Schema.Struct({ success: Schema.Boolean }),
       error: [UnauthorizedError, SyncServiceError],
     }),
