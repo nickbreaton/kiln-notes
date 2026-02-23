@@ -23,7 +23,7 @@ export const Board = () => {
   const [, navigate] = useLocation();
 
   const pieces = AsyncResult.isSuccess(atomValue)
-    ? atomValue.value as ReadonlyArray<{ id: PieceId; status: "drying" | "bisquing" | "glazed" | "complete" }>
+    ? atomValue.value
     : [];
 
   return (

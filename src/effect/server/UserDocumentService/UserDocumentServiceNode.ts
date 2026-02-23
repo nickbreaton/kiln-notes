@@ -1,8 +1,8 @@
-import { KeyValueStore } from "effect/unstable/persistence";
-import * as NodeServices from "@effect/platform-node/NodeServices";
+import { NodeServices } from "@effect/platform-node";
 import { Effect, Layer, Option, Schema, Scope } from "effect";
-import { UserId } from "../../schema";
+import { KeyValueStore } from "effect/unstable/persistence";
 import * as Y from "yjs";
+import { UserId } from "../../schema";
 import { UserDocumentError, UserDocumentService } from "./UserDocumentService";
 
 export const UserDocumentServiceNode = Layer.effect(
@@ -24,7 +24,10 @@ export const UserDocumentServiceNode = Layer.effect(
         return doc;
       }).pipe(Effect.catchCause(cause => Effect.fail(new UserDocumentError({ cause }))));
 
-    const update = (userId: UserId, updater: (doc: Y.Doc) => void): Effect.Effect<void, UserDocumentError, Scope.Scope> =>
+    const update = (
+      userId: UserId,
+      updater: (doc: Y.Doc) => void,
+    ): Effect.Effect<void, UserDocumentError, Scope.Scope> =>
       Effect.gen(function*() {
         const doc = yield* load(userId);
         updater(doc);

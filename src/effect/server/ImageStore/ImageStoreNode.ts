@@ -1,5 +1,5 @@
+import { NodeServices } from "@effect/platform-node";
 import { FileSystem, Path } from "effect";
-import * as NodeServices from "@effect/platform-node/NodeServices";
 import { Effect, Layer, Stream } from "effect";
 import { ImageStore, ImageStoreError } from "./ImageStore";
 
@@ -11,7 +11,7 @@ export const ImageStoreNode = Layer.effect(
 
     const getPath = (key: string) => `./tmp/images/${key}`;
 
-    const upload = (key: string, file: Stream.Stream<Uint8Array>, _contentLength: number) =>
+    const upload = (key: string, file: Stream.Stream<Uint8Array>) =>
       Effect.gen(function*() {
         const resolved = getPath(key);
         yield* fs.makeDirectory(path.dirname(resolved), { recursive: true });

@@ -20,16 +20,16 @@ export class PieceRepository extends ServiceMap.Service<PieceRepository>()("Piec
     return {
       pieces: Stream.callback<typeof Piece.Type[]>((queue) =>
         Effect.sync(() => {
-        const callback = () => {
+          const callback = () => {
             Queue.offerUnsafe(queue, Array.from(map.values()));
-        };
+          };
 
-        callback();
+          callback();
 
-        map.observe(callback);
+          map.observe(callback);
 
           return () => {
-          map.unobserve(callback);
+            map.unobserve(callback);
           };
         })
       ),

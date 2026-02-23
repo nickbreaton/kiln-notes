@@ -5,7 +5,7 @@ const UserCookieValue = Schema.NullOr(UserId);
 
 export class UserService extends ServiceMap.Service<UserService>()("UserService", {
   make: Effect.gen(function*() {
-    const getFromStore = Effect.promise(() => window.cookieStore.get("user") as Promise<{ value?: string } | null>);
+    const getFromStore = Effect.promise(() => window.cookieStore.get("user"));
 
     const user = Stream.make(void 0).pipe(
       Stream.concat(Stream.fromEventListener(window.cookieStore, "change")),

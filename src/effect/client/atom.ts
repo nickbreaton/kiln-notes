@@ -56,7 +56,7 @@ export const createPiecesAtom = runtime.fn((files: File[]) => {
 export const pieceAtom = Atom.family((id: PieceId) => {
   return Atom.mapResult(
     collectionAtom,
-    (pieces) => Array.findFirst(pieces as ReadonlyArray<LocalPiece>, (piece) => piece.id === id),
+    (pieces) => Array.findFirst(pieces, (piece) => piece.id === id),
   );
 });
 
@@ -64,7 +64,7 @@ export const getFullUrlAtom = Atom.family((id: PieceId) =>
   runtime.atom((context) => {
     return Effect.gen(function*() {
       const pieceResult = yield* context.result(pieceAtom(id));
-      const { images } = (yield* pieceResult) as LocalPiece;
+      const { images } = yield* pieceResult;
       const { id: imageId } = yield* Array.get(images, 0);
       return `/api/image/${imageId}/full`;
     });
@@ -75,7 +75,7 @@ export const getThumbnailUrlAtom = Atom.family((id: PieceId) =>
   runtime.atom((context) => {
     return Effect.gen(function*() {
       const pieceResult = yield* context.result(pieceAtom(id));
-      const { images } = (yield* pieceResult) as LocalPiece;
+      const { images } = yield* pieceResult;
       const { id: imageId } = yield* Array.get(images, 0);
       return `/api/image/${imageId}/thumbnail`;
     });

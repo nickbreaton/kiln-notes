@@ -1,5 +1,5 @@
-import { HttpServerRequest } from "effect/unstable/http";
 import { Effect, Layer } from "effect";
+import { HttpServerRequest } from "effect/unstable/http";
 import { HttpApiMiddleware } from "effect/unstable/httpapi";
 
 export class ApiErrorLoggingMiddleware extends HttpApiMiddleware.Service<ApiErrorLoggingMiddleware>()(
@@ -8,7 +8,7 @@ export class ApiErrorLoggingMiddleware extends HttpApiMiddleware.Service<ApiErro
 
 export const ApiErrorLoggingMiddlewareLive = Layer.succeed(
   ApiErrorLoggingMiddleware,
-  ((httpEffect) =>
+  (httpEffect) =>
     httpEffect.pipe(
       Effect.tapCause((cause) =>
         Effect.gen(function*() {
@@ -20,5 +20,5 @@ export const ApiErrorLoggingMiddlewareLive = Layer.succeed(
           });
         })
       ),
-    )) as ApiErrorLoggingMiddleware["Service"],
+    ),
 );
