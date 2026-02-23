@@ -1,4 +1,4 @@
-import { Schema } from "effect";
+import { Schema, SchemaGetter } from "effect";
 
 const Base64URLString = Schema.String;
 const COSEAlgorithmIdentifier = Schema.Number;
@@ -124,7 +124,7 @@ const AuthenticationExtensionsClientInputs = Schema.Struct({
 
 export const WebAuthnCredential = Schema.Struct({
   id: Base64URLString,
-  publicKey: Schema.Uint8Array,
+  publicKey: Schema.Uint8ArrayFromBase64,
   counter: Schema.Number,
   transports: Schema.optional(MutableArray(AuthenticatorTransportFuture)),
 });
@@ -176,7 +176,7 @@ export const PublicKeyCredentialCreationOptionsJSON = Schema.Struct({
 
 export const RegistrationInfo = Schema.Struct({
   aaguid: Base64URLString,
-  attestationObject: Schema.Uint8Array,
+  attestationObject: Schema.Uint8ArrayFromBase64,
   credential: WebAuthnCredential,
   credentialBackedUp: Schema.Boolean,
   credentialDeviceType: Schema.Union([Schema.Literal("singleDevice"), Schema.Literal("multiDevice")]),
@@ -188,4 +188,9 @@ export const RegistrationInfo = Schema.Struct({
 });
 export type RegistrationInfo = Schema.Schema.Type<typeof RegistrationInfo>;
 
-export const RegistrationInfoFromBase64 = Schema.fromJsonString(RegistrationInfo);
+export const RegistrationInfoFromBase64 = Schema.String.pipe(
+  Schema.decodeTo(Schema.fromJsonString(RegistrationInfo), {
+    decode: SchemaGetter.decodeBase64String(),
+    encode: SchemaGetter.encodeBase64(),
+  }),
+);

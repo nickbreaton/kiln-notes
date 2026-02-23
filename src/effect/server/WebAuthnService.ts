@@ -1,7 +1,7 @@
-import { KeyValueStore } from "effect/unstable/persistence";
 import * as SimpleWebAuthnServer from "@simplewebauthn/server";
 import { Effect, Layer, Record, Schema, ServiceMap } from "effect";
-import { AuthenticationResponseJSON, RegistrationResponseJSON } from "../shared/webauthn";
+import { KeyValueStore } from "effect/unstable/persistence";
+import { AuthenticationResponseJSON, RegistrationInfoFromBase64, RegistrationResponseJSON } from "../shared/webauthn";
 import { Session } from "./middleware/Session";
 import { RelayingPartyService } from "./RelayingPartyService";
 import { UserService } from "./UserService";
@@ -64,7 +64,7 @@ export class WebAuthnService extends ServiceMap.Service<WebAuthnService>()("kiln
           return yield* new WebAuthnError({ cause: new Error("verifyRegistrationResponse returned not verified") });
         }
 
-        return Buffer.from(JSON.stringify(result.registrationInfo), "utf8").toString("base64");
+        return yield* Schema.encodeEffect(RegistrationInfoFromBase64)(result.registrationInfo);
       });
 
     const generateAuthenticationOptions = Effect.gen(function*() {
