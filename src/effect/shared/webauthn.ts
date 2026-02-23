@@ -15,30 +15,26 @@ const AuthenticatorTransportFuture = Schema.Union([
 
 const MutableArray = <S extends Schema.Top>(schema: S) => Schema.mutable(Schema.Array(schema));
 
-class CredentialPropertiesOutput extends Schema.Class<CredentialPropertiesOutput>("CredentialPropertiesOutput")({
+const CredentialPropertiesOutput = Schema.Struct({
   rk: Schema.optional(Schema.Boolean),
-}) {}
+});
 
-class AuthenticationExtensionsClientOutputs
-  extends Schema.Class<AuthenticationExtensionsClientOutputs>("AuthenticationExtensionsClientOutputs")({
-    appid: Schema.optional(Schema.Boolean),
-    credProps: Schema.optional(CredentialPropertiesOutput),
-    hmacCreateSecret: Schema.optional(Schema.Boolean),
-  })
-{}
+const AuthenticationExtensionsClientOutputs = Schema.Struct({
+  appid: Schema.optional(Schema.Boolean),
+  credProps: Schema.optional(CredentialPropertiesOutput),
+  hmacCreateSecret: Schema.optional(Schema.Boolean),
+});
 
-class AuthenticatorAttestationResponseJSON
-  extends Schema.Class<AuthenticatorAttestationResponseJSON>("AuthenticatorAttestationResponseJSON")({
-    clientDataJSON: Base64URLString,
-    attestationObject: Base64URLString,
-    authenticatorData: Schema.optional(Base64URLString),
-    transports: Schema.optional(MutableArray(AuthenticatorTransportFuture)),
-    publicKeyAlgorithm: Schema.optional(COSEAlgorithmIdentifier),
-    publicKey: Schema.optional(Base64URLString),
-  })
-{}
+const AuthenticatorAttestationResponseJSON = Schema.Struct({
+  clientDataJSON: Base64URLString,
+  attestationObject: Base64URLString,
+  authenticatorData: Schema.optional(Base64URLString),
+  transports: Schema.optional(MutableArray(AuthenticatorTransportFuture)),
+  publicKeyAlgorithm: Schema.optional(COSEAlgorithmIdentifier),
+  publicKey: Schema.optional(Base64URLString),
+});
 
-export class RegistrationResponseJSON extends Schema.Class<RegistrationResponseJSON>("RegistrationResponseJSON")({
+export const RegistrationResponseJSON = Schema.Struct({
   id: Base64URLString,
   rawId: Base64URLString,
   response: AuthenticatorAttestationResponseJSON,
@@ -47,35 +43,30 @@ export class RegistrationResponseJSON extends Schema.Class<RegistrationResponseJ
   ),
   clientExtensionResults: AuthenticationExtensionsClientOutputs,
   type: Schema.Literal("public-key"),
-}) {}
+});
+export type RegistrationResponseJSON = Schema.Schema.Type<typeof RegistrationResponseJSON>;
 
-class PublicKeyCredentialRpEntity extends Schema.Class<PublicKeyCredentialRpEntity>("PublicKeyCredentialRpEntity")({
+const PublicKeyCredentialRpEntity = Schema.Struct({
   id: Schema.optional(Schema.String),
   name: Schema.String,
-}) {}
+});
 
-class PublicKeyCredentialUserEntityJSON
-  extends Schema.Class<PublicKeyCredentialUserEntityJSON>("PublicKeyCredentialUserEntityJSON")({
-    id: Schema.String,
-    name: Schema.String,
-    displayName: Schema.String,
-  })
-{}
+const PublicKeyCredentialUserEntityJSON = Schema.Struct({
+  id: Schema.String,
+  name: Schema.String,
+  displayName: Schema.String,
+});
 
-class PublicKeyCredentialParameters
-  extends Schema.Class<PublicKeyCredentialParameters>("PublicKeyCredentialParameters")({
-    alg: COSEAlgorithmIdentifier,
-    type: Schema.Literal("public-key"),
-  })
-{}
+const PublicKeyCredentialParameters = Schema.Struct({
+  alg: COSEAlgorithmIdentifier,
+  type: Schema.Literal("public-key"),
+});
 
-class PublicKeyCredentialDescriptorJSON
-  extends Schema.Class<PublicKeyCredentialDescriptorJSON>("PublicKeyCredentialDescriptorJSON")({
-    id: Base64URLString,
-    type: Schema.Literal("public-key"),
-    transports: Schema.optional(MutableArray(AuthenticatorTransportFuture)),
-  })
-{}
+const PublicKeyCredentialDescriptorJSON = Schema.Struct({
+  id: Base64URLString,
+  type: Schema.Literal("public-key"),
+  transports: Schema.optional(MutableArray(AuthenticatorTransportFuture)),
+});
 
 const AuthenticatorAttachment = Schema.Union([
   Schema.Literal("cross-platform"),
@@ -94,14 +85,12 @@ const UserVerificationRequirement = Schema.Union([
   Schema.Literal("required"),
 ]);
 
-class AuthenticatorSelectionCriteria
-  extends Schema.Class<AuthenticatorSelectionCriteria>("AuthenticatorSelectionCriteria")({
-    authenticatorAttachment: Schema.optional(AuthenticatorAttachment),
-    requireResidentKey: Schema.optional(Schema.Boolean),
-    residentKey: Schema.optional(ResidentKeyRequirement),
-    userVerification: Schema.optional(UserVerificationRequirement),
-  })
-{}
+const AuthenticatorSelectionCriteria = Schema.Struct({
+  authenticatorAttachment: Schema.optional(AuthenticatorAttachment),
+  requireResidentKey: Schema.optional(Schema.Boolean),
+  residentKey: Schema.optional(ResidentKeyRequirement),
+  userVerification: Schema.optional(UserVerificationRequirement),
+});
 
 const PublicKeyCredentialHint = Schema.Union([
   Schema.Literal("hybrid"),
@@ -126,33 +115,30 @@ const AttestationFormat = Schema.Union([
   Schema.Literal("none"),
 ]);
 
-class AuthenticationExtensionsClientInputs
-  extends Schema.Class<AuthenticationExtensionsClientInputs>("AuthenticationExtensionsClientInputs")({
-    appid: Schema.optional(Schema.String),
-    credProps: Schema.optional(Schema.Boolean),
-    hmacCreateSecret: Schema.optional(Schema.Boolean),
-    minPinLength: Schema.optional(Schema.Boolean),
-  })
-{}
+const AuthenticationExtensionsClientInputs = Schema.Struct({
+  appid: Schema.optional(Schema.String),
+  credProps: Schema.optional(Schema.Boolean),
+  hmacCreateSecret: Schema.optional(Schema.Boolean),
+  minPinLength: Schema.optional(Schema.Boolean),
+});
 
-export class WebAuthnCredential extends Schema.Class<WebAuthnCredential>("WebAuthnCredential")({
+export const WebAuthnCredential = Schema.Struct({
   id: Base64URLString,
   publicKey: Schema.Uint8Array,
   counter: Schema.Number,
   transports: Schema.optional(MutableArray(AuthenticatorTransportFuture)),
-}) {}
+});
+export type WebAuthnCredential = Schema.Schema.Type<typeof WebAuthnCredential>;
 
-class AuthenticatorAssertionResponseJSON
-  extends Schema.Class<AuthenticatorAssertionResponseJSON>("AuthenticatorAssertionResponseJSON")({
-    clientDataJSON: Base64URLString,
-    authenticatorData: Base64URLString,
-    signature: Base64URLString,
-    userHandle: Schema.optional(Base64URLString),
-    attestationObject: Schema.optional(Base64URLString),
-  })
-{}
+const AuthenticatorAssertionResponseJSON = Schema.Struct({
+  clientDataJSON: Base64URLString,
+  authenticatorData: Base64URLString,
+  signature: Base64URLString,
+  userHandle: Schema.optional(Base64URLString),
+  attestationObject: Schema.optional(Base64URLString),
+});
 
-export class AuthenticationResponseJSON extends Schema.Class<AuthenticationResponseJSON>("AuthenticationResponseJSON")({
+export const AuthenticationResponseJSON = Schema.Struct({
   id: Base64URLString,
   rawId: Base64URLString,
   response: AuthenticatorAssertionResponseJSON,
@@ -161,37 +147,34 @@ export class AuthenticationResponseJSON extends Schema.Class<AuthenticationRespo
   ),
   clientExtensionResults: AuthenticationExtensionsClientOutputs,
   type: Schema.Literal("public-key"),
-}) {}
+});
+export type AuthenticationResponseJSON = Schema.Schema.Type<typeof AuthenticationResponseJSON>;
 
-export class PublicKeyCredentialRequestOptionsJSON
-  extends Schema.Class<PublicKeyCredentialRequestOptionsJSON>("PublicKeyCredentialRequestOptionsJSON")({
-    challenge: Base64URLString,
-    timeout: Schema.optional(Schema.Number),
-    rpId: Schema.optional(Schema.String),
-    allowCredentials: Schema.optional(MutableArray(PublicKeyCredentialDescriptorJSON)),
-    userVerification: Schema.optional(UserVerificationRequirement),
-    hints: Schema.optional(MutableArray(PublicKeyCredentialHint)),
-    extensions: Schema.optional(AuthenticationExtensionsClientInputs),
-  })
-{}
+export const PublicKeyCredentialRequestOptionsJSON = Schema.Struct({
+  challenge: Base64URLString,
+  timeout: Schema.optional(Schema.Number),
+  rpId: Schema.optional(Schema.String),
+  allowCredentials: Schema.optional(MutableArray(PublicKeyCredentialDescriptorJSON)),
+  userVerification: Schema.optional(UserVerificationRequirement),
+  hints: Schema.optional(MutableArray(PublicKeyCredentialHint)),
+  extensions: Schema.optional(AuthenticationExtensionsClientInputs),
+});
 
-export class PublicKeyCredentialCreationOptionsJSON
-  extends Schema.Class<PublicKeyCredentialCreationOptionsJSON>("PublicKeyCredentialCreationOptionsJSON")({
-    rp: PublicKeyCredentialRpEntity,
-    user: PublicKeyCredentialUserEntityJSON,
-    challenge: Base64URLString,
-    pubKeyCredParams: MutableArray(PublicKeyCredentialParameters),
-    timeout: Schema.optional(Schema.Number),
-    excludeCredentials: Schema.optional(MutableArray(PublicKeyCredentialDescriptorJSON)),
-    authenticatorSelection: Schema.optional(AuthenticatorSelectionCriteria),
-    hints: Schema.optional(MutableArray(PublicKeyCredentialHint)),
-    attestation: Schema.optional(AttestationConveyancePreference),
-    attestationFormats: Schema.optional(MutableArray(AttestationFormat)),
-    extensions: Schema.optional(AuthenticationExtensionsClientInputs),
-  })
-{}
+export const PublicKeyCredentialCreationOptionsJSON = Schema.Struct({
+  rp: PublicKeyCredentialRpEntity,
+  user: PublicKeyCredentialUserEntityJSON,
+  challenge: Base64URLString,
+  pubKeyCredParams: MutableArray(PublicKeyCredentialParameters),
+  timeout: Schema.optional(Schema.Number),
+  excludeCredentials: Schema.optional(MutableArray(PublicKeyCredentialDescriptorJSON)),
+  authenticatorSelection: Schema.optional(AuthenticatorSelectionCriteria),
+  hints: Schema.optional(MutableArray(PublicKeyCredentialHint)),
+  attestation: Schema.optional(AttestationConveyancePreference),
+  attestationFormats: Schema.optional(MutableArray(AttestationFormat)),
+  extensions: Schema.optional(AuthenticationExtensionsClientInputs),
+});
 
-export class RegistrationInfo extends Schema.Class<RegistrationInfo>("RegistrationInfo")({
+export const RegistrationInfo = Schema.Struct({
   aaguid: Base64URLString,
   attestationObject: Schema.Uint8Array,
   credential: WebAuthnCredential,
@@ -202,6 +185,7 @@ export class RegistrationInfo extends Schema.Class<RegistrationInfo>("Registrati
   origin: Schema.String,
   rpID: Schema.optional(Schema.String),
   userVerified: Schema.Boolean,
-}) {}
+});
+export type RegistrationInfo = Schema.Schema.Type<typeof RegistrationInfo>;
 
 export const RegistrationInfoFromBase64 = Schema.fromJsonString(RegistrationInfo);

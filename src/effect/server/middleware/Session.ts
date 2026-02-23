@@ -25,7 +25,7 @@ export const SessionMiddlewareLive = Layer.effect(
         const request = yield* HttpServerRequest.HttpServerRequest;
         const currentRequest = yield* HttpServerRequest.toWeb(request).pipe(Effect.orDie);
 
-        const secure = yield* Schema.decodeUnknownEffect(Schema.URL)(currentRequest.url).pipe(
+        const secure = yield* Schema.decodeEffect(Schema.URLFromString)(currentRequest.url).pipe(
           Effect.map((url) => url.protocol !== "http:"),
           Effect.orDie,
         );

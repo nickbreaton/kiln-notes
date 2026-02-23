@@ -14,7 +14,8 @@ export class RelayingPartyService extends ServiceMap.Service<RelayingPartyServic
 
     const get = Effect.gen(function*() {
       const request = yield* HttpServerRequest.HttpServerRequest;
-      const url = yield* Schema.decodeUnknownEffect(Schema.URL)(request.originalUrl);
+      const currentRequest = yield* HttpServerRequest.toWeb(request).pipe(Effect.orDie);
+      const url = yield* Schema.decodeUnknownEffect(Schema.URLFromString)(currentRequest.url);
 
       if (!allowedOrigins.includes(url.origin)) {
         return yield* new RelayingPartyError({ message: `Origin "${url.origin}" not allowed as relaying party` });
