@@ -31,5 +31,15 @@
       "binding": "IMAGES_BUCKET",
       "bucket_name": "kiln-images"
     }
-  ]
+  ],
+  "env": {
+    "local": {
+      "r2_buckets": [
+        {
+          "binding": "IMAGES_BUCKET",
+          "bucket_name": "kiln-images"
+        }
+      ]
+    }
+  }
 }
