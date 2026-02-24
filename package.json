@@ -33,12 +33,12 @@
     "@astrojs/cloudflare": "^12.6.12",
     "@astrojs/react": "^4.4.2",
     "@cloudflare/workers-types": "^4",
-    "@effect/atom-react": "^4.0.0-beta.10",
-    "@effect/platform-browser": "^4.0.0-beta.10",
-    "@effect/platform-node": "^4.0.0-beta.10",
+    "@effect/atom-react": "^4.0.0-beta.12",
+    "@effect/platform-browser": "^4.0.0-beta.12",
+    "@effect/platform-node": "^4.0.0-beta.12",
     "@vite-pwa/astro": "^1.2.0",
     "dprint": "^0.51.1",
-    "effect": "^4.0.0-beta.10",
+    "effect": "^4.0.0-beta.12",
     "localtunnel": "^2.0.2",
     "typescript": "^5.9.3"
   }
